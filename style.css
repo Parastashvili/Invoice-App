@@ -4,6 +4,7 @@
 }
 :root {
   --logoBG: rgb(124, 93, 250);
+  --logoLightBG: rgb(146, 119, 255);
   --buttonBG: rgb(124, 93, 250);
   --logoBGHover: rgb(146, 119, 255);
   --boldText: rgb(12, 14, 22);
@@ -11,8 +12,222 @@
   --paid: rgb(51, 214, 159);
   --lighttext: rgb(133, 139, 178);
   --deleteBG: rgb(236, 87, 87);
+  --profileLeftBorder: rgb(73, 78, 110);
+  --headerBG: rgb(55, 59, 83);
+  --contentBG: rgb(248, 248, 251);
 }
 body {
   font-family: "League Spartan";
   font-style: normal;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--contentBG);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--headerBG);
+  height: 72px;
+  user-select: none;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--buttonBG);
+  width: 72px;
+  height: 72px;
+  border-radius: 0px 20px 20px 0px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.darklogoBG {
+  background-color: var(--buttonBG);
+  width: 100%;
+  height: 50%;
+}
+.lightlogoBG {
+  background-color: var(--logoLightBG);
+  width: 100%;
+  height: 50%;
+  border-top-left-radius: 50%;
+}
+.logoimg {
+  position: absolute;
+}
+.profile_pic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 20px 24px;
+  cursor: pointer;
+}
+.day_night {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 20px 24px;
+  cursor: pointer;
+}
+.imgContainer {
+  border-left: 1px solid var(--profileLeftBorder);
+}
+.headerrightEdge {
+  display: flex;
+  align-items: center;
+}
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 32px 24px;
+  user-select: none;
+}
+.sectionHeaderLeft {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+}
+.sectionH4 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 22px;
+  letter-spacing: -0.75px;
+  color: var(--boldText);
+}
+.sectionP {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  color: var(--lighttext);
+  margin-top: 3px;
+}
+.sectionHeaderRight {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18.54px;
+}
+.filterSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+}
+.sectionH6 {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: right;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+.addNew {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--buttonBG);
+  border-radius: 24px;
+  width: 90px;
+  height: 44px;
+}
+.plussign {
+  background-color: white;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: 6px;
+}
+.sectionButtonTxt {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: white;
+  margin-right: 15px;
+}
+.topbottomspace {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.invoiceContainerInner {
+  height: 87px;
+  background: wheat;
+  box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+  border-radius: 8px;
+  margin: 0px 24px 16px 24px;
+  padding: 25px 24px 22px 24px;
+}
+.invoiceContainer {
+  width: 100%;
+}
+.numbercontainer {
+  display: flex;
+}
+.invoiceNum {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+.numbersign {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: #7e88c3;
+}
+.contenttop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.clientname {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  text-align: right;
+  letter-spacing: -0.1px;
+  color: var(--lighttext);
+}
+.invoicedate {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  color: var(--lighttext);
+}
+.invoiceprice {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+.bottomleftside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 9px;
 }
