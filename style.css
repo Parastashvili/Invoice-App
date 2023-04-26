@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "League Spartan";
+  src: url(./fonts/LeagueSpartan-VariableFont_wght.ttf);
+}
+:root {
+  --logoBG: rgb(124, 93, 250);
+  --buttonBG: rgb(124, 93, 250);
+  --logoBGHover: rgb(146, 119, 255);
+  --boldText: rgb(12, 14, 22);
+  --pending: rgb(255, 143, 0);
+  --paid: rgb(51, 214, 159);
+  --lighttext: rgb(133, 139, 178);
+  --deleteBG: rgb(236, 87, 87);
+}
+body {
+  font-family: "League Spartan";
+  font-style: normal;
+}
