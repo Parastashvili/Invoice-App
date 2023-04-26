@@ -15,7 +15,7 @@ const createElement = (id, clientName, paymentDue, total, status) => {
   const bottomleft1 = document.createElement("date");
   const bottomleft2 = document.createElement("h5");
   const bottomright = document.createElement("div");
-  const invoicestatus = document.createElement("img");
+  const invoicestatus = document.createElement("div");
   const statustxt = document.createElement("h5");
   container.append(element);
   container.classList.add("invoiceContainer");
@@ -23,7 +23,7 @@ const createElement = (id, clientName, paymentDue, total, status) => {
   element.classList.add("topbottomspace");
   element.classList.add("invoiceContainerInner");
   top.append(topleft, topright);
-  top.classList.add("contenttop");
+  top.classList.add("contenttopbottom");
   const numberSign = document.createElement("span");
   numberSign.classList.add("numbersign");
   topleft1.textContent = "#";
@@ -35,6 +35,7 @@ const createElement = (id, clientName, paymentDue, total, status) => {
   topright.textContent = clientName;
   topright.classList.add("clientname");
   bottom.append(bottomleft, bottomright);
+  bottom.classList.add("contenttopbottom");
   bottomleft.append(bottomleft1, bottomleft2);
   bottomleft.classList.add("bottomleftside");
   const dateObj = new Date(paymentDue);
@@ -51,7 +52,23 @@ const createElement = (id, clientName, paymentDue, total, status) => {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
-  bottomleft2.classList.add("invoiceprice");
+  invoicestatus.classList.add("statuscircle");
+  if (status == "paid") {
+    bottomright.classList.add("invoicestatusPaid", "statusopacity");
+    statustxt.classList.add("invoicestatusPaid");
+    invoicestatus.classList.add("statuscirclepaid");
+  } else if (status == "draft") {
+    bottomright.classList.add("invoicestatusDraft", "statusopacity");
+    statustxt.classList.add("invoicestatusDraft");
+    invoicestatus.classList.add("statuscircledraft");
+  } else if (status == "pending") {
+    bottomright.classList.add("invoicestatusPending", "statusopacity");
+    statustxt.classList.add("invoicestatusPending");
+    invoicestatus.classList.add("statuscirclepending");
+  }
+  statustxt.textContent = status;
+  statustxt.classList.add("statustxt");
+  bottomright.append(invoicestatus, statustxt);
   return container;
 };
 

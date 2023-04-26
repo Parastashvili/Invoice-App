@@ -166,7 +166,7 @@ body {
 }
 .invoiceContainerInner {
   height: 87px;
-  background: wheat;
+  background: white;
   box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
   border-radius: 8px;
   margin: 0px 24px 16px 24px;
@@ -196,7 +196,7 @@ body {
   letter-spacing: -0.25px;
   color: #7e88c3;
 }
-.contenttop {
+.contenttopbottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -230,4 +230,65 @@ body {
   flex-direction: column;
   justify-content: space-between;
   gap: 9px;
+}
+.invoicestatusPending {
+  background-color: rgb(255, 143, 0, 0.06);
+  color: rgb(255, 143, 0);
+}
+.invoicestatusPaid {
+  background-color: rgb(51, 214, 159, 0.06);
+  color: rgb(51, 214, 159);
+}
+.invoicestatusDraft {
+  background-color: rgb(55, 59, 83, 0.06);
+  color: rgb(55, 59, 83);
+}
+.statusopacity {
+  width: 104px;
+  height: 40px;
+  mix-blend-mode: normal;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.statustxt {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  text-transform: capitalize;
+  background: transparent;
+}
+.statuscircle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.statuscirclepaid {
+  background-color: rgb(51, 214, 159);
+}
+.statuscirclepending {
+  background-color: rgb(255, 143, 0);
+}
+.statuscircledraft {
+  background-color: rgb(55, 59, 83);
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--headerBG);
+  height: 100px;
+  user-select: none;
+  margin-top: 50px;
+}
+.footertext {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.25px;
+  text-align: center;
+  color: var(--boldText);
 }
