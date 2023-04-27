@@ -1,6 +1,8 @@
 import data from "./data.json" assert { type: "json" };
 
 const invoices = document.querySelector(".invoices");
+const invoicescontainer = document.getElementById("invoices");
+const invoicesheader= document.getElementById("sectionHeader");
 
 const createElement = (id, clientName, paymentDue, total, status) => {
   const container = document.createElement("li");
@@ -22,6 +24,16 @@ const createElement = (id, clientName, paymentDue, total, status) => {
   element.append(top, bottom);
   element.classList.add("topbottomspace");
   element.classList.add("invoiceContainerInner");
+  element.addEventListener("click", function change() {
+    element.classList.add("backOutLeft");
+    setTimeout(() => {
+      element.classList.remove("backoutleft");
+    }, 2000);
+    setTimeout(() => {
+      invoicescontainer.style.display = "none";
+      invoicesheader.style.display = "none";
+    }, 500);
+  });
   top.append(topleft, topright);
   top.classList.add("contenttopbottom");
   const numberSign = document.createElement("span");
@@ -70,6 +82,30 @@ const createElement = (id, clientName, paymentDue, total, status) => {
   statustxt.classList.add("statustxt");
   bottomright.append(invoicestatus, statustxt);
   return container;
+};
+
+const createElementInner = (
+  id,
+  description,
+  street,
+  city,
+  postCode,
+  country,
+  createdAt,
+  paymentDue,
+  clientName,
+  street2,
+  city2,
+  postCode2,
+  country2,
+  clientEmail,
+  name,
+  quantity,
+  price,
+  total,
+  totalSUM
+) => {
+    
 };
 
 for (let i = 0; i < data.length; i++) {

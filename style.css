@@ -10,11 +10,18 @@
   --boldText: rgb(12, 14, 22);
   --pending: rgb(255, 143, 0);
   --paid: rgb(51, 214, 159);
+  --draft: rgb(55, 59, 83);
+  --paidbg: rgb(51, 214, 159, 0.06);
+  --pendingbg: rgb(255, 143, 0, 0.06);
+  --draftbg: rgb(55, 59, 83, 0.06);
   --lighttext: rgb(133, 139, 178);
   --deleteBG: rgb(236, 87, 87);
   --profileLeftBorder: rgb(73, 78, 110);
   --headerBG: rgb(55, 59, 83);
   --contentBG: rgb(248, 248, 251);
+  --innerShadow: rgba(72, 84, 159, 0.100397);
+  --white: #ffffff;
+  --diezi: #7e88c3;
 }
 body {
   font-family: "League Spartan";
@@ -140,9 +147,10 @@ body {
   border-radius: 24px;
   width: 90px;
   height: 44px;
+  cursor: pointer;
 }
 .plussign {
-  background-color: white;
+  background-color: var(--white);
   width: 32px;
   height: 32px;
   display: flex;
@@ -156,7 +164,7 @@ body {
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: white;
+  color: var(--white);
   margin-right: 15px;
 }
 .topbottomspace {
@@ -166,11 +174,12 @@ body {
 }
 .invoiceContainerInner {
   height: 87px;
-  background: white;
-  box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
+  background: var(--white);
+  box-shadow: 0px 10px 10px -10px var(--innerShadow);
   border-radius: 8px;
   margin: 0px 24px 16px 24px;
   padding: 25px 24px 22px 24px;
+  cursor: pointer;
 }
 .invoiceContainer {
   width: 100%;
@@ -194,7 +203,7 @@ body {
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: #7e88c3;
+  color: var(--diezi);
 }
 .contenttopbottom {
   display: flex;
@@ -232,16 +241,16 @@ body {
   gap: 9px;
 }
 .invoicestatusPending {
-  background-color: rgb(255, 143, 0, 0.06);
-  color: rgb(255, 143, 0);
+  background-color: var(--pendingbg);
+  color: var(--pending);
 }
 .invoicestatusPaid {
-  background-color: rgb(51, 214, 159, 0.06);
-  color: rgb(51, 214, 159);
+  background-color: var(--paidbg);
+  color: var(--paid);
 }
 .invoicestatusDraft {
-  background-color: rgb(55, 59, 83, 0.06);
-  color: rgb(55, 59, 83);
+  background-color: var(--draftbg);
+  color: var(--draft);
 }
 .statusopacity {
   width: 104px;
@@ -267,13 +276,13 @@ body {
   border-radius: 50%;
 }
 .statuscirclepaid {
-  background-color: rgb(51, 214, 159);
+  background-color: var(--paid);
 }
 .statuscirclepending {
-  background-color: rgb(255, 143, 0);
+  background-color: var(--pending);
 }
 .statuscircledraft {
-  background-color: rgb(55, 59, 83);
+  background-color: var(--draft);
 }
 .footer {
   display: flex;
@@ -291,4 +300,273 @@ body {
   letter-spacing: -0.25px;
   text-align: center;
   color: var(--boldText);
+  margin-top: 100px;
+}
+.backoutleft {
+  animation-name: backOutLeft;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes backOutLeft {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(0px) scale(0.95);
+    opacity: 0.7;
+  }
+}
+.backOutLeft {
+  -webkit-animation: backOutLeft 0.5s;
+  animation: backOutLeft 0.5s;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}
+.backbutton {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 23px;
+  cursor: pointer;
+}
+.backtxt {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+.detailedstatus {
+  height: 91px;
+  background-color: var(--white);
+  box-shadow: 0px 10px 10px -10px var(--innerShadow);
+  border-radius: 8px;
+  margin-top: 31px;
+  padding: 0px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.statustxt {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  color: var(--lighttext);
+}
+.statusboxdetailed {
+  width: 104px;
+  height: 40px;
+  background-color: var(--pendingbg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  gap: 8px;
+}
+.statuscoloredtxt {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--pending);
+}
+.detailedstatuscircle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--pending);
+}
+.invoicedetails {
+  background: var(--white);
+  box-shadow: 0px 10px 10px -10px var(--innerShadow);
+  border-radius: 8px;
+}
+.invoicedetailsinner {
+  padding: 24px;
+}
+.invoicedetailedp {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  color: var(--lighttext);
+}
+.invoicedetailedh {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+.colordiezi {
+  color: var(--lighttext);
+}
+.displayflex {
+  display: flex;
+}
+.invoicedetailed {
+  padding: 33px 24px;
+  margin-bottom: 100px;
+}
+.detailedinvoicenumber {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.detailedinvoiceaddress {
+  display: flex;
+  flex-direction: column;
+}
+.detailednumadress {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.detailedadress {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 31px;
+}
+.detaileddates {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.detaileddatesmain {
+  display: flex;
+  flex-direction: column;
+  gap: 31px;
+}
+.detaileddatesinner {
+  display: flex;
+  flex-direction: column;
+  gap: 31px;
+}
+.detailetusername {
+  margin: 13px 0px 7px;
+}
+.lineheightaddress {
+  line-height: 18px;
+}
+.detailedemail {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0px 38px 0px;
+  gap: 13px;
+}
+.totalamount {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: right;
+  letter-spacing: -0.5px;
+  color: var(--white);
+}
+.paymentdetailed {
+  height: 80px;
+  background-color: var(--headerBG);
+  padding: 0px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0px 0px 8px 8px;
+}
+.detailedfooter {
+  width: calc(100% - 48px);
+  padding: 0px 24px;
+  height: 91px;
+  position: fixed;
+  bottom: 0px;
+  z-index: 2;
+  background: var(--white);
+  box-shadow: 0px 10px 10px -10px var(--innerShadow);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.editbutton {
+  width: 23%;
+  height: 48px;
+  background: #f9fafe;
+  border-radius: 24px;
+  border-width: 0px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--lighttext);
+  padding: 0px;
+  cursor: pointer;
+}
+.deletebutton {
+  width: 28%;
+  height: 48px;
+  background: #ec5757;
+  border-radius: 24px;
+  border-width: 0px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--white);
+  padding: 0px;
+  cursor: pointer;
+}
+.marraspaidbutton {
+  width: 48%;
+  height: 48px;
+  background: #7c5dfa;
+  border-radius: 24px;
+  border-width: 0px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--white);
+  padding: 0px;
+  cursor: pointer;
+}
+
+/* dahaidebuli */
+.invoices {
+  display: none;
+}
+#sectionHeader {
+  display: none;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  /* dahaidebuli */
+  display: none;
+}
+.emptyImg {
+  height: 160px;
+}
+.emptyH {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 22px;
+  letter-spacing: -0.75px;
+  color: var(--boldText);
+  margin-top: 42px;
+}
+.emptyP {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: -0.1px;
+  color: var(--lighttext);
+  margin-top: 23px;
+  max-width: 180px;
 }

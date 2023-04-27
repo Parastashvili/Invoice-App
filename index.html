@@ -35,7 +35,7 @@
     </header>
     <main>
       <section>
-        <div class="sectionHeader">
+        <div class="sectionHeader" id="sectionHeader">
           <div class="sectionHeaderLeft">
             <h4 class="sectionH4">Invoices</h4>
             <p class="sectionP">7 invoices</p>
@@ -53,13 +53,94 @@
             </div>
           </div>
         </div>
-        <ul class="invoices"></ul>
+        <ul class="invoices" id="invoices"></ul>
       </section>
+      <article class="empty">
+        <img
+          class="emptyImg"
+          src="./assets/illustration-empty.svg"
+          alt="No invoices here"
+        />
+        <h4 class="emptyH">There is nothing here</h4>
+        <p class="emptyP">
+          Create an invoice by clicking the New button and get started
+        </p>
+      </article>
     </main>
-    <footer class="footer">
-      <p class="footertext">
-        Copyright 2023. All rights Reserved <br />Created by Levan Parastashvili
-      </p>
+    <aside class="invoicedetailed">
+      <div class="backbutton">
+        <img src="./assets/icon-arrow-left.svg" alt="back arrow" />
+        <h6 class="backtxt">Go back</h6>
+      </div>
+      <div class="detailedstatus">
+        <p class="statustxt">Status</p>
+        <div class="statusboxdetailed">
+          <div class="detailedstatuscircle"></div>
+          <h6 class="statuscoloredtxt">Pending</h6>
+        </div>
+      </div>
+      <div class="invoicedetails">
+        <div class="invoicedetailsinner">
+          <div class="detailednumadress">
+            <div class="detailedinvoicenumber">
+              <h4 class="invoicedetailedh displayflex">
+                <p class="colordiezi">#</p>
+                XM9141
+              </h4>
+              <p class="invoicedetailedp">Graphic Design</p>
+            </div>
+            <div class="detailedinvoiceaddress">
+              <p class="invoicedetailedp lineheightaddress">19 Union Terrace</p>
+              <p class="invoicedetailedp lineheightaddress">London</p>
+              <p class="invoicedetailedp lineheightaddress">E1 3EZ</p>
+              <p class="invoicedetailedp lineheightaddress">United Kingdom</p>
+            </div>
+          </div>
+          <div>
+            <div class="detailedadress">
+              <div class="detaileddatesmain">
+                <div class="detaileddates">
+                  <p class="invoicedetailedp">Invoice Date</p>
+                  <h5 class="invoicedetailedh">21 Aug 2021</h5>
+                </div>
+                <div class="detaileddates">
+                  <p class="invoicedetailedp">Payment Due</p>
+                  <h5 class="invoicedetailedh">20 Sep 2021</h5>
+                </div>
+              </div>
+              <div>
+                <p class="invoicedetailedp">Bill To</p>
+                <h5 class="invoicedetailedh detailetusername">Alex Grim</h5>
+                <p class="invoicedetailedp lineheightaddress">84 Church Way</p>
+                <p class="invoicedetailedp lineheightaddress">Bradford</p>
+                <p class="invoicedetailedp lineheightaddress">BD1 9PB</p>
+                <p class="invoicedetailedp lineheightaddress">United Kingdom</p>
+              </div>
+            </div>
+            <div class="detailedemail">
+              <p class="invoicedetailedp">Sent to</p>
+              <h5 class="invoicedetailedh">alexgrim@mail.com</h5>
+            </div>
+          </div>
+          <div>
+            <ul class="items"></ul>
+            <div class="paymentdetailed">
+              <p class="invoicedetailedp">Grand Total</p>
+              <h1 class="totalamount">£ 556.00</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="footertext">Invoice detailed</p>
+      </div>
+    </aside>
+    <footer>
+      <div class="detailedfooter">
+        <button class="editbutton">Edit</button
+        ><button class="deletebutton">Delete</button
+        ><button class="marraspaidbutton">Mark as Paid</button>
+      </div>
     </footer>
     <script src="./invoices.js" defer type="module"></script>
   </body>
