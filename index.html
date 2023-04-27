@@ -67,8 +67,8 @@
         </p>
       </article>
     </main>
-    <aside class="invoicedetailed" id="invoicedetailed">
-      <div class="backbutton" onclick="backBTN()">
+    <aside class="invoicedetailed slide-to-right" id="invoicedetailed">
+      <div class="backbutton" id="backbutton">
         <img src="./assets/icon-arrow-left.svg" alt="back arrow" />
         <h6 class="backtxt">Go back</h6>
       </div>
@@ -85,37 +85,27 @@
             <div class="detailedinvoicenumber">
               <h4 class="invoicedetailedh displayflex">
                 <p class="colordiezi">#</p>
-                <p id="invoiceid">XM9141</p>
+                <p id="invoiceid"></p>
               </h4>
-              <p class="invoicedetailedp" id="invoicedescription">
-                Graphic Design
-              </p>
+              <p class="invoicedetailedp" id="invoicedescription"></p>
             </div>
             <div class="detailedinvoiceaddress">
               <p
                 class="invoicedetailedp lineheightaddress"
                 id="invoicesenderStreet"
-              >
-                19 Union Terrace
-              </p>
+              ></p>
               <p
                 class="invoicedetailedp lineheightaddress"
                 id="invoicesenderCity"
-              >
-                London
-              </p>
+              ></p>
               <p
                 class="invoicedetailedp lineheightaddress"
                 id="invoicesenderPostCode"
-              >
-                E1 3EZ
-              </p>
+              ></p>
               <p
                 class="invoicedetailedp lineheightaddress"
                 id="invoicesenderCountry"
-              >
-                United Kingdom
-              </p>
+              ></p>
             </div>
           </div>
           <div>
@@ -123,15 +113,11 @@
               <div class="detaileddatesmain">
                 <div class="detaileddates">
                   <p class="invoicedetailedp">Invoice Date</p>
-                  <h5 class="invoicedetailedh" id="invoicecreatedAt">
-                    21 Aug 2021
-                  </h5>
+                  <h5 class="invoicedetailedh" id="invoicecreatedAt"></h5>
                 </div>
                 <div class="detaileddates">
                   <p class="invoicedetailedp">Payment Due</p>
-                  <h5 class="invoicedetailedh" id="invoicepaymentDue">
-                    20 Sep 2021
-                  </h5>
+                  <h5 class="invoicedetailedh" id="invoicepaymentDue"></h5>
                 </div>
               </div>
               <div>
@@ -139,47 +125,35 @@
                 <h5
                   class="invoicedetailedh detailetusername"
                   id="invoiceclientName"
-                >
-                  Alex Grim
-                </h5>
+                ></h5>
                 <p
                   class="invoicedetailedp lineheightaddress"
                   id="invoiceclientStreet"
-                >
-                  84 Church Way
-                </p>
+                ></p>
                 <p
                   class="invoicedetailedp lineheightaddress"
                   id="invoiceclientCity"
-                >
-                  Bradford
-                </p>
+                ></p>
                 <p
                   class="invoicedetailedp lineheightaddress"
                   id="invoiceclientPostCode"
-                >
-                  BD1 9PB
-                </p>
+                ></p>
                 <p
                   class="invoicedetailedp lineheightaddress"
                   id="invoiceclientCountry"
-                >
-                  United Kingdom
-                </p>
+                ></p>
               </div>
             </div>
             <div class="detailedemail">
               <p class="invoicedetailedp">Sent to</p>
-              <h5 class="invoicedetailedh" id="invoiceclientEmail">
-                alexgrim@mail.com
-              </h5>
+              <h5 class="invoicedetailedh" id="invoiceclientEmail"></h5>
             </div>
           </div>
           <div>
             <ul class="items"></ul>
             <div class="paymentdetailed">
               <p class="invoicedetailedGRAND">Grand Total</p>
-              <h1 class="totalamount" id="invoicetotal">£ 556.00</h1>
+              <h1 class="totalamount" id="invoicetotal"></h1>
             </div>
           </div>
         </div>
@@ -187,7 +161,9 @@
       <div class="detailedfooter">
         <button class="editbutton">Edit</button
         ><button class="deletebutton">Delete</button
-        ><button class="marraspaidbutton">Mark as Paid</button>
+        ><button class="marraspaidbutton" id="marraspaidbutton">
+          Mark as Paid
+        </button>
       </div>
     </aside>
     <footer>

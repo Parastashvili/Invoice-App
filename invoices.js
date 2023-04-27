@@ -4,6 +4,19 @@ const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
 const invoicesheader = document.getElementById("sectionHeader");
 const invoicedetailed = document.getElementById("invoicedetailed");
+const backbutton = document.getElementById("backbutton");
+
+backbutton.addEventListener("click", function ukandabruneba() {
+  invoicedetailed.classList.add("animate");
+  setTimeout(() => {
+    invoicedetailed.classList.remove("animate");
+  }, 500);
+  setTimeout(() => {
+    invoicescontainer.style.display = "block";
+    invoicesheader.style.display = "block";
+    invoicedetailed.style.display = "none";
+  }, 500);
+});
 
 const createElement = (
   id,
@@ -71,18 +84,22 @@ const createElement = (
     invoicestatus.innerHTML = status;
     const statusboxcolors = document.getElementById("statusboxcolors");
     const circlecolor = document.getElementById("circlecolor");
+    const marraspaidbutton = document.getElementById("marraspaidbutton");
     if (status === "paid") {
       invoicestatus.classList.add("paidcolor");
       statusboxcolors.classList.add("paidbg");
       circlecolor.classList.add("paidcircle");
+      marraspaidbutton.style.display = "none";
     } else if (status === "draft") {
       invoicestatus.classList.add("draftcolor");
       statusboxcolors.classList.add("draftbg");
       circlecolor.classList.add("draftcircle");
+      marraspaidbutton.style.display = "block";
     } else if (status === "pending") {
       invoicestatus.classList.add("pendingcolor");
       statusboxcolors.classList.add("pendingbg");
       circlecolor.classList.add("pendingcircle");
+      marraspaidbutton.style.display = "block";
     }
     const invoicecreatedAt = document.getElementById("invoicecreatedAt");
     const dateObj2 = new Date(createdAt);
@@ -124,11 +141,10 @@ const createElement = (
     const invoiceitemqty = document.getElementById("");
     const invoiceitemprice = document.getElementById("");
     const invoiceitemtotal = document.getElementById("");
-
     element.classList.add("backOutLeft");
     setTimeout(() => {
-      element.classList.remove("backoutleft");
-    }, 2000);
+      element.classList.remove("backOutLeft");
+    }, 500);
     setTimeout(() => {
       invoicescontainer.style.display = "none";
       invoicesheader.style.display = "none";
