@@ -2,9 +2,32 @@ import data from "./data.json" assert { type: "json" };
 
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
-const invoicesheader= document.getElementById("sectionHeader");
+const invoicesheader = document.getElementById("sectionHeader");
+const invoicedetailed = document.getElementById("invoicedetailed");
 
-const createElement = (id, clientName, paymentDue, total, status) => {
+const createElement = (
+  id,
+  clientName,
+  paymentDue,
+  total,
+  status,
+  createdAt,
+  description,
+  paymentTerms,
+  clientEmail,
+  senderStreet,
+  senderCity,
+  senderPostCode,
+  senderCountry,
+  clientStreet,
+  clientCity,
+  clientPostCode,
+  clientCountry,
+  itemNames,
+  itemqty,
+  itemprice,
+  itemtotal
+) => {
   const container = document.createElement("li");
   const element = document.createElement("div");
   const top = document.createElement("div");
@@ -25,6 +48,83 @@ const createElement = (id, clientName, paymentDue, total, status) => {
   element.classList.add("topbottomspace");
   element.classList.add("invoiceContainerInner");
   element.addEventListener("click", function change() {
+    const invoiceid = document.getElementById("invoiceid");
+    invoiceid.innerHTML = id;
+    const invoiceclientName = document.getElementById("invoiceclientName");
+    invoiceclientName.innerHTML = clientName;
+    const invoicepaymentDue = document.getElementById("invoicepaymentDue");
+    const dateObj = new Date(paymentDue);
+    const options = { day: "numeric", month: "short", year: "numeric" };
+    const formattedDate = dateObj.toLocaleDateString("en-US", options);
+    const day = formattedDate.slice(4, 6);
+    const month = formattedDate.slice(0, 3);
+    const year = formattedDate.slice(8);
+    invoicepaymentDue.innerHTML = day + " " + month + " " + year;
+    const invoicetotal = document.getElementById("invoicetotal");
+    invoicetotal.innerHTML =
+      "£ " +
+      total.toLocaleString("en-GB", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    const invoicestatus = document.getElementById("invoicestatus");
+    invoicestatus.innerHTML = status;
+    const statusboxcolors = document.getElementById("statusboxcolors");
+    const circlecolor = document.getElementById("circlecolor");
+    if (status === "paid") {
+      invoicestatus.classList.add("paidcolor");
+      statusboxcolors.classList.add("paidbg");
+      circlecolor.classList.add("paidcircle");
+    } else if (status === "draft") {
+      invoicestatus.classList.add("draftcolor");
+      statusboxcolors.classList.add("draftbg");
+      circlecolor.classList.add("draftcircle");
+    } else if (status === "pending") {
+      invoicestatus.classList.add("pendingcolor");
+      statusboxcolors.classList.add("pendingbg");
+      circlecolor.classList.add("pendingcircle");
+    }
+    const invoicecreatedAt = document.getElementById("invoicecreatedAt");
+    const dateObj2 = new Date(createdAt);
+    const options2 = { day: "numeric", month: "short", year: "numeric" };
+    const formattedDate2 = dateObj2.toLocaleDateString("en-US", options2);
+    const day2 = formattedDate2.slice(4, 6);
+    const month2 = formattedDate2.slice(0, 3);
+    const year2 = formattedDate2.slice(8);
+    invoicecreatedAt.innerHTML = day2 + " " + month2 + " " + year2;
+    const invoicedescription = document.getElementById("invoicedescription");
+    invoicedescription.innerHTML = description;
+    const invoiceclientEmail = document.getElementById("invoiceclientEmail");
+    invoiceclientEmail.innerHTML = clientEmail;
+    const invoicesenderStreet = document.getElementById("invoicesenderStreet");
+    invoicesenderStreet.innerHTML = senderStreet;
+    const invoicesenderCity = document.getElementById("invoicesenderCity");
+    invoicesenderCity.innerHTML = senderCity;
+    const invoicesenderPostCode = document.getElementById(
+      "invoicesenderPostCode"
+    );
+    invoicesenderPostCode.innerHTML = senderPostCode;
+    const invoicesenderCountry = document.getElementById(
+      "invoicesenderCountry"
+    );
+    invoicesenderCountry.innerHTML = senderCountry;
+    const invoiceclientStreet = document.getElementById("invoiceclientStreet");
+    invoiceclientStreet.innerHTML = clientStreet;
+    const invoiceclientCity = document.getElementById("invoiceclientCity");
+    invoiceclientCity.innerHTML = clientCity;
+    const invoiceclientPostCode = document.getElementById(
+      "invoiceclientPostCode"
+    );
+    invoiceclientPostCode.innerHTML = clientPostCode;
+    const invoiceclientCountry = document.getElementById(
+      "invoiceclientCountry"
+    );
+    invoiceclientCountry.innerHTML = clientCountry;
+    const invoiceitemNames = document.getElementById("");
+    const invoiceitemqty = document.getElementById("");
+    const invoiceitemprice = document.getElementById("");
+    const invoiceitemtotal = document.getElementById("");
+
     element.classList.add("backOutLeft");
     setTimeout(() => {
       element.classList.remove("backoutleft");
@@ -32,6 +132,7 @@ const createElement = (id, clientName, paymentDue, total, status) => {
     setTimeout(() => {
       invoicescontainer.style.display = "none";
       invoicesheader.style.display = "none";
+      invoicedetailed.style.display = "block";
     }, 500);
   });
   top.append(topleft, topright);
@@ -105,7 +206,8 @@ const createElementInner = (
   total,
   totalSUM
 ) => {
-    
+  const invoiceid = document.getElementById("invoiceid");
+  invoiceid.innerHTML = id;
 };
 
 for (let i = 0; i < data.length; i++) {
@@ -124,9 +226,15 @@ for (let i = 0; i < data.length; i++) {
     total,
   } = data[i];
   const itemNames = [];
+  const itemqty = [];
+  const itemprice = [];
+  const itemtotal = [];
   for (let j = 0; j < items.length; j++) {
     const { name, quantity, price, total } = items[j];
     itemNames.push(name);
+    itemqty.push(quantity);
+    itemprice.push(price);
+    itemtotal.push(total);
   }
   const {
     street: senderStreet,
@@ -140,6 +248,28 @@ for (let i = 0; i < data.length; i++) {
     postCode: clientPostCode,
     country: clientCountry,
   } = clientAddress;
-  const invoiceBox = createElement(id, clientName, paymentDue, total, status);
+  const invoiceBox = createElement(
+    id,
+    clientName,
+    paymentDue,
+    total,
+    status,
+    createdAt,
+    description,
+    paymentTerms,
+    clientEmail,
+    senderStreet,
+    senderCity,
+    senderPostCode,
+    senderCountry,
+    clientStreet,
+    clientCity,
+    clientPostCode,
+    clientCountry,
+    itemNames,
+    itemqty,
+    itemprice,
+    itemtotal
+  );
   invoices.append(invoiceBox);
 }
