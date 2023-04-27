@@ -227,8 +227,6 @@ body {
   color: var(--lighttext);
 }
 .invoiceprice {
-  font-family: "League Spartan";
-  font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 24px;
@@ -678,9 +676,9 @@ body {
 }
 .slide-to-right {
   position: relative;
-  left: 0;
-  transition: left 0.5s ease-out;
+  right: 0;
+  transition: right 0.5s ease-out;
 }
 .slide-to-right.animate {
-  left: 100%;
+  right: 100%;
 }
