@@ -18,6 +18,16 @@ backbutton.addEventListener("click", function ukandabruneba() {
   }, 500);
 });
 
+function correctDateFormat(value) {
+  const [year, month, day] = value.split("-");
+  const dateObj = new Date(year, month - 1, day);
+  const options = { day: "2-digit", month: "short", year: "numeric" };
+  const formattedDate = dateObj.toLocaleDateString("en-US", options);
+  const parts = formattedDate.split(" ");
+  const dayPart = parts[1].replace(",", "");
+  return `${dayPart} ${parts[0]} ${parts[2]}`;
+}
+
 const createElement = (
   id,
   clientName,
@@ -66,13 +76,7 @@ const createElement = (
     const invoiceclientName = document.getElementById("invoiceclientName");
     invoiceclientName.innerHTML = clientName;
     const invoicepaymentDue = document.getElementById("invoicepaymentDue");
-    const dateObj = new Date(paymentDue);
-    const options = { day: "numeric", month: "short", year: "numeric" };
-    const formattedDate = dateObj.toLocaleDateString("en-US", options);
-    const day = formattedDate.slice(4, 6);
-    const month = formattedDate.slice(0, 3);
-    const year = formattedDate.slice(8);
-    invoicepaymentDue.innerHTML = day + " " + month + " " + year;
+    invoicepaymentDue.innerHTML = correctDateFormat(paymentDue);
     const invoicetotal = document.getElementById("invoicetotal");
     invoicetotal.innerHTML =
       "£ " +
@@ -89,26 +93,38 @@ const createElement = (
       invoicestatus.classList.add("paidcolor");
       statusboxcolors.classList.add("paidbg");
       circlecolor.classList.add("paidcircle");
+      invoicestatus.classList.remove("draftcolor");
+      statusboxcolors.classList.remove("draftbg");
+      circlecolor.classList.remove("draftcircle");
+      invoicestatus.classList.remove("pendingcolor");
+      statusboxcolors.classList.remove("pendingbg");
+      circlecolor.classList.remove("pendingcircle");
       marraspaidbutton.style.display = "none";
     } else if (status === "draft") {
       invoicestatus.classList.add("draftcolor");
       statusboxcolors.classList.add("draftbg");
       circlecolor.classList.add("draftcircle");
+      invoicestatus.classList.remove("paidcolor");
+      statusboxcolors.classList.remove("paidbg");
+      circlecolor.classList.remove("paidcircle");
+      invoicestatus.classList.remove("pendingcolor");
+      statusboxcolors.classList.remove("pendingbg");
+      circlecolor.classList.remove("pendingcircle");
       marraspaidbutton.style.display = "block";
     } else if (status === "pending") {
       invoicestatus.classList.add("pendingcolor");
       statusboxcolors.classList.add("pendingbg");
       circlecolor.classList.add("pendingcircle");
+      invoicestatus.classList.remove("paidcolor");
+      statusboxcolors.classList.remove("paidbg");
+      circlecolor.classList.remove("paidcircle");
+      invoicestatus.classList.remove("draftcolor");
+      statusboxcolors.classList.remove("draftbg");
+      circlecolor.classList.remove("draftcircle");
       marraspaidbutton.style.display = "block";
     }
     const invoicecreatedAt = document.getElementById("invoicecreatedAt");
-    const dateObj2 = new Date(createdAt);
-    const options2 = { day: "numeric", month: "short", year: "numeric" };
-    const formattedDate2 = dateObj2.toLocaleDateString("en-US", options2);
-    const day2 = formattedDate2.slice(4, 6);
-    const month2 = formattedDate2.slice(0, 3);
-    const year2 = formattedDate2.slice(8);
-    invoicecreatedAt.innerHTML = day2 + " " + month2 + " " + year2;
+    invoicecreatedAt.innerHTML = correctDateFormat(createdAt);
     const invoicedescription = document.getElementById("invoicedescription");
     invoicedescription.innerHTML = description;
     const invoiceclientEmail = document.getElementById("invoiceclientEmail");
@@ -137,10 +153,43 @@ const createElement = (
       "invoiceclientCountry"
     );
     invoiceclientCountry.innerHTML = clientCountry;
-    const invoiceitemNames = document.getElementById("");
-    const invoiceitemqty = document.getElementById("");
-    const invoiceitemprice = document.getElementById("");
-    const invoiceitemtotal = document.getElementById("");
+    const items = document.getElementById("items");
+    items.innerHTML = "";
+    for (let k = 0; k < itemNames.length; k++) {
+      const itemsIL = document.createElement("il");
+      itemsIL.classList.add("itemlist");
+      const itemnameprice = document.createElement("div");
+      itemnameprice.classList.add("itemnameprice");
+      const itemnamepriceinner = document.createElement("div");
+      itemnamepriceinner.classList.add("itemnamepriceinner");
+      const quantitydiv = document.createElement("div");
+      quantitydiv.classList.add("quantitydiv");
+      const itemnamedetails = document.createElement("h5");
+      itemnamedetails.classList.add("itemnamedetails");
+      itemnamedetails.innerHTML = itemNames[k];
+      const qtytotalprice = document.createElement("h5");
+      qtytotalprice.classList.add("qtytotalprice");
+      qtytotalprice.innerHTML ="£ " +
+      itemtotal[k].toLocaleString("en-GB", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+      const qtyclass = document.createElement("p");
+      qtyclass.classList.add("qtyclass");
+      qtyclass.innerHTML = itemqty[k] + " x ";
+      const qtyprice = document.createElement("p");
+      qtyprice.classList.add("qtyprice");
+      qtyprice.innerHTML ="£ " +
+      itemprice[k].toLocaleString("en-GB", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+      quantitydiv.append(qtyclass, qtyprice);
+      itemnamepriceinner.append(itemnamedetails, quantitydiv);
+      itemnameprice.append(itemnamepriceinner, qtytotalprice);
+      itemsIL.append(itemnameprice);
+      items.append(itemsIL);
+    }
     element.classList.add("backOutLeft");
     setTimeout(() => {
       element.classList.remove("backOutLeft");
@@ -175,6 +224,7 @@ const createElement = (
   const year = formattedDate.slice(8);
   bottomleft1.textContent = "Due " + day + " " + month + " " + year;
   bottomleft1.classList.add("invoicedate");
+  bottomleft2.classList.add("invoiceprice");
   bottomleft2.textContent =
     "£ " +
     total.toLocaleString("en-GB", {

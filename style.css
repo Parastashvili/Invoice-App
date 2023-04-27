@@ -227,8 +227,6 @@ body {
   color: var(--lighttext);
 }
 .invoiceprice {
-  font-family: "League Spartan";
-  font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 24px;
@@ -573,6 +571,65 @@ body {
   padding: 0px;
   cursor: pointer;
 }
+.items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  background-color: #f9fafe;
+  border-radius: 8px 8px 0px 0px;
+  gap: 24px;
+}
+.itemlist {
+  display: flex;
+  align-items: center;
+}
+.itemnameprice {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quantitydiv {
+  display: flex;
+}
+.qtyclass {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--lighttext);
+}
+.qtyprice {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--lighttext);
+  margin-left: 3px;
+}
+.qtytotalprice {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: right;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+.itemnamedetails {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+.itemnamepriceinner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 /* dahaidebuli */
 /* .invoices {
@@ -619,9 +676,9 @@ body {
 }
 .slide-to-right {
   position: relative;
-  left: 0;
-  transition: left 0.5s ease-out;
+  right: 0;
+  transition: right 0.5s ease-out;
 }
 .slide-to-right.animate {
-  left: 100%;
+  right: 100%;
 }
