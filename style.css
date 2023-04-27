@@ -632,18 +632,6 @@ body {
   flex-direction: column;
   gap: 8px;
 }
-
-/* dahaidebuli */
-/* .invoices {
-  display: none;
-}
-#sectionHeader {
-  display: none;
-} */
-.invoicedetailed {
-  display: none;
-}
-
 .empty {
   flex-direction: column;
   align-items: center;
