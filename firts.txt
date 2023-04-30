@@ -1,6 +1,4 @@
- Invoices There are
-    <!-- Add number here -->total invoices Filter by status Draft Pending Paid
-    New Invoice
+ Invoices There ar
 
     <!-- No invoices -->
     There is nothing here Create an invoice by clicking the New Invoice button
