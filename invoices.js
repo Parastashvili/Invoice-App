@@ -1,3 +1,4 @@
+"use strict";
 import data from "./data.json" assert { type: "json" };
 
 const invoices = document.querySelector(".invoices");
@@ -169,21 +170,23 @@ const createElement = (
       itemnamedetails.innerHTML = itemNames[k];
       const qtytotalprice = document.createElement("h5");
       qtytotalprice.classList.add("qtytotalprice");
-      qtytotalprice.innerHTML ="£ " +
-      itemtotal[k].toLocaleString("en-GB", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+      qtytotalprice.innerHTML =
+        "£ " +
+        itemtotal[k].toLocaleString("en-GB", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
       const qtyclass = document.createElement("p");
       qtyclass.classList.add("qtyclass");
       qtyclass.innerHTML = itemqty[k] + " x ";
       const qtyprice = document.createElement("p");
       qtyprice.classList.add("qtyprice");
-      qtyprice.innerHTML ="£ " +
-      itemprice[k].toLocaleString("en-GB", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+      qtyprice.innerHTML =
+        "£ " +
+        itemprice[k].toLocaleString("en-GB", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
       quantitydiv.append(qtyclass, qtyprice);
       itemnamepriceinner.append(itemnamedetails, quantitydiv);
       itemnameprice.append(itemnamepriceinner, qtytotalprice);
