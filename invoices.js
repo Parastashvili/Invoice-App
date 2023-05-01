@@ -1,5 +1,5 @@
 "use strict";
-import data from "./data.json" assert { type: "json" };
+import data from "./data.json";
 
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
@@ -254,30 +254,30 @@ const createElement = (
   return container;
 };
 
-const createElementInner = (
-  id,
-  description,
-  street,
-  city,
-  postCode,
-  country,
-  createdAt,
-  paymentDue,
-  clientName,
-  street2,
-  city2,
-  postCode2,
-  country2,
-  clientEmail,
-  name,
-  quantity,
-  price,
-  total,
-  totalSUM
-) => {
-  const invoiceid = document.getElementById("invoiceid");
-  invoiceid.innerHTML = id;
-};
+// const createElementInner = (
+//   id,
+//   description,
+//   street,
+//   city,
+//   postCode,
+//   country,
+//   createdAt,
+//   paymentDue,
+//   clientName,
+//   street2,
+//   city2,
+//   postCode2,
+//   country2,
+//   clientEmail,
+//   name,
+//   quantity,
+//   price,
+//   total,
+//   totalSUM
+// ) => {
+//   const invoiceid = document.getElementById("invoiceid");
+//   invoiceid.innerHTML = id;
+// };
 
 for (let i = 0; i < data.length; i++) {
   const {
