@@ -1,6 +1,6 @@
 "use strict";
-const xhr = new XMLHttpRequest();
-xhr.open("GET", "./data.json");
+const data = new XMLHttpRequest();
+data.open("GET", "./data.json");
 
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
