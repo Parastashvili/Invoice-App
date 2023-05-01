@@ -14,7 +14,6 @@ data.onreadystatechange = function () {
 };
 data.send();
 
-
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
 const invoicesheader = document.getElementById("sectionHeader");
@@ -331,3 +330,6 @@ for (let i = 0; i < data.length; i++) {
   );
   invoices.append(invoiceBox);
 }
+
+const heli = document.getElementById("sectionH4");
+heli.style.color = "red";
