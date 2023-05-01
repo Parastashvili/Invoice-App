@@ -450,7 +450,7 @@ body {
 .invoicedetailed {
   padding: 33px 24px;
   margin-bottom: 100px;
-  /* display: none; */
+  display: none;
 }
 
 .detailedinvoicenumber {
@@ -637,8 +637,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 60vh;
-  display: flex;
-/* comment */
+  display: none;
 }
 .emptyImg {
   height: 160px;
