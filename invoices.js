@@ -1,5 +1,5 @@
-// "use strict";
-// import data from "./data.json";
+"use strict";
+import data from "./data.json";
 
 
 // const invoices = document.querySelector(".invoices");
