@@ -1,5 +1,6 @@
 "use strict";
-import data from "./data.json";
+const data = require("./data.json");
+
 
 
 // const invoices = document.querySelector(".invoices");
