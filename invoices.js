@@ -1,6 +1,18 @@
 "use strict";
 const data = new XMLHttpRequest();
 data.open("GET", "./data.json");
+data.onreadystatechange = function () {
+  if (data.readyState === 4) {
+    if (data.status === 200) {
+      const data = JSON.parse(data.responseText);
+      // Access the data object
+      console.log(data);
+    } else {
+      console.error("Failed to load data.json");
+    }
+  }
+};
+data.send();
 
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
