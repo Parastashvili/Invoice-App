@@ -4,15 +4,16 @@ data.open("GET", "./data.json");
 data.onreadystatechange = function () {
   if (data.readyState === 4) {
     if (data.status === 200) {
-      const data = JSON.parse(data.responseText);
+      const datas = JSON.parse(data.responseText);
       // Access the data object
-      console.log(data);
+      console.log(datas);
     } else {
       console.error("Failed to load data.json");
     }
   }
 };
 data.send();
+
 
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
