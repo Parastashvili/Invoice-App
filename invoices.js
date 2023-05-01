@@ -1,5 +1,5 @@
 "use strict";
-import data from "./data.json" assert { type: "json" };
+import data from "./data.json";
 
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
