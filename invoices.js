@@ -1,18 +1,19 @@
 "use strict";
-const data = new XMLHttpRequest();
-data.open("GET", "./data.json");
-data.onreadystatechange = function () {
-  if (data.readyState === 4) {
-    if (data.status === 200) {
-      const datas = JSON.parse(data.responseText);
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "./data.json");
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
       // Access the data object
-      console.log(datas);
+      console.log(data);
     } else {
       console.error("Failed to load data.json");
     }
   }
 };
-data.send();
+xhr.send();
+const data = JSON.parse(xhr.responseText);
 
 const invoices = document.querySelector(".invoices");
 const invoicescontainer = document.getElementById("invoices");
@@ -268,7 +269,6 @@ const createElement = (
 };
 
 for (let i = 0; i < data.length; i++) {
-  console.log("printed");
   const {
     id,
     createdAt,
@@ -331,6 +331,3 @@ for (let i = 0; i < data.length; i++) {
   );
   invoices.append(invoiceBox);
 }
-
-const heli = document.getElementById("sectionH4");
-heli.style.color = "red";
