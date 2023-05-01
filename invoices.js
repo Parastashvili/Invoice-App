@@ -1,18 +1,18 @@
 "use strict";
 const xhr = new XMLHttpRequest();
 xhr.open("GET", "./data.json");
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === 4) {
-    if (xhr.status === 200) {
-      const data = JSON.parse(xhr.responseText);
-      // Access the data object
-      console.log(data);
-    } else {
-      console.error("Failed to load data.json");
-    }
-  }
-};
-xhr.send();
+// xhr.onreadystatechange = function () {
+//   if (xhr.readyState === 4) {
+//     if (xhr.status === 200) {
+//       const data = JSON.parse(xhr.responseText);
+//       // Access the data object
+//       console.log(data);
+//     } else {
+//       console.error("Failed to load data.json");
+//     }
+//   }
+// };
+// xhr.send();
 
 
 
