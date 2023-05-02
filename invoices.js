@@ -401,10 +401,6 @@ function addnewinvoice() {
 function discard() {
   newpage.style.display = "none";
   main.style.display = "block";
-  window.scrollTo({
-    top: 0,
-    left: 0,
-  });
 }
 const newinvoices = document.getElementById("addNew");
 newinvoices.addEventListener("click", addnewinvoice);

@@ -524,6 +524,7 @@ body {
   padding: 0px 24px;
   height: 91px;
   position: fixed;
+  z-index: 101;
   bottom: 0px;
   z-index: 2;
   background: var(--white);
