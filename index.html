@@ -13,7 +13,7 @@
     />
     <title>Invoice app</title>
   </head>
-  <body>
+  <body id="body">
     <header class="header">
       <div class="logo">
         <div class="darklogoBG"></div>
@@ -38,7 +38,7 @@
         <div class="sectionHeader" id="sectionHeader">
           <div class="sectionHeaderLeft">
             <h4 class="sectionH4" id="sectionH4">Invoices</h4>
-            <p class="sectionP">7 invoices</p>
+            <p class="sectionP" id="sectionPinvoices">7 invoices</p>
           </div>
           <div class="sectionHeaderRight">
             <div class="filterSection">
@@ -160,17 +160,32 @@
       </div>
       <div class="detailedfooter">
         <button class="editbutton">Edit</button
-        ><button class="deletebutton">Delete</button
+        ><button class="deletebutton" id="deletebutton">Delete</button
         ><button class="marraspaidbutton" id="marraspaidbutton">
           Mark as Paid
         </button>
       </div>
     </aside>
+    <section id="deletecontainer">
+      <div class="deletescreen" id="deletescreen">
+        <div class="deletequestion">
+          <h4 id="confirmdelete">Confirm Deletion</h4>
+          <p id="confirmdeletep">
+            Are you sure you want to delete invoice #XM9141? This action cannot
+            be undone.
+          </p>
+        </div>
+        <div class="deletebuttons">
+          <button class="cancelbutton" id="cancelbutton">Cancel</button
+          ><button class="confirmbutton" id="confirmbutton">Delete</button>
+        </div>
+      </div>
+    </section>
     <footer>
       <div>
         <p class="footertext">Invoice detailed</p>
       </div>
     </footer>
-    <script  src="./invoices.js" type="module" defer ></script>
+    <script src="./invoices.js" type="module" defer></script>
   </body>
 </html>

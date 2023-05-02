@@ -670,4 +670,71 @@ body {
 .slide-to-right.animate {
   right: 100%;
 }
+.deletescreen {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 32px;
+  background: var(--white);
+  box-shadow: 0px 0px 0px 2000px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  flex-direction: column;
+  min-width: 263px;
+  display: none;
+  z-index: 3;
+}
 
+#confirmdelete {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.5px;
+  color: var(--boldText);
+}
+#confirmdeletep {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  letter-spacing: -0.1px;
+  color: var(--lighttext);
+  margin: 8px 0 22px;
+}
+.deletebuttons {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 8px;
+}
+.cancelbutton {
+  background: #f9fafe;
+  border-radius: 24px;
+  border-width: 0px;
+  width: 24%;
+  height: 48px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  min-width: 91px;
+  color: #7e88c3;
+}
+.confirmbutton {
+  background: #ec5757;
+  border-radius: 24px;
+  border-width: 0px;
+  width: 24%;
+  height: 48px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  min-width: 91px;
+  color: var(--white);
+}
+.deletecontainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}

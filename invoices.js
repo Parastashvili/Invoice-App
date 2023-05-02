@@ -7,8 +7,9 @@ fetch("./data.json")
     const invoicesheader = document.getElementById("sectionHeader");
     const invoicedetailed = document.getElementById("invoicedetailed");
     const backbutton = document.getElementById("backbutton");
+    const body = document.getElementById("body");
 
-    backbutton.addEventListener("click", function ukandabruneba() {
+    function ukandabruneba() {
       invoicedetailed.classList.add("animate");
       setTimeout(() => {
         invoicedetailed.classList.remove("animate");
@@ -18,7 +19,9 @@ fetch("./data.json")
         invoicesheader.style.display = "block";
         invoicedetailed.style.display = "none";
       }, 500);
-    });
+    }
+
+    backbutton.addEventListener("click", ukandabruneba);
 
     function correctDateFormat(value) {
       const [year, month, day] = value.split("-");
@@ -28,6 +31,12 @@ fetch("./data.json")
       const parts = formattedDate.split(" ");
       const dayPart = parts[1].replace(",", "");
       return `${dayPart} ${parts[0]} ${parts[2]}`;
+    }
+
+    function countinvoices() {
+      const invoicescount = document.getElementById("sectionPinvoices");
+      const numberOfInvoices = invoicescontainer.childElementCount;
+      invoicescount.innerHTML = numberOfInvoices + " invoices";
     }
 
     const createElement = (
@@ -73,6 +82,25 @@ fetch("./data.json")
       element.classList.add("topbottomspace");
       element.classList.add("invoiceContainerInner");
       element.addEventListener("click", function change() {
+        const deleteBTN = document.getElementById("deletebutton");
+        deleteBTN.addEventListener("click", function change() {
+          const delscreen = document.getElementById("deletescreen");
+          delscreen.style.display = "flex";
+          const deletebutton = document.getElementById("confirmbutton");
+          document.body.style.overflow = "hidden";
+          deletebutton.addEventListener("click", function deleteinvoice() {
+            container.remove();
+            ukandabruneba();
+            delscreen.style.display = "none";
+            document.body.style.overflow = "auto";
+            countinvoices();
+          });
+          const cancelbutton = document.getElementById("cancelbutton");
+          cancelbutton.addEventListener("click", function cancelbtn() {
+            delscreen.style.display = "none";
+            document.body.style.overflow = "auto";
+          });
+        });
         const invoiceid = document.getElementById("invoiceid");
         invoiceid.innerHTML = id;
         const invoiceclientName = document.getElementById("invoiceclientName");
@@ -208,6 +236,11 @@ fetch("./data.json")
           invoicescontainer.style.display = "none";
           invoicesheader.style.display = "none";
           invoicedetailed.style.display = "block";
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
         }, 500);
       });
       top.append(topleft, topright);
@@ -226,13 +259,7 @@ fetch("./data.json")
       bottom.classList.add("contenttopbottom");
       bottomleft.append(bottomleft1, bottomleft2);
       bottomleft.classList.add("bottomleftside");
-      const dateObj = new Date(paymentDue);
-      const options = { day: "numeric", month: "short", year: "numeric" };
-      const formattedDate = dateObj.toLocaleDateString("en-US", options);
-      const day = formattedDate.slice(4, 6);
-      const month = formattedDate.slice(0, 3);
-      const year = formattedDate.slice(8);
-      bottomleft1.textContent = "Due " + day + " " + month + " " + year;
+      bottomleft1.textContent = "Due " + correctDateFormat(paymentDue);
       bottomleft1.classList.add("invoicedate");
       bottomleft2.classList.add("invoiceprice");
       bottomleft2.textContent =
@@ -324,4 +351,6 @@ fetch("./data.json")
       );
       invoices.append(invoiceBox);
     }
+
+    countinvoices();
   });
