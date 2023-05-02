@@ -15,11 +15,11 @@
   </head>
   <body id="body">
     <header class="header">
-      <div class="logo">
+      <a href="./index.html" class="logo">
         <div class="darklogoBG"></div>
         <div class="lightlogoBG"></div>
         <img class="logoimg" src="./assets/logo.svg" alt="Site LogoS" />
-      </div>
+      </a>
       <div class="headerrightEdge">
         <div class="day_night">
           <img src="./assets/icon-moon.svg" alt="Day-Night Icon" />
@@ -33,7 +33,7 @@
         </div>
       </div>
     </header>
-    <main>
+    <main id="mainsection">
       <section>
         <div class="sectionHeader" id="sectionHeader">
           <div class="sectionHeaderLeft">
@@ -45,7 +45,7 @@
               <h6 class="sectionH6">Filter</h6>
               <img src="./assets/icon-arrow-down.svg" alt="Filter arrow" />
             </div>
-            <div class="addNew">
+            <div id="addNew" class="addNew">
               <div class="plussign">
                 <img src="./assets/icon-plus.svg" alt="Add new plus sign" />
               </div>
@@ -55,7 +55,7 @@
         </div>
         <ul class="invoices" id="invoices"></ul>
       </section>
-      <article class="empty">
+      <article class="empty" id="emptyscreen">
         <img
           class="emptyImg"
           src="./assets/illustration-empty.svg"
@@ -166,12 +166,144 @@
         </button>
       </div>
     </aside>
+    <article id="new_invoice">
+      <div class="backbutton" id="newbackbutton">
+        <img src="./assets/icon-arrow-left.svg" alt="back arrow" />
+        <h6 class="backtxt">Go back</h6>
+      </div>
+      <div>
+        <h1 id="newinvoiceH">New Invoice</h1>
+      </div>
+      <div>
+        <h4 class="bill_text">Bill From</h4>
+        <div>
+          <p class="create_headers">Street Address</p>
+          <input class="inputfield" type="text" placeholder="Street Address" />
+        </div>
+      </div>
+      <div>
+        <div class="inner_input_div">
+          <div>
+            <p class="create_headers">City</p>
+            <input class="inputfield" type="text" placeholder="City" />
+          </div>
+          <div>
+            <p class="create_headers">Post Code</p>
+            <input class="inputfield" type="text" placeholder="Post Code" />
+          </div>
+        </div>
+      </div>
+      <div class="countrybottommargin">
+        <p class="create_headers">Country</p>
+        <input class="inputfield" type="text" placeholder="Country" />
+      </div>
+      <div>
+        <h4 class="bill_text">Bill To</h4>
+        <div>
+          <p class="create_headers">Client's Name</p>
+          <input class="inputfield" type="text" placeholder="Client's Name" />
+        </div>
+        <div>
+          <p class="create_headers">Client's Email</p>
+          <input class="inputfield" type="email" placeholder="Client's Email" />
+        </div>
+        <div>
+          <p class="create_headers">Street Address</p>
+          <input class="inputfield" type="text" placeholder="Street Address" />
+        </div>
+        <div>
+          <div class="inner_input_div">
+            <div>
+              <p class="create_headers">City</p>
+              <input class="inputfield" type="text" placeholder="City" />
+            </div>
+            <div>
+              <p class="create_headers">Post Code</p>
+              <input class="inputfield" type="text" placeholder="Post Code" />
+            </div>
+          </div>
+        </div>
+        <div class="countrybottommargin">
+          <p class="create_headers">Country</p>
+          <input class="inputfield" type="text" placeholder="Country" />
+        </div>
+        <div>
+          <div>
+            <p class="create_headers" id="datepicker">Invoice Date</p>
+            <input class="inputfield" type="date" placeholder="Date" />
+          </div>
+          <div>
+            <p class="create_headers">Payment Terms</p>
+            <select id="dropdown">
+              <option value=""></option>
+              <option value="1">Net 1 Day</option>
+              <option value="7">Net 7 Day</option>
+              <option value="14">Net 14 Day</option>
+              <option value="30">Net 30 Day</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <p class="create_headers">Project Description</p>
+          <input
+            class="inputfield"
+            type="text"
+            placeholder="Project Description"
+          />
+        </div>
+        <ul id="itemlistbox">
+          <h4 class="itemlistheader">Item List</h4>
+          <li class="itemlistinner" id="itemlistinner">
+            <div>
+              <p class="create_headers">Item Name</p>
+              <input class="inputfield" type="text" placeholder="Item Name" />
+            </div>
+            <div class="itemqtydiv">
+              <div class="qtydiv">
+                <p class="create_headers">Qty.</p>
+                <input
+                  class="inputfieldqty"
+                  type="number"
+                  placeholder="Item quantity"
+                />
+              </div>
+              <div class="pricediv">
+                <p class="create_headers">Price</p>
+                <input
+                  class="inputfieldprice"
+                  type="number"
+                  placeholder="Price for one"
+                />
+              </div>
+              <div>
+                <p class="create_headers">Total</p>
+                <p class="counttotalprice">00.00</p>
+              </div>
+              <div id="deleteicon" class="deleteicon">
+                <img src="./assets/icon-delete.svg" alt="delete icon" />
+              </div>
+            </div>
+          </li>
+        </ul>
+        <button class="additembox" id="additembox">
+          <p class="additem">+ Add New Item</p>
+        </button>
+        <div class="gredinetfooter"></div>
+      </div>
+      <div class="fixeddiv">
+        <div class="detailedfooter">
+          <button class="discardbutton" id="discardbutton">Discard</button>
+          <button class="draftbutton" id="">Save as Draft</button>
+          <button class="sendbutton" id="">Save & Send</button>
+        </div>
+      </div>
+    </article>
     <section id="deletecontainer">
       <div class="deletescreen" id="deletescreen">
         <div class="deletequestion">
           <h4 id="confirmdelete">Confirm Deletion</h4>
           <p id="confirmdeletep">
-            Are you sure you want to delete invoice #XM9141? This action cannot
+            Are you sure you want to delete invoice ######? This action cannot
             be undone.
           </p>
         </div>

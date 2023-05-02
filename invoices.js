@@ -1,4 +1,10 @@
 "use strict";
+
+const dropdown = document.getElementById("dropdown");
+dropdown.addEventListener("change", (event) => {
+  const selectedOption = event.target.value;
+  console.log(selectedOption);
+});
 fetch("./data.json")
   .then((res) => res.json())
   .then((data) => {
@@ -7,7 +13,7 @@ fetch("./data.json")
     const invoicesheader = document.getElementById("sectionHeader");
     const invoicedetailed = document.getElementById("invoicedetailed");
     const backbutton = document.getElementById("backbutton");
-    const body = document.getElementById("body");
+    const emptyscreen = document.getElementById("emptyscreen");
 
     function ukandabruneba() {
       invoicedetailed.classList.add("animate");
@@ -16,7 +22,7 @@ fetch("./data.json")
       }, 500);
       setTimeout(() => {
         invoicescontainer.style.display = "block";
-        invoicesheader.style.display = "block";
+        invoicesheader.style.display = "flex";
         invoicedetailed.style.display = "none";
       }, 500);
     }
@@ -37,7 +43,14 @@ fetch("./data.json")
       const invoicescount = document.getElementById("sectionPinvoices");
       const numberOfInvoices = invoicescontainer.childElementCount;
       invoicescount.innerHTML = numberOfInvoices + " invoices";
+      if (numberOfInvoices == 0) {
+        setTimeout(() => {
+          emptyscreen.style.display = "flex";
+        }, 500);
+      }
     }
+
+    let lastOpenedContainer;
 
     const createElement = (
       id,
@@ -62,7 +75,7 @@ fetch("./data.json")
       itemprice,
       itemtotal
     ) => {
-      const container = document.createElement("li");
+      let container = document.createElement("li");
       const element = document.createElement("div");
       const top = document.createElement("div");
       const bottom = document.createElement("div");
@@ -82,14 +95,17 @@ fetch("./data.json")
       element.classList.add("topbottomspace");
       element.classList.add("invoiceContainerInner");
       element.addEventListener("click", function change() {
+        lastOpenedContainer = container;
         const deleteBTN = document.getElementById("deletebutton");
         deleteBTN.addEventListener("click", function change() {
           const delscreen = document.getElementById("deletescreen");
+          const deletetext = document.getElementById("confirmdeletep");
+          deletetext.innerHTML = `Are you sure you want to delete invoice #${id}? This action cannot be undone.`;
           delscreen.style.display = "flex";
           const deletebutton = document.getElementById("confirmbutton");
           document.body.style.overflow = "hidden";
           deletebutton.addEventListener("click", function deleteinvoice() {
-            container.remove();
+            lastOpenedContainer.remove();
             ukandabruneba();
             delscreen.style.display = "none";
             document.body.style.overflow = "auto";
@@ -354,3 +370,45 @@ fetch("./data.json")
 
     countinvoices();
   });
+
+const additembox = document.getElementById("additembox");
+additembox.addEventListener("click", function addListItem() {
+  const itemList = document.getElementById("itemlistbox");
+  const newItem = document.createElement("li");
+  newItem.className = "itemlistinner";
+  newItem.id = "itemlistinner";
+  const existingItem = document.getElementById("itemlistinner");
+  newItem.innerHTML = existingItem.innerHTML;
+  itemList.appendChild(newItem);
+  const deleteIcons = document.querySelectorAll(".deleteicon");
+  deleteIcons.forEach((deleteIcon) => {
+    deleteIcon.addEventListener("click", function () {
+      const itemlistinner = this.parentNode.parentNode;
+      const itemList = document.getElementById("itemlistbox");
+      if (itemList.childElementCount > 2) {
+        itemlistinner.remove();
+      }
+    });
+  });
+});
+
+const newpage = document.getElementById("new_invoice");
+const main = document.getElementById("mainsection");
+function addnewinvoice() {
+  newpage.style.display = "block";
+  main.style.display = "none";
+}
+function discard() {
+  newpage.style.display = "none";
+  main.style.display = "block";
+  window.scrollTo({
+    top: 0,
+    left: 0,
+  });
+}
+const newinvoices = document.getElementById("addNew");
+newinvoices.addEventListener("click", addnewinvoice);
+const discardbtn = document.getElementById("discardbutton");
+discardbtn.addEventListener("click", discard);
+const newbackbutton = document.getElementById("newbackbutton");
+newbackbutton.addEventListener("click", discard);

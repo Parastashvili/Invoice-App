@@ -30,6 +30,7 @@ body {
   height: 100vh;
   background-color: var(--contentBG);
   overflow-x: hidden;
+  min-width: 300px;
 }
 .header {
   display: flex;
@@ -328,6 +329,7 @@ body {
   justify-content: left;
   gap: 23px;
   cursor: pointer;
+  text-decoration: none;
 }
 .backtxt {
   font-weight: 700;
@@ -737,4 +739,232 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
+}
+
+/* Create new invoice */
+#new_invoice {
+  padding: 33px 24px 24px 24px;
+  background-color: var(--white);
+  margin-bottom: -40px;
+  display: none;
+}
+#newinvoiceH {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.5px;
+  color: var(--boldText);
+  margin: 26px 0px 22px 0px;
+}
+.bill_text {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: #7c5dfa;
+  margin-bottom: 24px;
+}
+.create_headers {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  color: #7e88c3;
+  margin-bottom: 9px;
+}
+.inputfield {
+  width: calc(100% - 42px);
+  height: 13px;
+  background: var(--white);
+  border: 1px solid #dfe3fa;
+  border-radius: 4px;
+  padding: 18px 20px 15px 20px;
+}
+input {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+  margin-bottom: 25px;
+}
+.inner_input_div {
+  display: flex;
+  gap: 23px;
+}
+#dropdown {
+  width: 100%;
+  height: 48px;
+  background: var(--white);
+  border: 1px solid #dfe3fa;
+  border-radius: 4px;
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+  cursor: pointer;
+  padding: 0px 20px;
+  margin-bottom: 25px;
+}
+
+#dropdown option {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 40px; /* increase the line-height to create extra space */
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+}
+#dropdown option {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 40px;
+  letter-spacing: 1px;
+  color: var(--boldText);
+}
+
+::placeholder {
+  opacity: 0.2;
+}
+.itemqtydiv {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+.counttotalprice {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--lighttext);
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+.qtydiv {
+  width: 25%;
+}
+.pricediv {
+  width: 45%;
+}
+.inputfieldqty {
+  width: 50%;
+  height: 13px;
+  background: var(--white);
+  border: 1px solid #dfe3fa;
+  border-radius: 4px;
+  padding: 18px 20px 15px 20px;
+}
+.inputfieldprice {
+  width: 50%;
+  height: 13px;
+  background: var(--white);
+  border: 1px solid #dfe3fa;
+  border-radius: 4px;
+  padding: 18px 20px 15px 20px;
+}
+.deleteicon {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-left: 40px;
+  cursor: pointer;
+}
+.itemlistinner {
+  width: 100%;
+  margin-bottom: 49px;
+}
+.itemlistheader {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 32px;
+  letter-spacing: -0.375px;
+  color: #777f98;
+  margin-bottom: 22px;
+  margin-top: 44px;
+}
+.additembox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafe;
+  border-radius: 24px;
+  height: 48px;
+  margin-top: 48px;
+  width: 100%;
+  border-width: 0px;
+  cursor: pointer;
+}
+
+.additem {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: -0.25px;
+  color: var(--lighttext);
+}
+.gredinetfooter {
+  margin: 24px -24px -24px -24px;
+  width: calc(100% + 48px);
+  height: 64px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.0001) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+.discardbutton {
+  width: 27.4%;
+  height: 48px;
+  background: #f9fafe;
+  border-radius: 24px;
+  border-width: 0px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--lighttext);
+  padding: 0px;
+  cursor: pointer;
+}
+.draftbutton {
+  width: 37%;
+  height: 48px;
+  background: #373b53;
+  border-radius: 24px;
+  border-width: 0px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: #888eb0;
+  padding: 0px;
+  cursor: pointer;
+}
+.sendbutton {
+  width: 35.8%;
+  height: 48px;
+  background: #7c5dfa;
+  border-radius: 24px;
+  border-width: 0px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--white);
+  padding: 0px;
+  cursor: pointer;
+}
+.countrybottommargin {
+  margin-bottom: 16px;
 }
