@@ -73,7 +73,8 @@ fetch("./data.json")
       itemNames,
       itemqty,
       itemprice,
-      itemtotal
+      itemtotal,
+      items
     ) => {
       let container = document.createElement("li");
       const element = document.createElement("div");
@@ -258,6 +259,65 @@ fetch("./data.json")
             behavior: "smooth",
           });
         }, 500);
+        const editButton = document.getElementById("editbutton");
+        editButton.addEventListener("click", function editBTN() {
+          invoicescontainer.style.display = "block";
+          invoicesheader.style.display = "flex";
+          invoicedetailed.style.display = "none";
+          addnewinvoice();
+          const streetaddress = document.getElementById("streetaddress");
+          streetaddress.value = senderStreet;
+          const city = document.getElementById("city");
+          city.value = senderCity;
+          const postcode = document.getElementById("postcode");
+          postcode.value = senderPostCode;
+          const country = document.getElementById("country");
+          country.value = senderCountry;
+          const clientname = document.getElementById("clientname");
+          clientname.value = clientName;
+          const clientemail = document.getElementById("clientemail");
+          clientemail.value = clientEmail;
+          const streetaddress2 = document.getElementById("streetaddress2");
+          streetaddress2.value = clientStreet;
+          const city2 = document.getElementById("city2");
+          city2.value = clientCity;
+          const postcode2 = document.getElementById("postcode2");
+          postcode2.value = clientPostCode;
+          const country2 = document.getElementById("country2");
+          country2.value = clientCountry;
+          const invoicdate = document.getElementById("invoicdate");
+          invoicdate.value = createdAt;
+          const projectdescription =
+            document.getElementById("projectdescription");
+          projectdescription.value = description;
+          const itemList = document.getElementById("itemlistbox");
+          while (itemList.childElementCount > 2) {
+            itemList.lastElementChild.remove();
+          }
+          for (let i = 0; i < itemNames.length - 1; i++) {
+            addListItem();
+          }
+          const inputitemname = document.querySelectorAll(".inputitemname");
+          const inputfieldqty = document.querySelectorAll(".inputfieldqty");
+          const inputfieldprice = document.querySelectorAll(".inputfieldprice");
+          const counttotalprice = document.querySelectorAll(".counttotalprice");
+          for (let i = 0; i < itemNames.length; i++) {
+            inputitemname[i].value = itemNames[i];
+            inputfieldqty[i].value = itemqty[i];
+            inputfieldprice[i].value = itemprice[i];
+            counttotalprice[i].innerHTML = itemtotal[i];
+          }
+          // paymentDue,
+          // total,
+          // status,
+
+          // ,
+          // paymentTerms,
+          // itemNames,
+          // itemqty,
+          // itemprice,
+          // itemtotal
+        });
       });
       top.append(topleft, topright);
       top.classList.add("contenttopbottom");
@@ -363,7 +423,8 @@ fetch("./data.json")
         itemNames,
         itemqty,
         itemprice,
-        itemtotal
+        itemtotal,
+        items
       );
       invoices.append(invoiceBox);
     }
@@ -372,7 +433,9 @@ fetch("./data.json")
   });
 
 const additembox = document.getElementById("additembox");
-additembox.addEventListener("click", function addListItem() {
+additembox.addEventListener("click", addListItem);
+
+function addListItem() {
   const itemList = document.getElementById("itemlistbox");
   const newItem = document.createElement("li");
   newItem.className = "itemlistinner";
@@ -390,18 +453,63 @@ additembox.addEventListener("click", function addListItem() {
       }
     });
   });
-});
+}
 
 const newpage = document.getElementById("new_invoice");
 const main = document.getElementById("mainsection");
 function addnewinvoice() {
   newpage.style.display = "block";
   main.style.display = "none";
+  newpage.classList.add("sweep-to-right");
+  setTimeout(() => {
+    newpage.classList.remove("sweep-to-right");
+  }, 500);
 }
 function discard() {
-  newpage.style.display = "none";
-  main.style.display = "block";
+  const streetaddress = document.getElementById("streetaddress");
+  streetaddress.value = "";
+  const city = document.getElementById("city");
+  city.value = "";
+  const postcode = document.getElementById("postcode");
+  postcode.value = "";
+  const country = document.getElementById("country");
+  country.value = "";
+  const clientname = document.getElementById("clientname");
+  clientname.value = "";
+  const clientemail = document.getElementById("clientemail");
+  clientemail.value = "";
+  const streetaddress2 = document.getElementById("streetaddress2");
+  streetaddress2.value = "";
+  const city2 = document.getElementById("city2");
+  city2.value = "";
+  const postcode2 = document.getElementById("postcode2");
+  postcode2.value = "";
+  const country2 = document.getElementById("country2");
+  country2.value = "";
+  const invoicdate = document.getElementById("invoicdate");
+  invoicdate.value = "";
+  const projectdescription = document.getElementById("projectdescription");
+  projectdescription.value = "";
+  const inputitemname = document.querySelectorAll(".inputitemname");
+  const inputfieldqty = document.querySelectorAll(".inputfieldqty");
+  const inputfieldprice = document.querySelectorAll(".inputfieldprice");
+  const counttotalprice = document.querySelectorAll(".counttotalprice");
+  inputitemname[0].value = "";
+  inputfieldqty[0].value = "";
+  inputfieldprice[0].value = "";
+  counttotalprice[0].innerHTML = "00.00";
+  newpage.classList.add("sweep-to-left");
+  setTimeout(() => {
+    newpage.style.display = "none";
+    main.style.display = "block";
+    newpage.classList.remove("sweep-to-left");
+  }, 500);
+  const itemList = document.getElementById("itemlistbox");
+  while (itemList.childElementCount > 2) {
+    itemList.lastElementChild.remove();
+  }
 }
+
 const newinvoices = document.getElementById("addNew");
 newinvoices.addEventListener("click", addnewinvoice);
 const discardbtn = document.getElementById("discardbutton");

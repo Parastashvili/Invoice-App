@@ -33,7 +33,7 @@
         </div>
       </div>
     </header>
-    <main id="mainsection">
+    <main id="mainsection" class="">
       <section>
         <div class="sectionHeader" id="sectionHeader">
           <div class="sectionHeaderLeft">
@@ -67,11 +67,7 @@
         </p>
       </article>
     </main>
-    <aside
-      transition-style="in:wipe:right"
-      class="invoicedetailed slide-to-right"
-      id="invoicedetailed"
-    >
+    <aside class="invoicedetailed slide-to-right" id="invoicedetailed">
       <div class="backbutton" id="backbutton">
         <img src="./assets/icon-arrow-left.svg" alt="back arrow" />
         <h6 class="backtxt">Go back</h6>
@@ -163,7 +159,7 @@
         </div>
       </div>
       <div class="detailedfooter">
-        <button class="editbutton">Edit</button
+        <button class="editbutton" id="editbutton">Edit</button
         ><button class="deletebutton" id="deletebutton">Delete</button
         ><button class="marraspaidbutton" id="marraspaidbutton">
           Mark as Paid
@@ -182,59 +178,114 @@
         <h4 class="bill_text">Bill From</h4>
         <div>
           <p class="create_headers">Street Address</p>
-          <input class="inputfield" type="text" placeholder="Street Address" />
+          <input
+            id="streetaddress"
+            class="inputfield"
+            type="text"
+            placeholder="Street Address"
+          />
         </div>
       </div>
       <div>
         <div class="inner_input_div">
-          <div>
+          <div class="intoinner">
             <p class="create_headers">City</p>
-            <input class="inputfield" type="text" placeholder="City" />
+            <input
+              id="city"
+              class="inputfield"
+              type="text"
+              placeholder="City"
+            />
           </div>
-          <div>
+          <div class="intoinner">
             <p class="create_headers">Post Code</p>
-            <input class="inputfield" type="text" placeholder="Post Code" />
+            <input
+              id="postcode"
+              class="inputfield"
+              type="text"
+              placeholder="Post Code"
+            />
           </div>
         </div>
       </div>
       <div class="countrybottommargin">
         <p class="create_headers">Country</p>
-        <input class="inputfield" type="text" placeholder="Country" />
+        <input
+          id="country"
+          class="inputfield"
+          type="text"
+          placeholder="Country"
+        />
       </div>
       <div>
         <h4 class="bill_text">Bill To</h4>
         <div>
           <p class="create_headers">Client's Name</p>
-          <input class="inputfield" type="text" placeholder="Client's Name" />
+          <input
+            id="clientname"
+            class="inputfield"
+            type="text"
+            placeholder="Client's Name"
+          />
         </div>
         <div>
           <p class="create_headers">Client's Email</p>
-          <input class="inputfield" type="email" placeholder="Client's Email" />
+          <input
+            id="clientemail"
+            class="inputfield"
+            type="email"
+            placeholder="Client's Email"
+          />
         </div>
         <div>
           <p class="create_headers">Street Address</p>
-          <input class="inputfield" type="text" placeholder="Street Address" />
+          <input
+            id="streetaddress2"
+            class="inputfield"
+            type="text"
+            placeholder="Street Address"
+          />
         </div>
         <div>
           <div class="inner_input_div">
-            <div>
+            <div class="intoinner">
               <p class="create_headers">City</p>
-              <input class="inputfield" type="text" placeholder="City" />
+              <input
+                id="city2"
+                class="inputfield"
+                type="text"
+                placeholder="City"
+              />
             </div>
-            <div>
+            <div class="intoinner">
               <p class="create_headers">Post Code</p>
-              <input class="inputfield" type="text" placeholder="Post Code" />
+              <input
+                id="postcode2"
+                class="inputfield"
+                type="text"
+                placeholder="Post Code"
+              />
             </div>
           </div>
         </div>
         <div class="countrybottommargin">
           <p class="create_headers">Country</p>
-          <input class="inputfield" type="text" placeholder="Country" />
+          <input
+            id="country2"
+            class="inputfield"
+            type="text"
+            placeholder="Country"
+          />
         </div>
         <div>
           <div>
             <p class="create_headers" id="datepicker">Invoice Date</p>
-            <input class="inputfield" type="date" placeholder="Date" />
+            <input
+              id="invoicdate"
+              class="inputfield"
+              type="date"
+              placeholder="Date"
+            />
           </div>
           <div>
             <p class="create_headers">Payment Terms</p>
@@ -250,6 +301,7 @@
         <div>
           <p class="create_headers">Project Description</p>
           <input
+            id="projectdescription"
             class="inputfield"
             type="text"
             placeholder="Project Description"
@@ -260,7 +312,11 @@
           <li class="itemlistinner" id="itemlistinner">
             <div>
               <p class="create_headers">Item Name</p>
-              <input class="inputfield" type="text" placeholder="Item Name" />
+              <input
+                class="inputfield inputitemname"
+                type="text"
+                placeholder="Item Name"
+              />
             </div>
             <div class="itemqtydiv">
               <div class="qtydiv">

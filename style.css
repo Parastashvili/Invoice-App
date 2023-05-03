@@ -741,6 +741,33 @@ body {
   width: 100vw;
   height: 100vh;
 }
+.sweep-to-left {
+  animation: sweep 0.5s ease-out forwards;
+}
+@keyframes sweep {
+  from {
+    opacity: 0;
+    transform: translateX(0%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+}
+
+.sweep-to-right {
+  animation: sweepy 0.5s ease-out forwards;
+}
+@keyframes sweepy {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
 
 /* Create new invoice */
 #new_invoice {
@@ -792,8 +819,13 @@ input {
   margin-bottom: 25px;
 }
 .inner_input_div {
+  width: 100%;
+  justify-content: space-between;
   display: flex;
   gap: 23px;
+}
+.intoinner{
+  width: 100%;
 }
 #dropdown {
   width: 100%;
@@ -818,7 +850,7 @@ input {
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
-  line-height: 40px; /* increase the line-height to create extra space */
+  line-height: 40px;
   letter-spacing: -0.25px;
   color: var(--boldText);
 }
