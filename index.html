@@ -67,7 +67,7 @@
         </p>
       </article>
     </main>
-    <aside class="invoicedetailed slide-to-right" id="invoicedetailed">
+    <article class="invoicedetailed slide-to-right" id="invoicedetailed">
       <div class="backbutton" id="backbutton">
         <img src="./assets/icon-arrow-left.svg" alt="back arrow" />
         <h6 class="backtxt">Go back</h6>
@@ -165,8 +165,8 @@
           Mark as Paid
         </button>
       </div>
-    </aside>
-    <article id="new_invoice">
+    </article>
+    <form action="" id="new_invoice">
       <div class="backbutton" id="newbackbutton">
         <img src="./assets/icon-arrow-left.svg" alt="back arrow" />
         <h6 class="backtxt">Go back</h6>
@@ -281,6 +281,7 @@
           <div>
             <p class="create_headers" id="datepicker">Invoice Date</p>
             <input
+              pattern="\d{2}/\d{2}/\d{4}"
               id="invoicdate"
               class="inputfield"
               type="date"
@@ -360,7 +361,7 @@
           <button class="sendbutton" id="">Save Changes</button>
         </div>
       </div>
-    </article>
+    </form>
     <section id="deletecontainer">
       <div class="deletescreen" id="deletescreen">
         <div class="deletequestion">

@@ -3,7 +3,6 @@
 const dropdown = document.getElementById("dropdown");
 dropdown.addEventListener("change", (event) => {
   const selectedOption = event.target.value;
-  console.log(selectedOption);
 });
 fetch("./data.json")
   .then((res) => res.json())
@@ -469,6 +468,9 @@ function addListItem() {
 }
 
 const newpage = document.getElementById("new_invoice");
+newpage.addEventListener("submit", function prevent(event) {
+  event.preventDefault();
+});
 const main = document.getElementById("mainsection");
 function addnewinvoice() {
   const buttons1 = document.getElementById("style1");

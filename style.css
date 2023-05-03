@@ -844,7 +844,6 @@ input {
   padding: 0px 20px;
   margin-bottom: 25px;
 }
-
 #dropdown option {
   font-family: "League Spartan";
   font-style: normal;
@@ -854,16 +853,6 @@ input {
   letter-spacing: -0.25px;
   color: var(--boldText);
 }
-#dropdown option {
-  font-family: "League Spartan";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 40px;
-  letter-spacing: 1px;
-  color: var(--boldText);
-}
-
 ::placeholder {
   opacity: 0.2;
 }
