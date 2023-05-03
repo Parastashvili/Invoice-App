@@ -824,7 +824,7 @@ input {
   display: flex;
   gap: 23px;
 }
-.intoinner{
+.intoinner {
   width: 100%;
 }
 #dropdown {
@@ -1000,4 +1000,10 @@ input {
 }
 .countrybottommargin {
   margin-bottom: 16px;
+}
+#style1 {
+  display: flex;
+}
+#style2 {
+  display: none;
 }

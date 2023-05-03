@@ -261,6 +261,11 @@ fetch("./data.json")
         }, 500);
         const editButton = document.getElementById("editbutton");
         editButton.addEventListener("click", function editBTN() {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
           invoicescontainer.style.display = "block";
           invoicesheader.style.display = "flex";
           invoicedetailed.style.display = "none";
@@ -290,6 +295,8 @@ fetch("./data.json")
           const projectdescription =
             document.getElementById("projectdescription");
           projectdescription.value = description;
+          const payment = document.getElementById("dropdown");
+          payment.value = paymentTerms;
           const itemList = document.getElementById("itemlistbox");
           while (itemList.childElementCount > 2) {
             itemList.lastElementChild.remove();
@@ -304,9 +311,13 @@ fetch("./data.json")
           for (let i = 0; i < itemNames.length; i++) {
             inputitemname[i].value = itemNames[i];
             inputfieldqty[i].value = itemqty[i];
-            inputfieldprice[i].value = itemprice[i];
-            counttotalprice[i].innerHTML = itemtotal[i];
+            inputfieldprice[i].value = itemprice[i].toFixed(2);
+            counttotalprice[i].innerHTML = itemtotal[i].toFixed(2);
           }
+          const buttons1 = document.getElementById("style1");
+          const buttons2 = document.getElementById("style2");
+          buttons1.style.display = "none";
+          buttons2.style.display = "flex";
           // paymentDue,
           // total,
           // status,
@@ -453,11 +464,17 @@ function addListItem() {
       }
     });
   });
+  const lasttotalprice = document.querySelectorAll(".counttotalprice");
+  lasttotalprice[lasttotalprice.length - 1].innerHTML = "00.00";
 }
 
 const newpage = document.getElementById("new_invoice");
 const main = document.getElementById("mainsection");
 function addnewinvoice() {
+  const buttons1 = document.getElementById("style1");
+  const buttons2 = document.getElementById("style2");
+  buttons1.style.display = "flex";
+  buttons2.style.display = "none";
   newpage.style.display = "block";
   main.style.display = "none";
   newpage.classList.add("sweep-to-right");
@@ -490,6 +507,8 @@ function discard() {
   invoicdate.value = "";
   const projectdescription = document.getElementById("projectdescription");
   projectdescription.value = "";
+  const payment = document.getElementById("dropdown");
+  payment.value = 1;
   const inputitemname = document.querySelectorAll(".inputitemname");
   const inputfieldqty = document.querySelectorAll(".inputfieldqty");
   const inputfieldprice = document.querySelectorAll(".inputfieldprice");
@@ -514,5 +533,7 @@ const newinvoices = document.getElementById("addNew");
 newinvoices.addEventListener("click", addnewinvoice);
 const discardbtn = document.getElementById("discardbutton");
 discardbtn.addEventListener("click", discard);
+const discardbtn1 = document.getElementById("discardbutton1");
+discardbtn1.addEventListener("click", discard);
 const newbackbutton = document.getElementById("newbackbutton");
 newbackbutton.addEventListener("click", discard);
