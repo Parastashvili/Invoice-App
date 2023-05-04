@@ -42,8 +42,18 @@
           </div>
           <div class="sectionHeaderRight">
             <div class="filterSection">
-              <h6 class="sectionH6">Filter</h6>
-              <img src="./assets/icon-arrow-down.svg" alt="Filter arrow" />
+              <!-- <h6 class="sectionH6">Filter</h6> -->
+              <select class="filtermenu" id="filtermenu2">
+                <option value="all">Filter</option>
+                <option value="paid">Paid</option>
+                <option value="pending">Pending</option>
+                <option value="draft">Draft</option>
+              </select>
+              <img
+                id="filterbtn"
+                src="./assets/icon-arrow-down.svg"
+                alt="Filter arrow"
+              />
             </div>
             <div id="addNew" class="addNew">
               <div class="plussign">
@@ -329,6 +339,7 @@
               <div class="pricediv">
                 <p class="create_headers">Price</p>
                 <input
+                  step="0.01"
                   class="inputfieldprice"
                   type="number"
                   placeholder="Price for one"

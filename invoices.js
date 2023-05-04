@@ -4,6 +4,60 @@ const dropdown = document.getElementById("dropdown");
 dropdown.addEventListener("change", (event) => {
   const selectedOption = event.target.value;
 });
+const dropdownfilter = document.getElementById("filtermenu2");
+dropdownfilter.addEventListener("change", (event) => {
+  const selectedOption = event.target.value;
+  const invoiceItems = document.querySelectorAll(".invoiceContainer");
+
+  if (selectedOption == "paid") {
+    invoiceItems.forEach(function (invoiceItem) {
+      const statusTxt = invoiceItem.querySelector(".statustxt");
+
+      if (statusTxt.innerHTML.toLowerCase() !== "paid") {
+        invoiceItem.style.display = "none";
+      }
+      if (statusTxt.innerHTML.toLowerCase() === "paid") {
+        invoiceItem.style.display = "block";
+      }
+    });
+  } else if (selectedOption == "pending") {
+    invoiceItems.forEach(function (invoiceItem) {
+      const statusTxt = invoiceItem.querySelector(".statustxt");
+
+      if (statusTxt.innerHTML.toLowerCase() !== "pending") {
+        invoiceItem.style.display = "none";
+      }
+      if (statusTxt.innerHTML.toLowerCase() === "pending") {
+        invoiceItem.style.display = "block";
+      }
+    });
+  } else if (selectedOption == "draft") {
+    invoiceItems.forEach(function (invoiceItem) {
+      const statusTxt = invoiceItem.querySelector(".statustxt");
+
+      if (statusTxt.innerHTML.toLowerCase() !== "draft") {
+        invoiceItem.style.display = "none";
+      }
+      if (statusTxt.innerHTML.toLowerCase() === "draft") {
+        invoiceItem.style.display = "block";
+      }
+    });
+  } else {
+    invoiceItems.forEach(function (invoiceItem) {
+      const statusTxt = invoiceItem.querySelector(".statustxt");
+
+      if (statusTxt.innerHTML.toLowerCase() === "pending") {
+        invoiceItem.style.display = "block";
+      }
+      if (statusTxt.innerHTML.toLowerCase() === "draft") {
+        invoiceItem.style.display = "block";
+      }
+      if (statusTxt.innerHTML.toLowerCase() === "paid") {
+        invoiceItem.style.display = "block";
+      }
+    });
+  }
+});
 fetch("./data.json")
   .then((res) => res.json())
   .then((data) => {
@@ -48,9 +102,7 @@ fetch("./data.json")
         }, 500);
       }
     }
-
     let lastOpenedContainer;
-
     const createElement = (
       id,
       clientName,
@@ -317,16 +369,6 @@ fetch("./data.json")
           const buttons2 = document.getElementById("style2");
           buttons1.style.display = "none";
           buttons2.style.display = "flex";
-          // paymentDue,
-          // total,
-          // status,
-
-          // ,
-          // paymentTerms,
-          // itemNames,
-          // itemqty,
-          // itemprice,
-          // itemtotal
         });
       });
       top.append(topleft, topright);
@@ -472,7 +514,6 @@ newpage.addEventListener("submit", (e) => {
   e.preventDefault();
   const fd = new FormData(newpage);
   const obj = Object.fromEntries(fd);
-  console.log(obj);
 });
 const main = document.getElementById("mainsection");
 function addnewinvoice() {
@@ -543,3 +584,9 @@ discardbtn1.addEventListener("click", discard);
 const newbackbutton = document.getElementById("newbackbutton");
 newbackbutton.addEventListener("click", discard);
 
+const filterBtn = document.getElementById("filterbtn");
+const filterMenu = document.getElementById("filtermenu2");
+
+filterBtn.addEventListener("click", function () {
+  filterMenu.click();
+});
