@@ -468,8 +468,11 @@ function addListItem() {
 }
 
 const newpage = document.getElementById("new_invoice");
-newpage.addEventListener("submit", function prevent(event) {
-  event.preventDefault();
+newpage.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fd = new FormData(newpage);
+  const obj = Object.fromEntries(fd);
+  console.log(obj);
 });
 const main = document.getElementById("mainsection");
 function addnewinvoice() {
@@ -539,3 +542,4 @@ const discardbtn1 = document.getElementById("discardbutton1");
 discardbtn1.addEventListener("click", discard);
 const newbackbutton = document.getElementById("newbackbutton");
 newbackbutton.addEventListener("click", discard);
+
