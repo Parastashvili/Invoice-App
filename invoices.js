@@ -321,49 +321,35 @@ fetch("./data.json")
           invoicesheader.style.display = "flex";
           invoicedetailed.style.display = "none";
           addnewinvoice();
-          const streetaddress = document.getElementById("streetaddress");
+          ivnoiceid.innerHTML = `Edit #${id}`;
           streetaddress.value = senderStreet;
-          const city = document.getElementById("city");
           city.value = senderCity;
-          const postcode = document.getElementById("postcode");
           postcode.value = senderPostCode;
-          const country = document.getElementById("country");
           country.value = senderCountry;
-          const clientname = document.getElementById("clientname");
           clientname.value = clientName;
-          const clientemail = document.getElementById("clientemail");
           clientemail.value = clientEmail;
-          const streetaddress2 = document.getElementById("streetaddress2");
           streetaddress2.value = clientStreet;
-          const city2 = document.getElementById("city2");
           city2.value = clientCity;
-          const postcode2 = document.getElementById("postcode2");
           postcode2.value = clientPostCode;
-          const country2 = document.getElementById("country2");
           country2.value = clientCountry;
-          const invoicdate = document.getElementById("invoicdate");
           invoicdate.value = createdAt;
-          const projectdescription =
-            document.getElementById("projectdescription");
           projectdescription.value = description;
-          const payment = document.getElementById("dropdown");
           payment.value = paymentTerms;
-          const itemList = document.getElementById("itemlistbox");
           while (itemList.childElementCount > 2) {
             itemList.lastElementChild.remove();
           }
           for (let i = 0; i < itemNames.length - 1; i++) {
             addListItem();
           }
-          const inputitemname = document.querySelectorAll(".inputitemname");
-          const inputfieldqty = document.querySelectorAll(".inputfieldqty");
-          const inputfieldprice = document.querySelectorAll(".inputfieldprice");
-          const counttotalprice = document.querySelectorAll(".counttotalprice");
-          for (let i = 0; i < itemNames.length; i++) {
-            inputitemname[i].value = itemNames[i];
-            inputfieldqty[i].value = itemqty[i];
-            inputfieldprice[i].value = itemprice[i].toFixed(2);
-            counttotalprice[i].innerHTML = itemtotal[i].toFixed(2);
+          const namebox = document.querySelectorAll(".inputitemname");
+          const qtybox = document.querySelectorAll(".inputfieldqty");
+          const pricebox = document.querySelectorAll(".inputfieldprice");
+          const totalbox = document.querySelectorAll(".counttotalprice");
+          for (let z = 0; z < itemNames.length; z++) {
+            namebox[z].value = itemNames[z];
+            qtybox[z].value = itemqty[z];
+            pricebox[z].value = itemprice[z].toFixed(2);
+            totalbox[z].innerHTML = itemtotal[z].toFixed(2);
           }
           const buttons1 = document.getElementById("style1");
           const buttons2 = document.getElementById("style2");
@@ -484,6 +470,117 @@ fetch("./data.json")
     countinvoices();
   });
 
+const ivnoiceid = document.getElementById("newinvoiceH");
+const streetaddress = document.getElementById("streetaddress");
+const city = document.getElementById("city");
+const postcode = document.getElementById("postcode");
+const country = document.getElementById("country");
+const clientname = document.getElementById("clientname");
+const clientemail = document.getElementById("clientemail");
+const streetaddress2 = document.getElementById("streetaddress2");
+const city2 = document.getElementById("city2");
+const postcode2 = document.getElementById("postcode2");
+const country2 = document.getElementById("country2");
+const invoicdate = document.getElementById("invoicdate");
+const projectdescription = document.getElementById("projectdescription");
+const payment = document.getElementById("dropdown");
+const itemList = document.getElementById("itemlistbox");
+const inputitemname = document.querySelectorAll(".inputitemname");
+const inputfieldqty = document.querySelectorAll(".inputfieldqty");
+const inputfieldprice = document.querySelectorAll(".inputfieldprice");
+const counttotalprice = document.querySelectorAll(".counttotalprice");
+
+const saveandsend = document.getElementById("savesend");
+const update = document.getElementById("update");
+
+update.addEventListener("click", saveInvoice);
+function saveInvoice() {
+  let result = "";
+  function generateRandomInvoiceID() {
+    const invoicenums = document.querySelectorAll(".invoiceNum");
+    let firstinvoice = invoicenums[0].innerHTML;
+    function randomizer() {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      for (let i = 0; i < 2; i++) {
+        result += letters.charAt(Math.floor(Math.random() * letters.length));
+      }
+      for (let i = 0; i < 4; i++) {
+        result += Math.floor(Math.random() * 10);
+      }
+    }
+    randomizer();
+    while (firstinvoice == result) {
+      randomizer();
+    }
+  }
+  function addDaysToDate(correctDate) {
+    let date = new Date(correctDate);
+    date.setDate(date.getDate() + Number(payment.value));
+    let year = date.getFullYear();
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
+    let result = `${year}-${month}-${day}`;
+    return result;
+  }
+  let correctDate = invoicdate.value;
+  correctDate = addDaysToDate(correctDate);
+  generateRandomInvoiceID();
+  function items() {
+    const itemname = document.querySelectorAll(".inputitemname");
+    const itemqty = document.querySelectorAll(".inputfieldqty");
+    const itemprice = document.querySelectorAll(".inputfieldprice");
+    console.log();
+    let itemsArr = [];
+    const itemscount = document.querySelectorAll(".itemlistinner");
+    for (let index = 0; index < itemscount.length; index++) {
+      console.log(
+        itemname[index].value,
+        itemqty[index].value,
+        itemprice[index].value
+      );
+      let item = {
+        name: itemname[index].value,
+        quantity: itemqty[index].value,
+        price: itemprice[index].value,
+        total: (
+          inputfieldqty[index].value * inputfieldprice[index].value
+        ).toString(),
+      };
+      itemsArr.push(item);
+    }
+    return itemsArr;
+  }
+
+  const newInvoice = [
+    {
+      id: result,
+      createdAt: invoicdate.value,
+      paymentDue: correctDate,
+      description: projectdescription.value,
+      paymentTerms: payment.value,
+      clientName: clientname.value,
+      clientEmail: clientemail.value,
+      status: "pending",
+      senderAddress: {
+        street: streetaddress.value,
+        city: city.value,
+        postCode: postcode.value,
+        country: country.value,
+      },
+      clientAddress: {
+        street: streetaddress2.value,
+        city: city2.value,
+        postCode: postcode2.value,
+        country: country2.value,
+      },
+      items: items(),
+      total: "0",
+    },
+  ];
+
+  console.log(newInvoice);
+}
+
 const additembox = document.getElementById("additembox");
 additembox.addEventListener("click", addListItem);
 
@@ -517,6 +614,8 @@ newpage.addEventListener("submit", (e) => {
 });
 const main = document.getElementById("mainsection");
 function addnewinvoice() {
+  const ivnoiceid = document.getElementById("newinvoiceH");
+  ivnoiceid.innerHTML = "New Invoice";
   const buttons1 = document.getElementById("style1");
   const buttons2 = document.getElementById("style2");
   buttons1.style.display = "flex";
