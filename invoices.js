@@ -661,3 +661,16 @@ function discard() {
     itemList.lastElementChild.remove();
   }
 }
+const newinvoices = document.getElementById("addNew");
+newinvoices.addEventListener("click", addnewinvoice);
+const discardbtn = document.getElementById("discardbutton");
+discardbtn.addEventListener("click", discard);
+const discardbtn1 = document.getElementById("discardbutton1");
+discardbtn1.addEventListener("click", discard);
+const newbackbutton = document.getElementById("newbackbutton");
+newbackbutton.addEventListener("click", discard);
+const filterBtn = document.getElementById("filterbtn");
+const filterMenu = document.getElementById("filtermenu2");
+filterBtn.addEventListener("click", function () {
+  filterMenu.click();
+});
