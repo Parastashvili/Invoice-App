@@ -1,5 +1,4 @@
 "use strict";
-
 const dropdown = document.getElementById("dropdown");
 dropdown.addEventListener("change", (event) => {
   const selectedOption = event.target.value;
@@ -8,7 +7,6 @@ const dropdownfilter = document.getElementById("filtermenu2");
 dropdownfilter.addEventListener("change", (event) => {
   const selectedOption = event.target.value;
   const invoiceItems = document.querySelectorAll(".invoiceContainer");
-
   if (selectedOption == "paid") {
     invoiceItems.forEach(function (invoiceItem) {
       const statusTxt = invoiceItem.querySelector(".statustxt");
@@ -79,9 +77,7 @@ fetch("./data.json")
         invoicedetailed.style.display = "none";
       }, 500);
     }
-
     backbutton.addEventListener("click", ukandabruneba);
-
     function correctDateFormat(value) {
       const [year, month, day] = value.split("-");
       const dateObj = new Date(year, month - 1, day);
@@ -401,7 +397,6 @@ fetch("./data.json")
       bottomright.append(invoicestatus, statustxt);
       return container;
     };
-
     for (let i = 0; i < data.length; i++) {
       const {
         id,
@@ -469,7 +464,6 @@ fetch("./data.json")
 
     countinvoices();
   });
-
 const ivnoiceid = document.getElementById("newinvoiceH");
 const streetaddress = document.getElementById("streetaddress");
 const city = document.getElementById("city");
@@ -489,10 +483,8 @@ const inputitemname = document.querySelectorAll(".inputitemname");
 const inputfieldqty = document.querySelectorAll(".inputfieldqty");
 const inputfieldprice = document.querySelectorAll(".inputfieldprice");
 const counttotalprice = document.querySelectorAll(".counttotalprice");
-
 const saveandsend = document.getElementById("savesend");
 const update = document.getElementById("update");
-
 update.addEventListener("click", saveInvoice);
 function saveInvoice() {
   let result = "";
@@ -550,7 +542,6 @@ function saveInvoice() {
     }
     return itemsArr;
   }
-
   const newInvoice = [
     {
       id: result,
@@ -580,10 +571,8 @@ function saveInvoice() {
 
   console.log(newInvoice);
 }
-
 const additembox = document.getElementById("additembox");
 additembox.addEventListener("click", addListItem);
-
 function addListItem() {
   const itemList = document.getElementById("itemlistbox");
   const newItem = document.createElement("li");
@@ -605,7 +594,6 @@ function addListItem() {
   const lasttotalprice = document.querySelectorAll(".counttotalprice");
   lasttotalprice[lasttotalprice.length - 1].innerHTML = "00.00";
 }
-
 const newpage = document.getElementById("new_invoice");
 newpage.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -673,7 +661,6 @@ function discard() {
     itemList.lastElementChild.remove();
   }
 }
-
 const newinvoices = document.getElementById("addNew");
 newinvoices.addEventListener("click", addnewinvoice);
 const discardbtn = document.getElementById("discardbutton");
@@ -682,10 +669,8 @@ const discardbtn1 = document.getElementById("discardbutton1");
 discardbtn1.addEventListener("click", discard);
 const newbackbutton = document.getElementById("newbackbutton");
 newbackbutton.addEventListener("click", discard);
-
 const filterBtn = document.getElementById("filterbtn");
 const filterMenu = document.getElementById("filtermenu2");
-
 filterBtn.addEventListener("click", function () {
   filterMenu.click();
 });
