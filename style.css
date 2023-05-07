@@ -754,7 +754,7 @@ body {
   line-height: 15px;
   letter-spacing: -0.25px;
   min-width: 91px;
-  color: #7e88c3;
+  color: var(--diezi);
 }
 .confirmbutton {
   background: #ec5757;
@@ -830,7 +830,7 @@ body {
   font-size: 13px;
   line-height: 15px;
   letter-spacing: -0.1px;
-  color: #7e88c3;
+  color: var(--diezi);
   margin-bottom: 9px;
 }
 .inputfield {
