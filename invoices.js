@@ -461,7 +461,6 @@ fetch("./data.json")
       );
       invoices.append(invoiceBox);
     }
-
     countinvoices();
   });
 const ivnoiceid = document.getElementById("newinvoiceH");
@@ -568,7 +567,6 @@ function saveInvoice() {
       total: "0",
     },
   ];
-
   console.log(newInvoice);
 }
 const additembox = document.getElementById("additembox");
