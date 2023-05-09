@@ -520,22 +520,16 @@ function saveInvoice() {
     const itemname = document.querySelectorAll(".inputitemname");
     const itemqty = document.querySelectorAll(".inputfieldqty");
     const itemprice = document.querySelectorAll(".inputfieldprice");
-    console.log();
     let itemsArr = [];
     const itemscount = document.querySelectorAll(".itemlistinner");
     for (let index = 0; index < itemscount.length; index++) {
-      console.log(
-        itemname[index].value,
-        itemqty[index].value,
-        itemprice[index].value
-      );
       let item = {
         name: itemname[index].value,
         quantity: itemqty[index].value,
         price: itemprice[index].value,
-        total: (
-          inputfieldqty[index].value * inputfieldprice[index].value
-        ).toString(),
+        total: (itemprice[index].value * itemqty[index].value)
+          .toFixed(2)
+          .toString(),
       };
       itemsArr.push(item);
     }
