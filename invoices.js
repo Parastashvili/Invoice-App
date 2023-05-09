@@ -6,22 +6,40 @@ dropdown.addEventListener("change", (event) => {
 const draftinvoices = document.getElementById("draftinvoices");
 const pendingtinvoices = document.getElementById("pendingtinvoices");
 const paidinvoices = document.getElementById("paidinvoices");
+const invNum = document.getElementById("sectionPinvoices");
+const emptyscreen = document.getElementById("emptyscreen");
+function countInvoices(num) {
+  if (num == 0) {
+  }
+  invNum.innerHTML = num + " invoices";
+  if (invoiceCount == 0) {
+    setTimeout(() => {
+      emptyscreen.style.display = "flex";
+    }, 500);
+  } else {
+    emptyscreen.style.display = "none";
+  }
+}
 paidinvoices.addEventListener("change", function () {
   const paids = document.querySelectorAll(".statustxt");
   if (this.checked) {
     for (let i = 0; i < paids.length - 1; i++) {
       if (paids[i].innerHTML == "paid") {
+        invoiceCount++;
         paids[i].parentElement.parentElement.parentElement.style.display =
           "flex";
       }
     }
+    countInvoices(invoiceCount);
   } else {
     for (let i = 0; i < paids.length - 1; i++) {
       if (paids[i].innerHTML == "paid") {
+        invoiceCount--;
         paids[i].parentElement.parentElement.parentElement.style.display =
           "none";
       }
     }
+    countInvoices(invoiceCount);
   }
 });
 pendingtinvoices.addEventListener("change", function () {
@@ -29,17 +47,21 @@ pendingtinvoices.addEventListener("change", function () {
   if (this.checked) {
     for (let i = 0; i < pendings.length - 1; i++) {
       if (pendings[i].innerHTML == "pending") {
+        invoiceCount++;
         pendings[i].parentElement.parentElement.parentElement.style.display =
           "flex";
       }
     }
+    countInvoices(invoiceCount);
   } else {
     for (let i = 0; i < pendings.length - 1; i++) {
       if (pendings[i].innerHTML == "pending") {
+        invoiceCount--;
         pendings[i].parentElement.parentElement.parentElement.style.display =
           "none";
       }
     }
+    countInvoices(invoiceCount);
   }
 });
 draftinvoices.addEventListener("change", function () {
@@ -47,17 +69,21 @@ draftinvoices.addEventListener("change", function () {
   if (this.checked) {
     for (let i = 0; i < drafts.length - 1; i++) {
       if (drafts[i].innerHTML == "draft") {
+        invoiceCount++;
         drafts[i].parentElement.parentElement.parentElement.style.display =
           "flex";
       }
     }
+    countInvoices(invoiceCount);
   } else {
     for (let i = 0; i < drafts.length - 1; i++) {
       if (drafts[i].innerHTML == "draft") {
+        invoiceCount--;
         drafts[i].parentElement.parentElement.parentElement.style.display =
           "none";
       }
     }
+    countInvoices(invoiceCount);
   }
 });
 fetch("./data.json")
@@ -68,9 +94,7 @@ fetch("./data.json")
     const invoicesheader = document.getElementById("sectionHeader");
     const invoicedetailed = document.getElementById("invoicedetailed");
     const backbutton = document.getElementById("backbutton");
-    const emptyscreen = document.getElementById("emptyscreen");
-
-    function ukandabruneba() {
+    function goBack() {
       invoicedetailed.classList.add("animate");
       setTimeout(() => {
         invoicedetailed.classList.remove("animate");
@@ -81,7 +105,7 @@ fetch("./data.json")
         invoicedetailed.style.display = "none";
       }, 500);
     }
-    backbutton.addEventListener("click", ukandabruneba);
+    backbutton.addEventListener("click", goBack);
     function correctDateFormat(value) {
       const [year, month, day] = value.split("-");
       const dateObj = new Date(year, month - 1, day);
@@ -90,17 +114,6 @@ fetch("./data.json")
       const parts = formattedDate.split(" ");
       const dayPart = parts[1].replace(",", "");
       return `${dayPart} ${parts[0]} ${parts[2]}`;
-    }
-
-    function countinvoices() {
-      const invoicescount = document.getElementById("sectionPinvoices");
-      const numberOfInvoices = invoicescontainer.childElementCount;
-      invoicescount.innerHTML = numberOfInvoices + " invoices";
-      if (numberOfInvoices == 0) {
-        setTimeout(() => {
-          emptyscreen.style.display = "flex";
-        }, 500);
-      }
     }
     let lastOpenedContainer;
     const createElement = (
@@ -156,17 +169,24 @@ fetch("./data.json")
           delscreen.style.display = "flex";
           const deletebutton = document.getElementById("confirmbutton");
           document.body.style.overflow = "hidden";
-          deletebutton.addEventListener("click", function deleteinvoice() {
+          console.log("yeasss1");
+          function deleteinvoice() {
             lastOpenedContainer.remove();
-            ukandabruneba();
+            goBack();
             delscreen.style.display = "none";
             document.body.style.overflow = "auto";
-            countinvoices();
-          });
+            console.log("zigzas");
+            deleteBTN.removeEventListener("click", change);
+            deletebutton.removeEventListener("click", deleteinvoice);
+            invoiceCount--;
+            countInvoices(invoiceCount);
+          }
+          deletebutton.addEventListener("click", deleteinvoice);
           const cancelbutton = document.getElementById("cancelbutton");
           cancelbutton.addEventListener("click", function cancelbtn() {
             delscreen.style.display = "none";
             document.body.style.overflow = "auto";
+            deletebutton.removeEventListener("click", deleteinvoice);
           });
         });
         const invoiceid = document.getElementById("invoiceid");
@@ -356,6 +376,7 @@ fetch("./data.json")
           buttons1.style.display = "none";
           buttons2.style.display = "flex";
         });
+        element.removeEventListener("click", change);
       });
       top.append(topleft, topright);
       top.classList.add("contenttopbottom");
@@ -465,7 +486,6 @@ fetch("./data.json")
       );
       invoices.append(invoiceBox);
     }
-    countinvoices();
   });
 const ivnoiceid = document.getElementById("newinvoiceH");
 const streetaddress = document.getElementById("streetaddress");
@@ -683,8 +703,11 @@ const discardbtn1 = document.getElementById("discardbutton1");
 discardbtn1.addEventListener("click", discard);
 const newbackbutton = document.getElementById("newbackbutton");
 newbackbutton.addEventListener("click", discard);
-// const filterBtn = document.getElementById("filterbtn");
-// const filterMenu = document.getElementById("filtermenu2");
-// filterBtn.addEventListener("click", function () {
-//   filterMenu.click();
-// });
+let invoiceCount = 0;
+async function createAndCountInvoices() {
+  let response = await fetch("./data.json");
+  let data = await response.json();
+  invoiceCount = document.getElementById("invoices").childElementCount;
+  console.log(invoiceCount);
+}
+createAndCountInvoices();
