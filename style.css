@@ -141,39 +141,6 @@ body {
   letter-spacing: -0.25px;
   color: var(--boldText);
 }
-.filtermenu {
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 15px;
-  text-align: right;
-  letter-spacing: -0.25px;
-  color: var(--boldText);
-  text-decoration: none;
-  border-width: 0px;
-  background-color: transparent;
-  appearance: none;
-  -webkit-appearance: none;
-  text-align: end;
-}
-.filtermenu option {
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 15px;
-  text-align: right;
-  letter-spacing: -0.25px;
-  color: var(--boldText);
-  text-decoration: none;
-  border-width: 0px;
-  background-color: transparent;
-  appearance: none;
-  -webkit-appearance: none;
-  text-align: end;
-}
-.filtermenu:focus {
-  outline: none;
-  box-shadow: none;
-  border-color: transparent;
-}
 .addNew {
   display: flex;
   align-items: center;
@@ -1028,4 +995,102 @@ input {
 }
 #style2 {
   display: none;
+}
+
+nav {
+  margin: auto;
+  position: relative;
+}
+
+nav h2 {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+  position: relative;
+  height: 40px;
+  color: inherit;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s;
+}
+#toggle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  cursor: pointer;
+  height: 40px;
+}
+
+#toggle:not(:checked) ~ h2::before {
+  transform: rotate(0deg) scale(0.75);
+}
+
+#toggle:checked ~ ul {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#toggle:not(:checked) ~ ul {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+nav ul {
+  width: 100px;
+  padding: 20px 0px 0px 20px;
+  margin-left: -40px;
+  margin-top: 10px;
+  background: var(--white);
+  box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+  border-radius: 8px;
+  list-style: none;
+  overflow: hidden;
+  text-align: left;
+  transition: all 0.4s ease-out;
+  position: absolute;
+}
+nav ul li {
+  position: relative;
+  display: inline-block;
+  line-height: 1.5;
+  width: 100%;
+  transition: background 3s;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  color: var(--boldText);
+  display: flex;
+  gap: 5px;
+  align-items: first baseline;
+}
+.filterDiv {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: auto;
+}
+input[type="checkbox"] {
+  border-radius: 2px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #7c5dfa;
+  outline: none;
+  cursor: pointer;
+  background-color: #dfe3fa;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #7c5dfa;
+  border-radius: 2px;
 }

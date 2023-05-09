@@ -42,13 +42,36 @@
           </div>
           <div class="sectionHeaderRight">
             <div class="filterSection">
-              <!-- <h6 class="sectionH6">Filter</h6> -->
-              <select class="filtermenu" id="filtermenu2">
-                <option value="all">Filter</option>
-                <option value="paid">Paid</option>
-                <option value="pending">Pending</option>
-                <option value="draft">Draft</option>
-              </select>
+              <nav>
+                <input id="toggle" type="checkbox" checked />
+                <h2>Filter</h2>
+                <ul>
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="filter"
+                      value="paid"
+                      checked
+                    />Draft
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="filter"
+                      value="pending"
+                      checked
+                    />Pending
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      name="filter"
+                      value="draft"
+                      checked
+                    />Paid
+                  </li>
+                </ul>
+              </nav>
               <img
                 id="filterbtn"
                 src="./assets/icon-arrow-down.svg"

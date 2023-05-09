@@ -3,59 +3,59 @@ const dropdown = document.getElementById("dropdown");
 dropdown.addEventListener("change", (event) => {
   const selectedOption = event.target.value;
 });
-const dropdownfilter = document.getElementById("filtermenu2");
-dropdownfilter.addEventListener("change", (event) => {
-  const selectedOption = event.target.value;
-  const invoiceItems = document.querySelectorAll(".invoiceContainer");
-  if (selectedOption == "paid") {
-    invoiceItems.forEach(function (invoiceItem) {
-      const statusTxt = invoiceItem.querySelector(".statustxt");
+// const dropdownfilter = document.getElementById("filtermenu2");
+// dropdownfilter.addEventListener("change", (event) => {
+//   const selectedOption = event.target.value;
+//   const invoiceItems = document.querySelectorAll(".invoiceContainer");
+//   if (selectedOption == "paid") {
+//     invoiceItems.forEach(function (invoiceItem) {
+//       const statusTxt = invoiceItem.querySelector(".statustxt");
 
-      if (statusTxt.innerHTML.toLowerCase() !== "paid") {
-        invoiceItem.style.display = "none";
-      }
-      if (statusTxt.innerHTML.toLowerCase() === "paid") {
-        invoiceItem.style.display = "block";
-      }
-    });
-  } else if (selectedOption == "pending") {
-    invoiceItems.forEach(function (invoiceItem) {
-      const statusTxt = invoiceItem.querySelector(".statustxt");
+//       if (statusTxt.innerHTML.toLowerCase() !== "paid") {
+//         invoiceItem.style.display = "none";
+//       }
+//       if (statusTxt.innerHTML.toLowerCase() === "paid") {
+//         invoiceItem.style.display = "block";
+//       }
+//     });
+//   } else if (selectedOption == "pending") {
+//     invoiceItems.forEach(function (invoiceItem) {
+//       const statusTxt = invoiceItem.querySelector(".statustxt");
 
-      if (statusTxt.innerHTML.toLowerCase() !== "pending") {
-        invoiceItem.style.display = "none";
-      }
-      if (statusTxt.innerHTML.toLowerCase() === "pending") {
-        invoiceItem.style.display = "block";
-      }
-    });
-  } else if (selectedOption == "draft") {
-    invoiceItems.forEach(function (invoiceItem) {
-      const statusTxt = invoiceItem.querySelector(".statustxt");
+//       if (statusTxt.innerHTML.toLowerCase() !== "pending") {
+//         invoiceItem.style.display = "none";
+//       }
+//       if (statusTxt.innerHTML.toLowerCase() === "pending") {
+//         invoiceItem.style.display = "block";
+//       }
+//     });
+//   } else if (selectedOption == "draft") {
+//     invoiceItems.forEach(function (invoiceItem) {
+//       const statusTxt = invoiceItem.querySelector(".statustxt");
 
-      if (statusTxt.innerHTML.toLowerCase() !== "draft") {
-        invoiceItem.style.display = "none";
-      }
-      if (statusTxt.innerHTML.toLowerCase() === "draft") {
-        invoiceItem.style.display = "block";
-      }
-    });
-  } else {
-    invoiceItems.forEach(function (invoiceItem) {
-      const statusTxt = invoiceItem.querySelector(".statustxt");
+//       if (statusTxt.innerHTML.toLowerCase() !== "draft") {
+//         invoiceItem.style.display = "none";
+//       }
+//       if (statusTxt.innerHTML.toLowerCase() === "draft") {
+//         invoiceItem.style.display = "block";
+//       }
+//     });
+//   } else {
+//     invoiceItems.forEach(function (invoiceItem) {
+//       const statusTxt = invoiceItem.querySelector(".statustxt");
 
-      if (statusTxt.innerHTML.toLowerCase() === "pending") {
-        invoiceItem.style.display = "block";
-      }
-      if (statusTxt.innerHTML.toLowerCase() === "draft") {
-        invoiceItem.style.display = "block";
-      }
-      if (statusTxt.innerHTML.toLowerCase() === "paid") {
-        invoiceItem.style.display = "block";
-      }
-    });
-  }
-});
+//       if (statusTxt.innerHTML.toLowerCase() === "pending") {
+//         invoiceItem.style.display = "block";
+//       }
+//       if (statusTxt.innerHTML.toLowerCase() === "draft") {
+//         invoiceItem.style.display = "block";
+//       }
+//       if (statusTxt.innerHTML.toLowerCase() === "paid") {
+//         invoiceItem.style.display = "block";
+//       }
+//     });
+//   }
+// });
 fetch("./data.json")
   .then((res) => res.json())
   .then((data) => {
@@ -535,6 +535,24 @@ function saveInvoice() {
     }
     return itemsArr;
   }
+  function sumTotal() {
+    const itemqty = document.querySelectorAll(".inputfieldqty");
+    const itemprice = document.querySelectorAll(".inputfieldprice");
+    let itemsArr = [];
+    let sumT = 0;
+    const itemscount = document.querySelectorAll(".itemlistinner");
+    for (let index = 0; index < itemscount.length; index++) {
+      let item = {
+        total: (itemprice[index].value * itemqty[index].value).toFixed(2),
+      };
+      itemsArr.push(item);
+    }
+    for (let index = 0; index < itemscount.length; index++) {
+      sumT += parseInt(itemsArr[index].total);
+    }
+    return sumT.toFixed(2).toString();
+  }
+
   const newInvoice = [
     {
       id: result,
@@ -558,7 +576,7 @@ function saveInvoice() {
         country: country2.value,
       },
       items: items(),
-      total: "0",
+      total: sumTotal(),
     },
   ];
   console.log(newInvoice);
@@ -661,8 +679,11 @@ const discardbtn1 = document.getElementById("discardbutton1");
 discardbtn1.addEventListener("click", discard);
 const newbackbutton = document.getElementById("newbackbutton");
 newbackbutton.addEventListener("click", discard);
-const filterBtn = document.getElementById("filterbtn");
-const filterMenu = document.getElementById("filtermenu2");
-filterBtn.addEventListener("click", function () {
-  filterMenu.click();
-});
+// const filterBtn = document.getElementById("filterbtn");
+// const filterMenu = document.getElementById("filtermenu2");
+// filterBtn.addEventListener("click", function () {
+//   filterMenu.click();
+// });
+
+
+
