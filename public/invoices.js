@@ -1,91 +1,11 @@
 "use strict";
-const dropdown = document.getElementById("dropdown");
-dropdown.addEventListener("change", (event) => {
-  const selectedOption = event.target.value;
-});
-const draftinvoices = document.getElementById("draftinvoices");
-const pendingtinvoices = document.getElementById("pendingtinvoices");
-const paidinvoices = document.getElementById("paidinvoices");
-const invNum = document.getElementById("sectionPinvoices");
-const emptyscreen = document.getElementById("emptyscreen");
-function countInvoices(num) {
-  if (num == 0) {
-  }
-  invNum.innerHTML = num + " invoices";
-  if (invoiceCount == 0) {
-    setTimeout(() => {
-      emptyscreen.style.display = "flex";
-    }, 500);
-  } else {
-    emptyscreen.style.display = "none";
-  }
-}
-paidinvoices.addEventListener("change", function () {
-  const paids = document.querySelectorAll(".statustxt");
-  if (this.checked) {
-    for (let i = 0; i < paids.length - 1; i++) {
-      if (paids[i].innerHTML == "paid") {
-        invoiceCount++;
-        paids[i].parentElement.parentElement.parentElement.style.display =
-          "flex";
-      }
-    }
-    countInvoices(invoiceCount);
-  } else {
-    for (let i = 0; i < paids.length - 1; i++) {
-      if (paids[i].innerHTML == "paid") {
-        invoiceCount--;
-        paids[i].parentElement.parentElement.parentElement.style.display =
-          "none";
-      }
-    }
-    countInvoices(invoiceCount);
-  }
-});
-pendingtinvoices.addEventListener("change", function () {
-  const pendings = document.querySelectorAll(".statustxt");
-  if (this.checked) {
-    for (let i = 0; i < pendings.length - 1; i++) {
-      if (pendings[i].innerHTML == "pending") {
-        invoiceCount++;
-        pendings[i].parentElement.parentElement.parentElement.style.display =
-          "flex";
-      }
-    }
-    countInvoices(invoiceCount);
-  } else {
-    for (let i = 0; i < pendings.length - 1; i++) {
-      if (pendings[i].innerHTML == "pending") {
-        invoiceCount--;
-        pendings[i].parentElement.parentElement.parentElement.style.display =
-          "none";
-      }
-    }
-    countInvoices(invoiceCount);
-  }
-});
-draftinvoices.addEventListener("change", function () {
-  const drafts = document.querySelectorAll(".statustxt");
-  if (this.checked) {
-    for (let i = 0; i < drafts.length - 1; i++) {
-      if (drafts[i].innerHTML == "draft") {
-        invoiceCount++;
-        drafts[i].parentElement.parentElement.parentElement.style.display =
-          "flex";
-      }
-    }
-    countInvoices(invoiceCount);
-  } else {
-    for (let i = 0; i < drafts.length - 1; i++) {
-      if (drafts[i].innerHTML == "draft") {
-        invoiceCount--;
-        drafts[i].parentElement.parentElement.parentElement.style.display =
-          "none";
-      }
-    }
-    countInvoices(invoiceCount);
-  }
-});
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+import {
+  getDatabase,
+  ref,
+  set,
+} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 fetch("./data.json")
   .then((res) => res.json())
   .then((data) => {
@@ -602,6 +522,38 @@ function saveInvoice() {
     },
   ];
   console.log(newInvoice);
+  update.addEventListener("click", (e) => {
+    set(ref(database, "/" + 7), {
+      id: result,
+      createdAt: invoicdate.value,
+      paymentDue: correctDate,
+      description: projectdescription.value,
+      paymentTerms: payment.value,
+      clientName: clientname.value,
+      clientEmail: clientemail.value,
+      status: "pending",
+      senderAddress: {
+        street: streetaddress.value,
+        city: city.value,
+        postCode: postcode.value,
+        country: country.value,
+      },
+      clientAddress: {
+        street: streetaddress2.value,
+        city: city2.value,
+        postCode: postcode2.value,
+        country: country2.value,
+      },
+      items: items(),
+      total: sumTotal(),
+    })
+      .then(() => {
+        alert("Invoice Saved Succesfully");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  });
 }
 const additembox = document.getElementById("additembox");
 additembox.addEventListener("click", addListItem);
@@ -693,6 +645,7 @@ function discard() {
     itemList.lastElementChild.remove();
   }
 }
+
 const newinvoices = document.getElementById("addNew");
 newinvoices.addEventListener("click", addnewinvoice);
 const discardbtn = document.getElementById("discardbutton");
@@ -707,6 +660,93 @@ async function createAndCountInvoices() {
   let data = await response.json();
   invoiceCount = document.getElementById("invoices").childElementCount;
 }
+const dropdown = document.getElementById("dropdown");
+dropdown.addEventListener("change", (event) => {
+  const selectedOption = event.target.value;
+});
+const draftinvoices = document.getElementById("draftinvoices");
+const pendingtinvoices = document.getElementById("pendingtinvoices");
+const paidinvoices = document.getElementById("paidinvoices");
+const invNum = document.getElementById("sectionPinvoices");
+const emptyscreen = document.getElementById("emptyscreen");
+function countInvoices(num) {
+  if (num == 0) {
+  }
+  invNum.innerHTML = num + " invoices";
+  if (invoiceCount == 0) {
+    setTimeout(() => {
+      emptyscreen.style.display = "flex";
+    }, 500);
+  } else {
+    emptyscreen.style.display = "none";
+  }
+}
+paidinvoices.addEventListener("change", function () {
+  const paids = document.querySelectorAll(".statustxt");
+  if (this.checked) {
+    for (let i = 0; i < paids.length - 1; i++) {
+      if (paids[i].innerHTML == "paid") {
+        invoiceCount++;
+        paids[i].parentElement.parentElement.parentElement.style.display =
+          "flex";
+      }
+    }
+    countInvoices(invoiceCount);
+  } else {
+    for (let i = 0; i < paids.length - 1; i++) {
+      if (paids[i].innerHTML == "paid") {
+        invoiceCount--;
+        paids[i].parentElement.parentElement.parentElement.style.display =
+          "none";
+      }
+    }
+    countInvoices(invoiceCount);
+  }
+});
+pendingtinvoices.addEventListener("change", function () {
+  const pendings = document.querySelectorAll(".statustxt");
+  if (this.checked) {
+    for (let i = 0; i < pendings.length - 1; i++) {
+      if (pendings[i].innerHTML == "pending") {
+        invoiceCount++;
+        pendings[i].parentElement.parentElement.parentElement.style.display =
+          "flex";
+      }
+    }
+    countInvoices(invoiceCount);
+  } else {
+    for (let i = 0; i < pendings.length - 1; i++) {
+      if (pendings[i].innerHTML == "pending") {
+        invoiceCount--;
+        pendings[i].parentElement.parentElement.parentElement.style.display =
+          "none";
+      }
+    }
+    countInvoices(invoiceCount);
+  }
+});
+draftinvoices.addEventListener("change", function () {
+  const drafts = document.querySelectorAll(".statustxt");
+  if (this.checked) {
+    for (let i = 0; i < drafts.length - 1; i++) {
+      if (drafts[i].innerHTML == "draft") {
+        invoiceCount++;
+        drafts[i].parentElement.parentElement.parentElement.style.display =
+          "flex";
+      }
+    }
+    countInvoices(invoiceCount);
+  } else {
+    for (let i = 0; i < drafts.length - 1; i++) {
+      if (drafts[i].innerHTML == "draft") {
+        invoiceCount--;
+        drafts[i].parentElement.parentElement.parentElement.style.display =
+          "none";
+      }
+    }
+    countInvoices(invoiceCount);
+  }
+});
 createAndCountInvoices();
 const checkbox = document.getElementById("toggle");
 const div = document.getElementById("checkdiv");
@@ -724,3 +764,19 @@ window.addEventListener("click", (event) => {
     checkbox.checked = false;
   }
 });
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDH_ifcXcFMQDDyBr6LVEsvW7MrtgnDJu8",
+  authDomain: "invoice-app-3dbc8.firebaseapp.com",
+  databaseURL:
+    "https://invoice-app-3dbc8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "invoice-app-3dbc8",
+  storageBucket: "invoice-app-3dbc8.appspot.com",
+  messagingSenderId: "580121821695",
+  appId: "1:580121821695:web:f153eedc590c616b5e67ca",
+  measurementId: "G-V3NV40PKS6",
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
