@@ -38,15 +38,15 @@
         <div class="sectionHeader" id="sectionHeader">
           <div class="sectionHeaderLeft">
             <h4 class="sectionH4" id="sectionH4">Invoices</h4>
-            <p class="sectionP" id="sectionPinvoices"> 7 invoices</p>
+            <p class="sectionP" id="sectionPinvoices">7 invoices</p>
           </div>
           <div class="sectionHeaderRight">
             <div class="filterSection">
               <nav>
-                <input id="toggle" type="checkbox" checked />
+                <input id="toggle" type="checkbox" />
                 <h2>Filter</h2>
-                <ul>
-                  <li>
+                <ul id="checkdiv">
+                  <li class="filterlist">
                     <input
                       id="draftinvoices"
                       type="checkbox"
@@ -55,7 +55,7 @@
                       checked
                     />Draft
                   </li>
-                  <li>
+                  <li class="filterlist">
                     <input
                       id="pendingtinvoices"
                       type="checkbox"
@@ -64,7 +64,7 @@
                       checked
                     />Pending
                   </li>
-                  <li>
+                  <li class="filterlist">
                     <input
                       id="paidinvoices"
                       type="checkbox"

@@ -169,13 +169,11 @@ fetch("./data.json")
           delscreen.style.display = "flex";
           const deletebutton = document.getElementById("confirmbutton");
           document.body.style.overflow = "hidden";
-          console.log("yeasss1");
           function deleteinvoice() {
             lastOpenedContainer.remove();
             goBack();
             delscreen.style.display = "none";
             document.body.style.overflow = "auto";
-            console.log("zigzas");
             deleteBTN.removeEventListener("click", change);
             deletebutton.removeEventListener("click", deleteinvoice);
             invoiceCount--;
@@ -708,6 +706,21 @@ async function createAndCountInvoices() {
   let response = await fetch("./data.json");
   let data = await response.json();
   invoiceCount = document.getElementById("invoices").childElementCount;
-  console.log(invoiceCount);
 }
 createAndCountInvoices();
+const checkbox = document.getElementById("toggle");
+const div = document.getElementById("checkdiv");
+window.addEventListener("click", (event) => {
+  if (
+    !(
+      event.target.matches(".filterlist") ||
+      event.target.matches("#toggle") ||
+      event.target.matches("#checkdiv") ||
+      event.target.matches("#draftinvoices") ||
+      event.target.matches("#pendingtinvoices") ||
+      event.target.matches("#paidinvoices")
+    )
+  ) {
+    checkbox.checked = false;
+  }
+});
