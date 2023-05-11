@@ -7,9 +7,6 @@ import {
   set,
   onValue,
   remove,
-  query,
-  orderByChild,
-  limitToLast,
 } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDH_ifcXcFMQDDyBr6LVEsvW7MrtgnDJu8",
@@ -29,6 +26,7 @@ const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const firebaseRef = ref(database);
 let newInvoiceNum = 0;
+
 onValue(firebaseRef, (snapshot) => {
   const data = snapshot.val();
   const length = Object.keys(data).length;
@@ -38,7 +36,8 @@ onValue(firebaseRef, (snapshot) => {
       lastId = key;
     }
   }
-  newInvoiceNum = parseInt(lastId) + 1;
+  newInvoiceNum = Number(lastId) + 1;
+  console.log(newInvoiceNum);
   invoiceCount = length;
   countInvoices(invoiceCount);
   const invoices = document.querySelector(".invoices");
@@ -47,7 +46,6 @@ onValue(firebaseRef, (snapshot) => {
   const invoicedetailed = document.getElementById("invoicedetailed");
   const backbutton = document.getElementById("backbutton");
   invoicescontainer.innerHTML = "";
-
   function goBack() {
     invoicedetailed.classList.add("animate");
     setTimeout(() => {
@@ -406,7 +404,7 @@ onValue(firebaseRef, (snapshot) => {
     return container;
   };
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < newInvoiceNum + 1; i++) {
     try {
       const {
         id,
@@ -622,12 +620,8 @@ function saveInvoice() {
         items: items(),
         total: sumTotal(),
       })
-        .then(() => {
-          alert("Invoice Saved Succesfully");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        .then(() => {})
+        .catch((error) => {});
     }
     saveInvoiceOK();
     location.reload();
