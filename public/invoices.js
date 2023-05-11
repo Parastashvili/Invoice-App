@@ -20,18 +20,19 @@ const firebaseConfig = {
   measurementId: "G-V3NV40PKS6",
 };
 
+let invoiceCount = 0;
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const database = getDatabase(app);
-let invoiceCount = 0;
 const firebaseRef = ref(database);
 let newInvoiceNum = 0;
 onValue(firebaseRef, (snapshot) => {
   const data = snapshot.val();
-  const length = data.length;
+  const length = Object.keys(data).length;
   newInvoiceNum = length;
   invoiceCount = length;
   countInvoices(invoiceCount);
+  console.log(length);
   const invoices = document.querySelector(".invoices");
   const invoicescontainer = document.getElementById("invoices");
   const invoicesheader = document.getElementById("sectionHeader");
@@ -142,15 +143,25 @@ onValue(firebaseRef, (snapshot) => {
           countInvoices(invoiceCount);
 
           try {
-            remove(ref(database, "/" + 10));
-          } catch (error) {
-            console.log("chat");
-          }
+            remove(ref(database, "/" + itemIndex()));
+          } catch (error) {}
+          const filter1 = document.getElementById("draftinvoices");
+          const filter2 = document.getElementById("pendingtinvoices");
+          const filter3 = document.getElementById("paidinvoices");
+          filter1.checked = true;
+          filter2.checked = true;
+          filter3.checked = true;
         }
 
         deletebutton.addEventListener("click", deleteinvoice);
         const cancelbutton = document.getElementById("cancelbutton");
         cancelbutton.addEventListener("click", function cancelbtn() {
+          delscreen.style.display = "none";
+          document.body.style.overflow = "auto";
+          deletebutton.removeEventListener("click", deleteinvoice);
+        });
+        const cancelbutton1 = document.getElementById("cancelbutton1");
+        cancelbutton1.addEventListener("click", function cancelbtn() {
           delscreen.style.display = "none";
           document.body.style.overflow = "auto";
           deletebutton.removeEventListener("click", deleteinvoice);
@@ -474,134 +485,144 @@ const inputitemname = document.querySelectorAll(".inputitemname");
 const inputfieldqty = document.querySelectorAll(".inputfieldqty");
 const inputfieldprice = document.querySelectorAll(".inputfieldprice");
 const counttotalprice = document.querySelectorAll(".counttotalprice");
-const saveandsend = document.getElementById("savesend");
 const update = document.getElementById("update");
-update.addEventListener("click", saveInvoice);
+const savesend = document.getElementById("savesend");
+savesend.addEventListener("click", saveInvoice);
 function saveInvoice() {
+  const confirmscreen = document.getElementById("deletescreen1");
+  confirmscreen.style.display = "flex";
   let result = "";
-  function generateRandomInvoiceID() {
-    const invoicenums = document.querySelectorAll(".invoiceNum");
-    let firstinvoice = invoicenums[0].innerHTML;
-    function randomizer() {
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      for (let i = 0; i < 2; i++) {
-        result += letters.charAt(Math.floor(Math.random() * letters.length));
+  const cancel = document.getElementById("cancelbutton1");
+  cancel.addEventListener("click", () => {
+    confirmscreen.style.display = "none";
+  });
+  const confirmOK = document.getElementById("confirmbuttonOK");
+  confirmOK.addEventListener("click", () => {
+    function generateRandomInvoiceID() {
+      const invoicenums = document.querySelectorAll(".invoiceNum");
+      let firstinvoice = invoicenums[0].innerHTML;
+      function randomizer() {
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (let i = 0; i < 2; i++) {
+          result += letters.charAt(Math.floor(Math.random() * letters.length));
+        }
+        for (let i = 0; i < 4; i++) {
+          result += Math.floor(Math.random() * 10);
+        }
       }
-      for (let i = 0; i < 4; i++) {
-        result += Math.floor(Math.random() * 10);
-      }
-    }
-    randomizer();
-    while (firstinvoice == result) {
       randomizer();
+      while (firstinvoice == result) {
+        randomizer();
+      }
     }
-  }
-  function addDaysToDate(correctDate) {
-    let date = new Date(correctDate);
-    date.setDate(date.getDate() + Number(payment.value));
-    let year = date.getFullYear();
-    let month = ("0" + (date.getMonth() + 1)).slice(-2);
-    let day = ("0" + date.getDate()).slice(-2);
-    let result = `${year}-${month}-${day}`;
-    return result;
-  }
-  let correctDate = invoicdate.value;
-  correctDate = addDaysToDate(correctDate);
-  generateRandomInvoiceID();
-  function items() {
-    const itemname = document.querySelectorAll(".inputitemname");
-    const itemqty = document.querySelectorAll(".inputfieldqty");
-    const itemprice = document.querySelectorAll(".inputfieldprice");
-    let itemsArr = [];
-    const itemscount = document.querySelectorAll(".itemlistinner");
-    for (let index = 0; index < itemscount.length; index++) {
-      let item = {
-        name: itemname[index].value,
-        quantity: itemqty[index].value,
-        price: itemprice[index].value,
-        total: (itemprice[index].value * itemqty[index].value)
-          .toFixed(2)
-          .toString(),
-      };
-      itemsArr.push(item);
+    function addDaysToDate(correctDate) {
+      let date = new Date(correctDate);
+      date.setDate(date.getDate() + Number(payment.value));
+      let year = date.getFullYear();
+      let month = ("0" + (date.getMonth() + 1)).slice(-2);
+      let day = ("0" + date.getDate()).slice(-2);
+      let result = `${year}-${month}-${day}`;
+      return result;
     }
-    return itemsArr;
-  }
-  function sumTotal() {
-    const itemqty = document.querySelectorAll(".inputfieldqty");
-    const itemprice = document.querySelectorAll(".inputfieldprice");
-    let itemsArr = [];
-    let sumT = 0;
-    const itemscount = document.querySelectorAll(".itemlistinner");
-    for (let index = 0; index < itemscount.length; index++) {
-      let item = {
-        total: (itemprice[index].value * itemqty[index].value).toFixed(2),
-      };
-      itemsArr.push(item);
+    let correctDate = invoicdate.value;
+    correctDate = addDaysToDate(correctDate);
+    generateRandomInvoiceID();
+    function items() {
+      const itemname = document.querySelectorAll(".inputitemname");
+      const itemqty = document.querySelectorAll(".inputfieldqty");
+      const itemprice = document.querySelectorAll(".inputfieldprice");
+      let itemsArr = [];
+      const itemscount = document.querySelectorAll(".itemlistinner");
+      for (let index = 0; index < itemscount.length; index++) {
+        let item = {
+          name: itemname[index].value,
+          quantity: itemqty[index].value,
+          price: itemprice[index].value,
+          total: (itemprice[index].value * itemqty[index].value)
+            .toFixed(2)
+            .toString(),
+        };
+        itemsArr.push(item);
+      }
+      return itemsArr;
     }
-    for (let index = 0; index < itemscount.length; index++) {
-      sumT += parseInt(itemsArr[index].total);
+    function sumTotal() {
+      const itemqty = document.querySelectorAll(".inputfieldqty");
+      const itemprice = document.querySelectorAll(".inputfieldprice");
+      let itemsArr = [];
+      let sumT = 0;
+      const itemscount = document.querySelectorAll(".itemlistinner");
+      for (let index = 0; index < itemscount.length; index++) {
+        let item = {
+          total: (itemprice[index].value * itemqty[index].value).toFixed(2),
+        };
+        itemsArr.push(item);
+      }
+      for (let index = 0; index < itemscount.length; index++) {
+        sumT += parseInt(itemsArr[index].total);
+      }
+      return sumT.toFixed(2).toString();
     }
-    return sumT.toFixed(2).toString();
-  }
-
-  const newInvoice = [
-    {
-      id: result,
-      createdAt: invoicdate.value,
-      paymentDue: correctDate,
-      description: projectdescription.value,
-      paymentTerms: payment.value,
-      clientName: clientname.value,
-      clientEmail: clientemail.value,
-      status: "pending",
-      senderAddress: {
-        street: streetaddress.value,
-        city: city.value,
-        postCode: postcode.value,
-        country: country.value,
+    const newInvoice = [
+      {
+        id: result,
+        createdAt: invoicdate.value,
+        paymentDue: correctDate,
+        description: projectdescription.value,
+        paymentTerms: payment.value,
+        clientName: clientname.value,
+        clientEmail: clientemail.value,
+        status: "pending",
+        senderAddress: {
+          street: streetaddress.value,
+          city: city.value,
+          postCode: postcode.value,
+          country: country.value,
+        },
+        clientAddress: {
+          street: streetaddress2.value,
+          city: city2.value,
+          postCode: postcode2.value,
+          country: country2.value,
+        },
+        items: items(),
+        total: sumTotal(),
       },
-      clientAddress: {
-        street: streetaddress2.value,
-        city: city2.value,
-        postCode: postcode2.value,
-        country: country2.value,
-      },
-      items: items(),
-      total: sumTotal(),
-    },
-  ];
-  update.addEventListener("click", (e) => {
-    set(ref(database, "/" + newInvoiceNum), {
-      id: result,
-      createdAt: invoicdate.value,
-      paymentDue: correctDate,
-      description: projectdescription.value,
-      paymentTerms: payment.value,
-      clientName: clientname.value,
-      clientEmail: clientemail.value,
-      status: "pending",
-      senderAddress: {
-        street: streetaddress.value,
-        city: city.value,
-        postCode: postcode.value,
-        country: country.value,
-      },
-      clientAddress: {
-        street: streetaddress2.value,
-        city: city2.value,
-        postCode: postcode2.value,
-        country: country2.value,
-      },
-      items: items(),
-      total: sumTotal(),
-    })
-      .then(() => {
-        alert("Invoice Saved Succesfully");
+    ];
+    function saveInvoiceOK() {
+      set(ref(database, "/" + newInvoiceNum), {
+        id: result,
+        createdAt: invoicdate.value,
+        paymentDue: correctDate,
+        description: projectdescription.value,
+        paymentTerms: payment.value,
+        clientName: clientname.value,
+        clientEmail: clientemail.value,
+        status: "pending",
+        senderAddress: {
+          street: streetaddress.value,
+          city: city.value,
+          postCode: postcode.value,
+          country: country.value,
+        },
+        clientAddress: {
+          street: streetaddress2.value,
+          city: city2.value,
+          postCode: postcode2.value,
+          country: country2.value,
+        },
+        items: items(),
+        total: sumTotal(),
       })
-      .catch((error) => {
-        alert(error);
-      });
+        .then(() => {
+          alert("Invoice Saved Succesfully");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    saveInvoiceOK();
+    location.reload();
   });
 }
 const additembox = document.getElementById("additembox");
@@ -719,7 +740,7 @@ function countInvoices(num) {
   if (invoiceCount == 0) {
     setTimeout(() => {
       emptyscreen.style.display = "flex";
-    }, 500);
+    }, 100);
   } else {
     emptyscreen.style.display = "none";
   }
