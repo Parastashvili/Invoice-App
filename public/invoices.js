@@ -5,342 +5,375 @@ import {
   getDatabase,
   ref,
   set,
+  onValue,
+  remove,
 } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
-fetch("./data.json")
-  .then((res) => res.json())
-  .then((data) => {
-    const invoices = document.querySelector(".invoices");
-    const invoicescontainer = document.getElementById("invoices");
-    const invoicesheader = document.getElementById("sectionHeader");
-    const invoicedetailed = document.getElementById("invoicedetailed");
-    const backbutton = document.getElementById("backbutton");
-    function goBack() {
-      invoicedetailed.classList.add("animate");
-      setTimeout(() => {
-        invoicedetailed.classList.remove("animate");
-      }, 500);
-      setTimeout(() => {
-        invoicescontainer.style.display = "block";
-        invoicesheader.style.display = "flex";
-        invoicedetailed.style.display = "none";
-      }, 500);
-    }
-    backbutton.addEventListener("click", goBack);
-    function correctDateFormat(value) {
-      const [year, month, day] = value.split("-");
-      const dateObj = new Date(year, month - 1, day);
-      const options = { day: "2-digit", month: "short", year: "numeric" };
-      const formattedDate = dateObj.toLocaleDateString("en-US", options);
-      const parts = formattedDate.split(" ");
-      const dayPart = parts[1].replace(",", "");
-      return `${dayPart} ${parts[0]} ${parts[2]}`;
-    }
-    let lastOpenedContainer;
-    const createElement = (
-      id,
-      clientName,
-      paymentDue,
-      total,
-      status,
-      createdAt,
-      description,
-      paymentTerms,
-      clientEmail,
-      senderStreet,
-      senderCity,
-      senderPostCode,
-      senderCountry,
-      clientStreet,
-      clientCity,
-      clientPostCode,
-      clientCountry,
-      itemNames,
-      itemqty,
-      itemprice,
-      itemtotal,
-      items
-    ) => {
-      let container = document.createElement("li");
-      const element = document.createElement("div");
-      const top = document.createElement("div");
-      const bottom = document.createElement("div");
-      const topleft = document.createElement("div");
-      const topleft1 = document.createElement("h5");
-      const topleft2 = document.createElement("h5");
-      const topright = document.createElement("p");
-      const bottomleft = document.createElement("div");
-      const bottomleft1 = document.createElement("date");
-      const bottomleft2 = document.createElement("h5");
-      const bottomright = document.createElement("div");
-      const invoicestatus = document.createElement("div");
-      const statustxt = document.createElement("h5");
-      container.append(element);
-      container.classList.add("invoiceContainer");
-      element.append(top, bottom);
-      element.classList.add("topbottomspace");
-      element.classList.add("invoiceContainerInner");
-      element.addEventListener("click", function change() {
-        lastOpenedContainer = container;
-        const deleteBTN = document.getElementById("deletebutton");
-        deleteBTN.addEventListener("click", function change() {
-          const delscreen = document.getElementById("deletescreen");
-          const deletetext = document.getElementById("confirmdeletep");
-          deletetext.innerHTML = `Are you sure you want to delete invoice #${id}? This action cannot be undone.`;
-          delscreen.style.display = "flex";
-          const deletebutton = document.getElementById("confirmbutton");
-          document.body.style.overflow = "hidden";
-          function deleteinvoice() {
-            lastOpenedContainer.remove();
-            goBack();
-            delscreen.style.display = "none";
-            document.body.style.overflow = "auto";
-            deleteBTN.removeEventListener("click", change);
-            deletebutton.removeEventListener("click", deleteinvoice);
-            invoiceCount--;
-            countInvoices(invoiceCount);
+const firebaseConfig = {
+  apiKey: "AIzaSyDH_ifcXcFMQDDyBr6LVEsvW7MrtgnDJu8",
+  authDomain: "invoice-app-3dbc8.firebaseapp.com",
+  databaseURL:
+    "https://invoice-app-3dbc8-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "invoice-app-3dbc8",
+  storageBucket: "invoice-app-3dbc8.appspot.com",
+  messagingSenderId: "580121821695",
+  appId: "1:580121821695:web:f153eedc590c616b5e67ca",
+  measurementId: "G-V3NV40PKS6",
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
+let invoiceCount = 0;
+const firebaseRef = ref(database);
+let newInvoiceNum = 0;
+onValue(firebaseRef, (snapshot) => {
+  const data = snapshot.val();
+  const length = data.length;
+  newInvoiceNum = length;
+  invoiceCount = length;
+  countInvoices(invoiceCount);
+  const invoices = document.querySelector(".invoices");
+  const invoicescontainer = document.getElementById("invoices");
+  const invoicesheader = document.getElementById("sectionHeader");
+  const invoicedetailed = document.getElementById("invoicedetailed");
+  const backbutton = document.getElementById("backbutton");
+  invoicescontainer.innerHTML = "";
+
+  function goBack() {
+    invoicedetailed.classList.add("animate");
+    setTimeout(() => {
+      invoicedetailed.classList.remove("animate");
+    }, 500);
+    setTimeout(() => {
+      invoicescontainer.style.display = "block";
+      invoicesheader.style.display = "flex";
+      invoicedetailed.style.display = "none";
+    }, 500);
+  }
+  backbutton.addEventListener("click", goBack);
+  function correctDateFormat(value) {
+    const [year, month, day] = value.split("-");
+    const dateObj = new Date(year, month - 1, day);
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    const formattedDate = dateObj.toLocaleDateString("en-US", options);
+    const parts = formattedDate.split(" ");
+    const dayPart = parts[1].replace(",", "");
+    return `${dayPart} ${parts[0]} ${parts[2]}`;
+  }
+  let lastOpenedContainer;
+  const createElement = (
+    id,
+    clientName,
+    paymentDue,
+    total,
+    status,
+    createdAt,
+    description,
+    paymentTerms,
+    clientEmail,
+    senderStreet,
+    senderCity,
+    senderPostCode,
+    senderCountry,
+    clientStreet,
+    clientCity,
+    clientPostCode,
+    clientCountry,
+    itemNames,
+    itemqty,
+    itemprice,
+    itemtotal,
+    items
+  ) => {
+    let container = document.createElement("li");
+    const element = document.createElement("div");
+    const top = document.createElement("div");
+    const bottom = document.createElement("div");
+    const topleft = document.createElement("div");
+    const topleft1 = document.createElement("h5");
+    const topleft2 = document.createElement("h5");
+    const topright = document.createElement("p");
+    const bottomleft = document.createElement("div");
+    const bottomleft1 = document.createElement("date");
+    const bottomleft2 = document.createElement("h5");
+    const bottomright = document.createElement("div");
+    const invoicestatus = document.createElement("div");
+    const statustxt = document.createElement("h5");
+    container.append(element);
+    container.classList.add("invoiceContainer");
+    element.append(top, bottom);
+    element.classList.add("topbottomspace");
+    element.classList.add("invoiceContainerInner");
+    element.addEventListener("click", function change() {
+      lastOpenedContainer = container;
+      const deleteBTN = document.getElementById("deletebutton");
+      deleteBTN.addEventListener("click", function change() {
+        const delscreen = document.getElementById("deletescreen");
+        const deletetext = document.getElementById("confirmdeletep");
+        deletetext.innerHTML = `Are you sure you want to delete invoice #${id}? This action cannot be undone.`;
+        delscreen.style.display = "flex";
+        const deletebutton = document.getElementById("confirmbutton");
+        document.body.style.overflow = "hidden";
+        function deleteinvoice() {
+          lastOpenedContainer.remove();
+          goBack();
+          delscreen.style.display = "none";
+          document.body.style.overflow = "auto";
+          deleteBTN.removeEventListener("click", change);
+          deletebutton.removeEventListener("click", deleteinvoice);
+          invoiceCount--;
+          countInvoices(invoiceCount);
+          // const itemIndex = data.findIndex((data) => data.id === id);
+          // console.log(itemIndex);
+          try {
+            remove(ref(database, "/" + 2));
+          } catch (error) {
+            console.log("chat");
           }
-          deletebutton.addEventListener("click", deleteinvoice);
-          const cancelbutton = document.getElementById("cancelbutton");
-          cancelbutton.addEventListener("click", function cancelbtn() {
-            delscreen.style.display = "none";
-            document.body.style.overflow = "auto";
-            deletebutton.removeEventListener("click", deleteinvoice);
-          });
-        });
-        const invoiceid = document.getElementById("invoiceid");
-        invoiceid.innerHTML = id;
-        const invoiceclientName = document.getElementById("invoiceclientName");
-        invoiceclientName.innerHTML = clientName;
-        const invoicepaymentDue = document.getElementById("invoicepaymentDue");
-        invoicepaymentDue.innerHTML = correctDateFormat(paymentDue);
-        const invoicetotal = document.getElementById("invoicetotal");
-        invoicetotal.innerHTML =
-          "£ " +
-          total.toLocaleString("en-GB", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          });
-        const invoicestatus = document.getElementById("invoicestatus");
-        invoicestatus.innerHTML = status;
-        const statusboxcolors = document.getElementById("statusboxcolors");
-        const circlecolor = document.getElementById("circlecolor");
-        const marraspaidbutton = document.getElementById("marraspaidbutton");
-        if (status === "paid") {
-          invoicestatus.classList.add("paidcolor");
-          statusboxcolors.classList.add("paidbg");
-          circlecolor.classList.add("paidcircle");
-          invoicestatus.classList.remove("draftcolor");
-          statusboxcolors.classList.remove("draftbg");
-          circlecolor.classList.remove("draftcircle");
-          invoicestatus.classList.remove("pendingcolor");
-          statusboxcolors.classList.remove("pendingbg");
-          circlecolor.classList.remove("pendingcircle");
-          marraspaidbutton.style.display = "none";
-        } else if (status === "draft") {
-          invoicestatus.classList.add("draftcolor");
-          statusboxcolors.classList.add("draftbg");
-          circlecolor.classList.add("draftcircle");
-          invoicestatus.classList.remove("paidcolor");
-          statusboxcolors.classList.remove("paidbg");
-          circlecolor.classList.remove("paidcircle");
-          invoicestatus.classList.remove("pendingcolor");
-          statusboxcolors.classList.remove("pendingbg");
-          circlecolor.classList.remove("pendingcircle");
-          marraspaidbutton.style.display = "block";
-        } else if (status === "pending") {
-          invoicestatus.classList.add("pendingcolor");
-          statusboxcolors.classList.add("pendingbg");
-          circlecolor.classList.add("pendingcircle");
-          invoicestatus.classList.remove("paidcolor");
-          statusboxcolors.classList.remove("paidbg");
-          circlecolor.classList.remove("paidcircle");
-          invoicestatus.classList.remove("draftcolor");
-          statusboxcolors.classList.remove("draftbg");
-          circlecolor.classList.remove("draftcircle");
-          marraspaidbutton.style.display = "block";
         }
-        const invoicecreatedAt = document.getElementById("invoicecreatedAt");
-        invoicecreatedAt.innerHTML = correctDateFormat(createdAt);
-        const invoicedescription =
-          document.getElementById("invoicedescription");
-        invoicedescription.innerHTML = description;
-        const invoiceclientEmail =
-          document.getElementById("invoiceclientEmail");
-        invoiceclientEmail.innerHTML = clientEmail;
-        const invoicesenderStreet = document.getElementById(
-          "invoicesenderStreet"
-        );
-        invoicesenderStreet.innerHTML = senderStreet;
-        const invoicesenderCity = document.getElementById("invoicesenderCity");
-        invoicesenderCity.innerHTML = senderCity;
-        const invoicesenderPostCode = document.getElementById(
-          "invoicesenderPostCode"
-        );
-        invoicesenderPostCode.innerHTML = senderPostCode;
-        const invoicesenderCountry = document.getElementById(
-          "invoicesenderCountry"
-        );
-        invoicesenderCountry.innerHTML = senderCountry;
-        const invoiceclientStreet = document.getElementById(
-          "invoiceclientStreet"
-        );
-        invoiceclientStreet.innerHTML = clientStreet;
-        const invoiceclientCity = document.getElementById("invoiceclientCity");
-        invoiceclientCity.innerHTML = clientCity;
-        const invoiceclientPostCode = document.getElementById(
-          "invoiceclientPostCode"
-        );
-        invoiceclientPostCode.innerHTML = clientPostCode;
-        const invoiceclientCountry = document.getElementById(
-          "invoiceclientCountry"
-        );
-        invoiceclientCountry.innerHTML = clientCountry;
-        const items = document.getElementById("items");
-        items.innerHTML = "";
-        for (let k = 0; k < itemNames.length; k++) {
-          const itemsIL = document.createElement("il");
-          itemsIL.classList.add("itemlist");
-          const itemnameprice = document.createElement("div");
-          itemnameprice.classList.add("itemnameprice");
-          const itemnamepriceinner = document.createElement("div");
-          itemnamepriceinner.classList.add("itemnamepriceinner");
-          const quantitydiv = document.createElement("div");
-          quantitydiv.classList.add("quantitydiv");
-          const itemnamedetails = document.createElement("h5");
-          itemnamedetails.classList.add("itemnamedetails");
-          itemnamedetails.innerHTML = itemNames[k];
-          const qtytotalprice = document.createElement("h5");
-          qtytotalprice.classList.add("qtytotalprice");
-          qtytotalprice.innerHTML =
-            "£ " +
-            itemtotal[k].toLocaleString("en-GB", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            });
-          const qtyclass = document.createElement("p");
-          qtyclass.classList.add("qtyclass");
-          qtyclass.innerHTML = itemqty[k] + " x ";
-          const qtyprice = document.createElement("p");
-          qtyprice.classList.add("qtyprice");
-          qtyprice.innerHTML =
-            "£ " +
-            itemprice[k].toLocaleString("en-GB", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            });
-          quantitydiv.append(qtyclass, qtyprice);
-          itemnamepriceinner.append(itemnamedetails, quantitydiv);
-          itemnameprice.append(itemnamepriceinner, qtytotalprice);
-          itemsIL.append(itemnameprice);
-          items.append(itemsIL);
-        }
-        element.classList.add("backOutLeft");
-        setTimeout(() => {
-          element.classList.remove("backOutLeft");
-        }, 500);
-        setTimeout(() => {
-          invoicescontainer.style.display = "none";
-          invoicesheader.style.display = "none";
-          invoicedetailed.style.display = "block";
-          window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-        }, 500);
-        const editButton = document.getElementById("editbutton");
-        editButton.addEventListener("click", function editBTN() {
-          window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-          invoicescontainer.style.display = "block";
-          invoicesheader.style.display = "flex";
-          invoicedetailed.style.display = "none";
-          addnewinvoice();
-          ivnoiceid.innerHTML = `Edit #${id}`;
-          streetaddress.value = senderStreet;
-          city.value = senderCity;
-          postcode.value = senderPostCode;
-          country.value = senderCountry;
-          clientname.value = clientName;
-          clientemail.value = clientEmail;
-          streetaddress2.value = clientStreet;
-          city2.value = clientCity;
-          postcode2.value = clientPostCode;
-          country2.value = clientCountry;
-          invoicdate.value = createdAt;
-          projectdescription.value = description;
-          payment.value = paymentTerms;
-          while (itemList.childElementCount > 2) {
-            itemList.lastElementChild.remove();
-          }
-          for (let i = 0; i < itemNames.length - 1; i++) {
-            addListItem();
-          }
-          const namebox = document.querySelectorAll(".inputitemname");
-          const qtybox = document.querySelectorAll(".inputfieldqty");
-          const pricebox = document.querySelectorAll(".inputfieldprice");
-          const totalbox = document.querySelectorAll(".counttotalprice");
-          for (let z = 0; z < itemNames.length; z++) {
-            namebox[z].value = itemNames[z];
-            qtybox[z].value = itemqty[z];
-            pricebox[z].value = itemprice[z].toFixed(2);
-            totalbox[z].innerHTML = itemtotal[z].toFixed(2);
-          }
-          const buttons1 = document.getElementById("style1");
-          const buttons2 = document.getElementById("style2");
-          buttons1.style.display = "none";
-          buttons2.style.display = "flex";
+
+        deletebutton.addEventListener("click", deleteinvoice);
+        const cancelbutton = document.getElementById("cancelbutton");
+        cancelbutton.addEventListener("click", function cancelbtn() {
+          delscreen.style.display = "none";
+          document.body.style.overflow = "auto";
+          deletebutton.removeEventListener("click", deleteinvoice);
         });
-        element.removeEventListener("click", change);
       });
-      top.append(topleft, topright);
-      top.classList.add("contenttopbottom");
-      const numberSign = document.createElement("span");
-      numberSign.classList.add("numbersign");
-      topleft1.textContent = "#";
-      topleft1.classList.add("numbersign");
-      topleft2.textContent = id;
-      topleft2.classList.add("invoiceNum");
-      topleft.append(topleft1, topleft2);
-      topleft.classList.add("numbercontainer");
-      topright.textContent = clientName;
-      topright.classList.add("clientname");
-      bottom.append(bottomleft, bottomright);
-      bottom.classList.add("contenttopbottom");
-      bottomleft.append(bottomleft1, bottomleft2);
-      bottomleft.classList.add("bottomleftside");
-      bottomleft1.textContent = "Due " + correctDateFormat(paymentDue);
-      bottomleft1.classList.add("invoicedate");
-      bottomleft2.classList.add("invoiceprice");
-      bottomleft2.textContent =
+      const invoiceid = document.getElementById("invoiceid");
+      invoiceid.innerHTML = id;
+      const invoiceclientName = document.getElementById("invoiceclientName");
+      invoiceclientName.innerHTML = clientName;
+      const invoicepaymentDue = document.getElementById("invoicepaymentDue");
+      invoicepaymentDue.innerHTML = correctDateFormat(paymentDue);
+      const invoicetotal = document.getElementById("invoicetotal");
+      invoicetotal.innerHTML =
         "£ " +
         total.toLocaleString("en-GB", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });
-      invoicestatus.classList.add("statuscircle");
-      if (status == "paid") {
-        bottomright.classList.add("invoicestatusPaid", "statusopacity");
-        statustxt.classList.add("invoicestatusPaid");
-        invoicestatus.classList.add("statuscirclepaid");
-      } else if (status == "draft") {
-        bottomright.classList.add("invoicestatusDraft", "statusopacity");
-        statustxt.classList.add("invoicestatusDraft");
-        invoicestatus.classList.add("statuscircledraft");
-      } else if (status == "pending") {
-        bottomright.classList.add("invoicestatusPending", "statusopacity");
-        statustxt.classList.add("invoicestatusPending");
-        invoicestatus.classList.add("statuscirclepending");
+      const invoicestatus = document.getElementById("invoicestatus");
+      invoicestatus.innerHTML = status;
+      const statusboxcolors = document.getElementById("statusboxcolors");
+      const circlecolor = document.getElementById("circlecolor");
+      const marraspaidbutton = document.getElementById("marraspaidbutton");
+      if (status === "paid") {
+        invoicestatus.classList.add("paidcolor");
+        statusboxcolors.classList.add("paidbg");
+        circlecolor.classList.add("paidcircle");
+        invoicestatus.classList.remove("draftcolor");
+        statusboxcolors.classList.remove("draftbg");
+        circlecolor.classList.remove("draftcircle");
+        invoicestatus.classList.remove("pendingcolor");
+        statusboxcolors.classList.remove("pendingbg");
+        circlecolor.classList.remove("pendingcircle");
+        marraspaidbutton.style.display = "none";
+      } else if (status === "draft") {
+        invoicestatus.classList.add("draftcolor");
+        statusboxcolors.classList.add("draftbg");
+        circlecolor.classList.add("draftcircle");
+        invoicestatus.classList.remove("paidcolor");
+        statusboxcolors.classList.remove("paidbg");
+        circlecolor.classList.remove("paidcircle");
+        invoicestatus.classList.remove("pendingcolor");
+        statusboxcolors.classList.remove("pendingbg");
+        circlecolor.classList.remove("pendingcircle");
+        marraspaidbutton.style.display = "block";
+      } else if (status === "pending") {
+        invoicestatus.classList.add("pendingcolor");
+        statusboxcolors.classList.add("pendingbg");
+        circlecolor.classList.add("pendingcircle");
+        invoicestatus.classList.remove("paidcolor");
+        statusboxcolors.classList.remove("paidbg");
+        circlecolor.classList.remove("paidcircle");
+        invoicestatus.classList.remove("draftcolor");
+        statusboxcolors.classList.remove("draftbg");
+        circlecolor.classList.remove("draftcircle");
+        marraspaidbutton.style.display = "block";
       }
-      statustxt.textContent = status;
-      statustxt.classList.add("statustxt");
-      bottomright.append(invoicestatus, statustxt);
-      return container;
-    };
-    for (let i = 0; i < data.length; i++) {
+      const invoicecreatedAt = document.getElementById("invoicecreatedAt");
+      invoicecreatedAt.innerHTML = correctDateFormat(createdAt);
+      const invoicedescription = document.getElementById("invoicedescription");
+      invoicedescription.innerHTML = description;
+      const invoiceclientEmail = document.getElementById("invoiceclientEmail");
+      invoiceclientEmail.innerHTML = clientEmail;
+      const invoicesenderStreet = document.getElementById(
+        "invoicesenderStreet"
+      );
+      invoicesenderStreet.innerHTML = senderStreet;
+      const invoicesenderCity = document.getElementById("invoicesenderCity");
+      invoicesenderCity.innerHTML = senderCity;
+      const invoicesenderPostCode = document.getElementById(
+        "invoicesenderPostCode"
+      );
+      invoicesenderPostCode.innerHTML = senderPostCode;
+      const invoicesenderCountry = document.getElementById(
+        "invoicesenderCountry"
+      );
+      invoicesenderCountry.innerHTML = senderCountry;
+      const invoiceclientStreet = document.getElementById(
+        "invoiceclientStreet"
+      );
+      invoiceclientStreet.innerHTML = clientStreet;
+      const invoiceclientCity = document.getElementById("invoiceclientCity");
+      invoiceclientCity.innerHTML = clientCity;
+      const invoiceclientPostCode = document.getElementById(
+        "invoiceclientPostCode"
+      );
+      invoiceclientPostCode.innerHTML = clientPostCode;
+      const invoiceclientCountry = document.getElementById(
+        "invoiceclientCountry"
+      );
+      invoiceclientCountry.innerHTML = clientCountry;
+      const items = document.getElementById("items");
+      items.innerHTML = "";
+      for (let k = 0; k < itemNames.length; k++) {
+        const itemsIL = document.createElement("il");
+        itemsIL.classList.add("itemlist");
+        const itemnameprice = document.createElement("div");
+        itemnameprice.classList.add("itemnameprice");
+        const itemnamepriceinner = document.createElement("div");
+        itemnamepriceinner.classList.add("itemnamepriceinner");
+        const quantitydiv = document.createElement("div");
+        quantitydiv.classList.add("quantitydiv");
+        const itemnamedetails = document.createElement("h5");
+        itemnamedetails.classList.add("itemnamedetails");
+        itemnamedetails.innerHTML = itemNames[k];
+        const qtytotalprice = document.createElement("h5");
+        qtytotalprice.classList.add("qtytotalprice");
+        qtytotalprice.innerHTML =
+          "£ " +
+          itemtotal[k].toLocaleString("en-GB", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        const qtyclass = document.createElement("p");
+        qtyclass.classList.add("qtyclass");
+        qtyclass.innerHTML = itemqty[k] + " x ";
+        const qtyprice = document.createElement("p");
+        qtyprice.classList.add("qtyprice");
+        qtyprice.innerHTML =
+          "£ " +
+          itemprice[k].toLocaleString("en-GB", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        quantitydiv.append(qtyclass, qtyprice);
+        itemnamepriceinner.append(itemnamedetails, quantitydiv);
+        itemnameprice.append(itemnamepriceinner, qtytotalprice);
+        itemsIL.append(itemnameprice);
+        items.append(itemsIL);
+      }
+      element.classList.add("backOutLeft");
+      setTimeout(() => {
+        element.classList.remove("backOutLeft");
+      }, 500);
+      setTimeout(() => {
+        invoicescontainer.style.display = "none";
+        invoicesheader.style.display = "none";
+        invoicedetailed.style.display = "block";
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+      }, 500);
+      const editButton = document.getElementById("editbutton");
+      editButton.addEventListener("click", function editBTN() {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+        invoicescontainer.style.display = "block";
+        invoicesheader.style.display = "flex";
+        invoicedetailed.style.display = "none";
+        addnewinvoice();
+        ivnoiceid.innerHTML = `Edit #${id}`;
+        streetaddress.value = senderStreet;
+        city.value = senderCity;
+        postcode.value = senderPostCode;
+        country.value = senderCountry;
+        clientname.value = clientName;
+        clientemail.value = clientEmail;
+        streetaddress2.value = clientStreet;
+        city2.value = clientCity;
+        postcode2.value = clientPostCode;
+        country2.value = clientCountry;
+        invoicdate.value = createdAt;
+        projectdescription.value = description;
+        payment.value = paymentTerms;
+        while (itemList.childElementCount > 2) {
+          itemList.lastElementChild.remove();
+        }
+        for (let i = 0; i < itemNames.length - 1; i++) {
+          addListItem();
+        }
+        const namebox = document.querySelectorAll(".inputitemname");
+        const qtybox = document.querySelectorAll(".inputfieldqty");
+        const pricebox = document.querySelectorAll(".inputfieldprice");
+        const totalbox = document.querySelectorAll(".counttotalprice");
+        for (let z = 0; z < itemNames.length; z++) {
+          namebox[z].value = itemNames[z];
+          qtybox[z].value = itemqty[z];
+          pricebox[z].value = itemprice[z].toFixed(2);
+          totalbox[z].innerHTML = itemtotal[z].toFixed(2);
+        }
+        const buttons1 = document.getElementById("style1");
+        const buttons2 = document.getElementById("style2");
+        buttons1.style.display = "none";
+        buttons2.style.display = "flex";
+      });
+      element.removeEventListener("click", change);
+    });
+    top.append(topleft, topright);
+    top.classList.add("contenttopbottom");
+    const numberSign = document.createElement("span");
+    numberSign.classList.add("numbersign");
+    topleft1.textContent = "#";
+    topleft1.classList.add("numbersign");
+    topleft2.textContent = id;
+    topleft2.classList.add("invoiceNum");
+    topleft.append(topleft1, topleft2);
+    topleft.classList.add("numbercontainer");
+    topright.textContent = clientName;
+    topright.classList.add("clientname");
+    bottom.append(bottomleft, bottomright);
+    bottom.classList.add("contenttopbottom");
+    bottomleft.append(bottomleft1, bottomleft2);
+    bottomleft.classList.add("bottomleftside");
+    bottomleft1.textContent = "Due " + correctDateFormat(paymentDue);
+    bottomleft1.classList.add("invoicedate");
+    bottomleft2.classList.add("invoiceprice");
+    bottomleft2.textContent =
+      "£ " +
+      total.toLocaleString("en-GB", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    invoicestatus.classList.add("statuscircle");
+    if (status == "paid") {
+      bottomright.classList.add("invoicestatusPaid", "statusopacity");
+      statustxt.classList.add("invoicestatusPaid");
+      invoicestatus.classList.add("statuscirclepaid");
+    } else if (status == "draft") {
+      bottomright.classList.add("invoicestatusDraft", "statusopacity");
+      statustxt.classList.add("invoicestatusDraft");
+      invoicestatus.classList.add("statuscircledraft");
+    } else if (status == "pending") {
+      bottomright.classList.add("invoicestatusPending", "statusopacity");
+      statustxt.classList.add("invoicestatusPending");
+      invoicestatus.classList.add("statuscirclepending");
+    }
+    statustxt.textContent = status;
+    statustxt.classList.add("statustxt");
+    bottomright.append(invoicestatus, statustxt);
+    return container;
+  };
+
+  for (let i = 0; i < data.length; i++) {
+    try {
       const {
         id,
         createdAt,
@@ -403,8 +436,10 @@ fetch("./data.json")
         items
       );
       invoices.append(invoiceBox);
-    }
-  });
+      const itemIndex = data.findIndex((data) => data.id === id);
+    } catch (error) {}
+  }
+});
 const ivnoiceid = document.getElementById("newinvoiceH");
 const streetaddress = document.getElementById("streetaddress");
 const city = document.getElementById("city");
@@ -521,9 +556,8 @@ function saveInvoice() {
       total: sumTotal(),
     },
   ];
-  console.log(newInvoice);
   update.addEventListener("click", (e) => {
-    set(ref(database, "/" + 7), {
+    set(ref(database, "/" + newInvoiceNum), {
       id: result,
       createdAt: invoicdate.value,
       paymentDue: correctDate,
@@ -654,12 +688,6 @@ const discardbtn1 = document.getElementById("discardbutton1");
 discardbtn1.addEventListener("click", discard);
 const newbackbutton = document.getElementById("newbackbutton");
 newbackbutton.addEventListener("click", discard);
-let invoiceCount = 0;
-async function createAndCountInvoices() {
-  let response = await fetch("./data.json");
-  let data = await response.json();
-  invoiceCount = document.getElementById("invoices").childElementCount;
-}
 const dropdown = document.getElementById("dropdown");
 dropdown.addEventListener("change", (event) => {
   const selectedOption = event.target.value;
@@ -747,7 +775,6 @@ draftinvoices.addEventListener("change", function () {
     countInvoices(invoiceCount);
   }
 });
-createAndCountInvoices();
 const checkbox = document.getElementById("toggle");
 const div = document.getElementById("checkdiv");
 window.addEventListener("click", (event) => {
@@ -764,19 +791,3 @@ window.addEventListener("click", (event) => {
     checkbox.checked = false;
   }
 });
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDH_ifcXcFMQDDyBr6LVEsvW7MrtgnDJu8",
-  authDomain: "invoice-app-3dbc8.firebaseapp.com",
-  databaseURL:
-    "https://invoice-app-3dbc8-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "invoice-app-3dbc8",
-  storageBucket: "invoice-app-3dbc8.appspot.com",
-  messagingSenderId: "580121821695",
-  appId: "1:580121821695:web:f153eedc590c616b5e67ca",
-  measurementId: "G-V3NV40PKS6",
-};
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const database = getDatabase(app);
