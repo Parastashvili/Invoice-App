@@ -106,6 +106,23 @@ onValue(firebaseRef, (snapshot) => {
     element.classList.add("invoiceContainerInner");
     element.addEventListener("click", function change() {
       lastOpenedContainer = container;
+      const itemIndex = function () {
+        try {
+          return data.findIndex((data) => data.id === id);
+        } catch (error) {
+          const targetId = id;
+          let targetItem = null;
+          for (const [key, value] of Object.entries(data)) {
+            if (value.id === targetId) {
+              targetItem = { [key]: value };
+              break;
+            }
+          }
+          const targetKey = Object.keys(targetItem)[0];
+          return parseInt(targetKey);
+        }
+      };
+      console.log(itemIndex());
       const deleteBTN = document.getElementById("deletebutton");
       deleteBTN.addEventListener("click", function change() {
         const delscreen = document.getElementById("deletescreen");
@@ -123,10 +140,9 @@ onValue(firebaseRef, (snapshot) => {
           deletebutton.removeEventListener("click", deleteinvoice);
           invoiceCount--;
           countInvoices(invoiceCount);
-          // const itemIndex = data.findIndex((data) => data.id === id);
-          // console.log(itemIndex);
+
           try {
-            remove(ref(database, "/" + 2));
+            remove(ref(database, "/" + 10));
           } catch (error) {
             console.log("chat");
           }
@@ -325,7 +341,6 @@ onValue(firebaseRef, (snapshot) => {
         buttons1.style.display = "none";
         buttons2.style.display = "flex";
       });
-      element.removeEventListener("click", change);
     });
     top.append(topleft, topright);
     top.classList.add("contenttopbottom");
