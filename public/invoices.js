@@ -7,6 +7,9 @@ import {
   set,
   onValue,
   remove,
+  query,
+  orderByChild,
+  limitToLast,
 } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDH_ifcXcFMQDDyBr6LVEsvW7MrtgnDJu8",
@@ -29,10 +32,15 @@ let newInvoiceNum = 0;
 onValue(firebaseRef, (snapshot) => {
   const data = snapshot.val();
   const length = Object.keys(data).length;
-  newInvoiceNum = length;
+  let lastId = null;
+  for (const key of Object.keys(data)) {
+    if (!lastId || key > lastId) {
+      lastId = key;
+    }
+  }
+  newInvoiceNum = parseInt(lastId) + 1;
   invoiceCount = length;
   countInvoices(invoiceCount);
-  console.log(length);
   const invoices = document.querySelector(".invoices");
   const invoicescontainer = document.getElementById("invoices");
   const invoicesheader = document.getElementById("sectionHeader");
