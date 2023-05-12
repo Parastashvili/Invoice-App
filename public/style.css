@@ -696,6 +696,13 @@ body {
   letter-spacing: -0.5px;
   color: var(--boldText);
 }
+#confirmdelete5 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.5px;
+  color: var(--boldText);
+}
 #confirmdeletep {
   font-weight: 500;
   font-size: 13px;

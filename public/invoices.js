@@ -26,7 +26,9 @@ const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const firebaseRef = ref(database);
 let newInvoiceNum = 0;
-
+let editInvoice = 0;
+let editInvoiceId = "";
+let editInvoiceStatus = "";
 onValue(firebaseRef, (snapshot) => {
   const data = snapshot.val();
   const length = Object.keys(data).length;
@@ -128,6 +130,9 @@ onValue(firebaseRef, (snapshot) => {
           return parseInt(targetKey);
         }
       };
+      editInvoice = itemIndex();
+      editInvoiceId = id;
+      editInvoiceStatus = status;
       const deleteBTN = document.getElementById("deletebutton");
       deleteBTN.addEventListener("click", function change() {
         const delscreen = document.getElementById("deletescreen");
@@ -211,6 +216,7 @@ onValue(firebaseRef, (snapshot) => {
         statusboxcolors.classList.remove("pendingbg");
         circlecolor.classList.remove("pendingcircle");
         marraspaidbutton.style.display = "block";
+        marraspaidbutton.innerHTML = "Save & Send";
       } else if (status === "pending") {
         invoicestatus.classList.add("pendingcolor");
         statusboxcolors.classList.add("pendingbg");
@@ -222,6 +228,7 @@ onValue(firebaseRef, (snapshot) => {
         statusboxcolors.classList.remove("draftbg");
         circlecolor.classList.remove("draftcircle");
         marraspaidbutton.style.display = "block";
+        marraspaidbutton.innerHTML = "Mark as Paid";
       }
       const invoicecreatedAt = document.getElementById("invoicecreatedAt");
       invoicecreatedAt.innerHTML = correctDateFormat(createdAt);
@@ -485,22 +492,20 @@ const invoicdate = document.getElementById("invoicdate");
 const projectdescription = document.getElementById("projectdescription");
 const payment = document.getElementById("dropdown");
 const itemList = document.getElementById("itemlistbox");
-const inputitemname = document.querySelectorAll(".inputitemname");
-const inputfieldqty = document.querySelectorAll(".inputfieldqty");
-const inputfieldprice = document.querySelectorAll(".inputfieldprice");
-const counttotalprice = document.querySelectorAll(".counttotalprice");
-const invoicestatus = document.querySelectorAll(".invoicestatus");
 const update = document.getElementById("update");
 const savesend = document.getElementById("savesend");
 const savedraft = document.getElementById("savedraft");
 const confTXT = document.getElementById("confirmdeletep1");
+const confirmdelete = document.getElementById("confirmdelete5");
 savesend.addEventListener("click", function () {
   saveInvoice("pending");
+  confirmdelete.innerHTML = "Confirm Invoice";
   confTXT.innerHTML =
     "This invoice will be created after confirmation, are you sure that you want to create it ?";
 });
 savedraft.addEventListener("click", function () {
   saveInvoice("draft");
+  confirmdelete.innerHTML = "Confirm Invoice";
   confTXT.innerHTML =
     "This invoice will be saved as draft in your invoices after confirmation, are you sure that you want to save it ?";
 });
@@ -512,6 +517,9 @@ function updateInvoice() {
   cancel.addEventListener("click", () => {
     confirmscreen.style.display = "none";
   });
+  confirmdelete.innerHTML = "Confirm Invoice Update";
+  confTXT.innerHTML =
+    "This invoice will be updated after confirmation, are you sure that you want to update it ?";
   const confirmOK = document.getElementById("confirmbuttonOK");
   confirmOK.addEventListener("click", () => {
     function addDaysToDate(correctDate) {
@@ -534,11 +542,11 @@ function updateInvoice() {
       for (let index = 0; index < itemscount.length; index++) {
         let item = {
           name: itemname[index].value,
-          quantity: itemqty[index].value,
-          price: itemprice[index].value,
-          total: (itemprice[index].value * itemqty[index].value)
-            .toFixed(2)
-            .toString(),
+          quantity: Number(itemqty[index].value),
+          price: Number(itemprice[index].value),
+          total: Number(
+            (itemprice[index].value * itemqty[index].value).toFixed(2)
+          ),
         };
         itemsArr.push(item);
       }
@@ -563,14 +571,14 @@ function updateInvoice() {
     }
     const newInvoice = [
       {
-        id: ivnoiceid,
+        id: editInvoiceId,
         createdAt: invoicdate.value,
         paymentDue: correctDate,
         description: projectdescription.value,
-        paymentTerms: payment.value,
+        paymentTerms: Number(payment.value),
         clientName: clientname.value,
         clientEmail: clientemail.value,
-        status: invoicestatus.innerHTML,
+        status: editInvoiceStatus,
         senderAddress: {
           street: streetaddress.value,
           city: city.value,
@@ -584,19 +592,19 @@ function updateInvoice() {
           country: country2.value,
         },
         items: items(),
-        total: sumTotal(),
+        total: Number(sumTotal()),
       },
     ];
     function saveInvoiceOK() {
-      set(ref(database, "/" + 0), {
-        id: ivnoiceid,
+      set(ref(database, "/" + editInvoice), {
+        id: editInvoiceId,
         createdAt: invoicdate.value,
         paymentDue: correctDate,
         description: projectdescription.value,
-        paymentTerms: payment.value,
+        paymentTerms: Number(payment.value),
         clientName: clientname.value,
         clientEmail: clientemail.value,
-        status: invoicestatus.innerHTML,
+        status: editInvoiceStatus,
         senderAddress: {
           street: streetaddress.value,
           city: city.value,
@@ -610,7 +618,7 @@ function updateInvoice() {
           country: country2.value,
         },
         items: items(),
-        total: sumTotal(),
+        total: Number(sumTotal()),
       })
         .then(() => {})
         .catch((error) => {});
@@ -668,11 +676,11 @@ function saveInvoice(status) {
       for (let index = 0; index < itemscount.length; index++) {
         let item = {
           name: itemname[index].value,
-          quantity: itemqty[index].value,
-          price: itemprice[index].value,
-          total: (itemprice[index].value * itemqty[index].value)
-            .toFixed(2)
-            .toString(),
+          quantity: Number(itemqty[index].value),
+          price: Number(itemprice[index].value),
+          total: Number(
+            (itemprice[index].value * itemqty[index].value).toFixed(2)
+          ),
         };
         itemsArr.push(item);
       }
@@ -701,7 +709,7 @@ function saveInvoice(status) {
         createdAt: invoicdate.value,
         paymentDue: correctDate,
         description: projectdescription.value,
-        paymentTerms: payment.value,
+        paymentTerms: Number(payment.value),
         clientName: clientname.value,
         clientEmail: clientemail.value,
         status: status,
@@ -727,7 +735,7 @@ function saveInvoice(status) {
         createdAt: invoicdate.value,
         paymentDue: correctDate,
         description: projectdescription.value,
-        paymentTerms: payment.value,
+        paymentTerms: Number(payment.value),
         clientName: clientname.value,
         clientEmail: clientemail.value,
         status: status,
@@ -744,7 +752,7 @@ function saveInvoice(status) {
           country: country2.value,
         },
         items: items(),
-        total: sumTotal(),
+        total: Number(sumTotal()),
       })
         .then(() => {})
         .catch((error) => {});
