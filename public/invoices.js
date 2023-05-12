@@ -32,12 +32,11 @@ onValue(firebaseRef, (snapshot) => {
   const length = Object.keys(data).length;
   let lastId = null;
   for (const key of Object.keys(data)) {
-    if (!lastId || key > lastId) {
+    if (!lastId || 1000 > lastId) {
       lastId = key;
     }
   }
   newInvoiceNum = Number(lastId) + 1;
-  console.log(newInvoiceNum);
   invoiceCount = length;
   countInvoices(invoiceCount);
   const invoices = document.querySelector(".invoices");
@@ -129,7 +128,6 @@ onValue(firebaseRef, (snapshot) => {
           return parseInt(targetKey);
         }
       };
-      console.log(itemIndex());
       const deleteBTN = document.getElementById("deletebutton");
       deleteBTN.addEventListener("click", function change() {
         const delscreen = document.getElementById("deletescreen");
@@ -491,10 +489,138 @@ const inputitemname = document.querySelectorAll(".inputitemname");
 const inputfieldqty = document.querySelectorAll(".inputfieldqty");
 const inputfieldprice = document.querySelectorAll(".inputfieldprice");
 const counttotalprice = document.querySelectorAll(".counttotalprice");
+const invoicestatus = document.querySelectorAll(".invoicestatus");
 const update = document.getElementById("update");
 const savesend = document.getElementById("savesend");
-savesend.addEventListener("click", saveInvoice);
-function saveInvoice() {
+const savedraft = document.getElementById("savedraft");
+const confTXT = document.getElementById("confirmdeletep1");
+savesend.addEventListener("click", function () {
+  saveInvoice("pending");
+  confTXT.innerHTML =
+    "This invoice will be created after confirmation, are you sure that you want to create it ?";
+});
+savedraft.addEventListener("click", function () {
+  saveInvoice("draft");
+  confTXT.innerHTML =
+    "This invoice will be saved as draft in your invoices after confirmation, are you sure that you want to save it ?";
+});
+update.addEventListener("click", updateInvoice);
+function updateInvoice() {
+  const confirmscreen = document.getElementById("deletescreen1");
+  confirmscreen.style.display = "flex";
+  const cancel = document.getElementById("cancelbutton1");
+  cancel.addEventListener("click", () => {
+    confirmscreen.style.display = "none";
+  });
+  const confirmOK = document.getElementById("confirmbuttonOK");
+  confirmOK.addEventListener("click", () => {
+    function addDaysToDate(correctDate) {
+      let date = new Date(correctDate);
+      date.setDate(date.getDate() + Number(payment.value));
+      let year = date.getFullYear();
+      let month = ("0" + (date.getMonth() + 1)).slice(-2);
+      let day = ("0" + date.getDate()).slice(-2);
+      let result = `${year}-${month}-${day}`;
+      return result;
+    }
+    let correctDate = invoicdate.value;
+    correctDate = addDaysToDate(correctDate);
+    function items() {
+      const itemname = document.querySelectorAll(".inputitemname");
+      const itemqty = document.querySelectorAll(".inputfieldqty");
+      const itemprice = document.querySelectorAll(".inputfieldprice");
+      let itemsArr = [];
+      const itemscount = document.querySelectorAll(".itemlistinner");
+      for (let index = 0; index < itemscount.length; index++) {
+        let item = {
+          name: itemname[index].value,
+          quantity: itemqty[index].value,
+          price: itemprice[index].value,
+          total: (itemprice[index].value * itemqty[index].value)
+            .toFixed(2)
+            .toString(),
+        };
+        itemsArr.push(item);
+      }
+      return itemsArr;
+    }
+    function sumTotal() {
+      const itemqty = document.querySelectorAll(".inputfieldqty");
+      const itemprice = document.querySelectorAll(".inputfieldprice");
+      let itemsArr = [];
+      let sumT = 0;
+      const itemscount = document.querySelectorAll(".itemlistinner");
+      for (let index = 0; index < itemscount.length; index++) {
+        let item = {
+          total: (itemprice[index].value * itemqty[index].value).toFixed(2),
+        };
+        itemsArr.push(item);
+      }
+      for (let index = 0; index < itemscount.length; index++) {
+        sumT += parseInt(itemsArr[index].total);
+      }
+      return sumT.toFixed(2).toString();
+    }
+    const newInvoice = [
+      {
+        id: ivnoiceid,
+        createdAt: invoicdate.value,
+        paymentDue: correctDate,
+        description: projectdescription.value,
+        paymentTerms: payment.value,
+        clientName: clientname.value,
+        clientEmail: clientemail.value,
+        status: invoicestatus.innerHTML,
+        senderAddress: {
+          street: streetaddress.value,
+          city: city.value,
+          postCode: postcode.value,
+          country: country.value,
+        },
+        clientAddress: {
+          street: streetaddress2.value,
+          city: city2.value,
+          postCode: postcode2.value,
+          country: country2.value,
+        },
+        items: items(),
+        total: sumTotal(),
+      },
+    ];
+    function saveInvoiceOK() {
+      set(ref(database, "/" + 0), {
+        id: ivnoiceid,
+        createdAt: invoicdate.value,
+        paymentDue: correctDate,
+        description: projectdescription.value,
+        paymentTerms: payment.value,
+        clientName: clientname.value,
+        clientEmail: clientemail.value,
+        status: invoicestatus.innerHTML,
+        senderAddress: {
+          street: streetaddress.value,
+          city: city.value,
+          postCode: postcode.value,
+          country: country.value,
+        },
+        clientAddress: {
+          street: streetaddress2.value,
+          city: city2.value,
+          postCode: postcode2.value,
+          country: country2.value,
+        },
+        items: items(),
+        total: sumTotal(),
+      })
+        .then(() => {})
+        .catch((error) => {});
+    }
+    saveInvoiceOK();
+    location.reload();
+  });
+}
+
+function saveInvoice(status) {
   const confirmscreen = document.getElementById("deletescreen1");
   confirmscreen.style.display = "flex";
   let result = "";
@@ -578,7 +704,7 @@ function saveInvoice() {
         paymentTerms: payment.value,
         clientName: clientname.value,
         clientEmail: clientemail.value,
-        status: "pending",
+        status: status,
         senderAddress: {
           street: streetaddress.value,
           city: city.value,
@@ -596,7 +722,7 @@ function saveInvoice() {
       },
     ];
     function saveInvoiceOK() {
-      set(ref(database, "/" + newInvoiceNum), {
+      set(ref(database, "/" + newInvoiceNum++), {
         id: result,
         createdAt: invoicdate.value,
         paymentDue: correctDate,
@@ -604,7 +730,7 @@ function saveInvoice() {
         paymentTerms: payment.value,
         clientName: clientname.value,
         clientEmail: clientemail.value,
-        status: "pending",
+        status: status,
         senderAddress: {
           street: streetaddress.value,
           city: city.value,
