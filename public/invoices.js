@@ -297,6 +297,7 @@ onValue(firebaseRef, (snapshot) => {
       const items = document.getElementById("items");
       items.innerHTML = "";
       for (let k = 0; k < itemNames.length; k++) {
+        emptyscreen.style.display = "none";
         const itemsIL = document.createElement("il");
         itemsIL.classList.add("itemlist");
         const itemnameprice = document.createElement("div");
@@ -992,51 +993,7 @@ window.addEventListener("click", (event) => {
     checkbox.checked = false;
   }
 });
-function setDarkModeColors() {
-  document.documentElement.style.setProperty("--contentBG", "#141625");
-  document.documentElement.style.setProperty("--boldText", "#FFFFFF");
-  document.documentElement.style.setProperty("--white", "#1E2139");
-  // document.documentElement.style.setProperty("--logoBG", "rgb(255, 0, 0)");
-  // document.documentElement.style.setProperty(
-  //   "--logoLightBG",
-  //   "rgb(255, 255, 0)"
-  // );
-  // document.documentElement.style.setProperty("--buttonBG", "rgb(0, 255, 0)");
-  // document.documentElement.style.setProperty("--logoBGHover", "rgb(0, 0, 255)");
-  //
-  // document.documentElement.style.setProperty("--pending", "rgb(255, 165, 0)");
-  // document.documentElement.style.setProperty("--paid", "rgb(0, 255, 255)");
-  // document.documentElement.style.setProperty("--draft", "rgb(255, 0, 255)");
-  // document.documentElement.style.setProperty(
-  //   "--paidbg",
-  //   "rgb(0, 255, 255, 0.06)"
-  // );
-  // document.documentElement.style.setProperty(
-  //   "--pendingbg",
-  //   "rgb(255, 165, 0, 0.06)"
-  // );
-  // document.documentElement.style.setProperty(
-  //   "--draftbg",
-  //   "rgb(255, 0, 255, 0.06)"
-  // );
-  // document.documentElement.style.setProperty("--lighttext", "rgb(255, 255, 0)");
-  // document.documentElement.style.setProperty("--deleteBG", "rgb(255, 0, 0)");
-  // document.documentElement.style.setProperty(
-  //   "--profileLeftBorder",
-  //   "rgb(255, 255, 0)"
-  // );
-  // document.documentElement.style.setProperty("--headerBG", "rgb(0, 255, 0)");
-  //
-  // document.documentElement.style.setProperty(
-  //   "--innerShadow",
-  //   "rgba(255, 255, 0, 0.100397)"
-  // );
-  //
-  // document.documentElement.style.setProperty("--diezi", "#ff00ff");
-  // document.documentElement.style.setProperty("--editBTN", "#0000ff");
-  // document.documentElement.style.setProperty("--paidBTNbg", "#ffff00");
-  // document.documentElement.style.setProperty("--inputBorder", "#ff0000");
-}
+
 const dayNightIcon = document.getElementById("day_night");
 dayNightIcon.addEventListener("click", function () {
   const currentMode = localStorage.getItem("dark-mode");
@@ -1056,55 +1013,66 @@ if (localStorage.getItem("dark-mode") === "on") {
 } else {
   dayNightIcon.src = "./assets/icon-moon.svg";
   setLightModeColors();
-}ფ
+}
+function setDarkModeColors() {
+  const root = document.documentElement;
+  root.style.setProperty("--wholeContentBG", "#141625");
+  root.style.setProperty("--boldText", "#FFFFFF");
+  root.style.setProperty("--white", "#1E2139");
+  root.style.setProperty("--invoiceCount", "#DFE3FA");
+  root.style.setProperty("--invoiceDate", "#DFE3FA");
+  root.style.setProperty("--clientName", "#FFFFFF");
+  root.style.setProperty("--draft", "#DFE3FA");
+  root.style.setProperty("--draftbg", "rgb(223, 227, 250,0.06)");
+  root.style.setProperty("--statustxtMain", "#DFE3FA");
+  root.style.setProperty("--lighttext", "#DFE3FA");
+  root.style.setProperty("--paymentBG", "#0C0E16");
+  root.style.setProperty("--itemsDetailed", "#252945");
+  root.style.setProperty("--TotalAmount", "#FFFFFF");
+  root.style.setProperty("--editBTNBG", "#252945");
+  root.style.setProperty("--inputBorder", "#252945");
+  root.style.setProperty("--formfield", "#1E2139");
+  root.style.setProperty("--headerBG", "#1E2139");
+  root.style.setProperty("--newInvoice", "#141625");
+  root.style.setProperty("--addItemBTN", "#252945");
+  root.style.setProperty("--additemtxt", "#7E88C3");
+  root.style.setProperty("--cancelButton", "#252945");
+}
 function setLightModeColors() {
-  document.documentElement.style.setProperty("--logoBG", "rgb(124, 93, 250)");
-  document.documentElement.style.setProperty(
-    "--logoLightBG",
-    "rgb(146, 119, 255)"
-  );
-  document.documentElement.style.setProperty("--buttonBG", "rgb(124, 93, 250)");
-  document.documentElement.style.setProperty(
-    "--logoBGHover",
-    "rgb(146, 119, 255)"
-  );
-  document.documentElement.style.setProperty("--boldText", "rgb(12, 14, 22)");
-  document.documentElement.style.setProperty("--pending", "rgb(255, 143, 0)");
-  document.documentElement.style.setProperty("--paid", "rgb(51, 214, 159)");
-  document.documentElement.style.setProperty("--draft", "rgb(55, 59, 83)");
-  document.documentElement.style.setProperty(
-    "--paidbg",
-    "rgb(51, 214, 159, 0.06)"
-  );
-  document.documentElement.style.setProperty(
-    "--pendingbg",
-    "rgb(255, 143, 0, 0.06)"
-  );
-  document.documentElement.style.setProperty(
-    "--draftbg",
-    "rgb(55, 59, 83, 0.06)"
-  );
-  document.documentElement.style.setProperty(
-    "--lighttext",
-    "rgb(133, 139, 178)"
-  );
-  document.documentElement.style.setProperty("--deleteBG", "rgb(236, 87, 87)");
-  document.documentElement.style.setProperty(
-    "--profileLeftBorder",
-    "rgb(73, 78, 110)"
-  );
-  document.documentElement.style.setProperty("--headerBG", "rgb(55, 59, 83)");
-  document.documentElement.style.setProperty(
-    "--contentBG",
-    "rgb(248, 248, 251)"
-  );
-  document.documentElement.style.setProperty(
-    "--innerShadow",
-    "rgba(72, 84, 159, 0.100397)"
-  );
-  document.documentElement.style.setProperty("--white", "#ffffff");
-  document.documentElement.style.setProperty("--diezi", "#7e88c3");
-  document.documentElement.style.setProperty("--editBTN", "#f9fafe");
-  document.documentElement.style.setProperty("--paidBTNbg", "#7c5dfa");
-  document.documentElement.style.setProperty("--inputBorder", "#dfe3fa");
+  const root = document.documentElement;
+  root.style.setProperty("--cancelButton", "#f9fafe");
+  root.style.setProperty("--additemtxt", "rgb(133, 139, 178)");
+  root.style.setProperty("--addItemBTN", "#f9fafe");
+  root.style.setProperty("--newInvoice", "#ffffff");
+  root.style.setProperty("--formfield", "#ffffff");
+  root.style.setProperty("--editBTNBG", "#f9fafe");
+  root.style.setProperty("--TotalAmount", "#FFFFFF");
+  root.style.setProperty("--itemsDetailed", "#f9fafe");
+  root.style.setProperty("--paymentBG", "rgb(55, 59, 83)");
+  root.style.setProperty("--statustxtMain", "#858bb2");
+  root.style.setProperty("--clientName", "rgb(133, 139, 178)");
+  root.style.setProperty("--invoiceDate", "rgb(133, 139, 178)");
+  root.style.setProperty("--wholeContentBG", "rgb(248, 248, 251)");
+  root.style.setProperty("--logoLightBG", "rgb(146, 119, 255)");
+  root.style.setProperty("--buttonBG", "rgb(124, 93, 250)");
+  root.style.setProperty("--logoBGHover", "rgb(146, 119, 255)");
+  root.style.setProperty("--boldText", "rgb(12, 14, 22)");
+  root.style.setProperty("--pending", "rgb(255, 143, 0)");
+  root.style.setProperty("--paid", "rgb(51, 214, 159)");
+  root.style.setProperty("--draft", "rgb(55, 59, 83)");
+  root.style.setProperty("--paidbg", "rgb(51, 214, 159, 0.06)");
+  root.style.setProperty("--pendingbg", "rgb(255, 143, 0, 0.06)");
+  root.style.setProperty("--draftbg", "rgb(55, 59, 83, 0.06)");
+  root.style.setProperty("--lighttext", "rgb(133, 139, 178)");
+  root.style.setProperty("--invoiceCount", "rgb(133, 139, 178)");
+  root.style.setProperty("--deleteBG", "rgb(236, 87, 87)");
+  root.style.setProperty("--profileLeftBorder", "rgb(73, 78, 110)");
+  root.style.setProperty("--headerBG", "rgb(55, 59, 83)");
+  root.style.setProperty("--innerShadow", "rgba(72, 84, 159, 0.100397)");
+  root.style.setProperty("--plussign", "#ffffff");
+  root.style.setProperty("--white", "#ffffff");
+  root.style.setProperty("--diezi", "#7e88c3");
+  root.style.setProperty("--editBTN", "#f9fafe");
+  root.style.setProperty("--paidBTNbg", "#7c5dfa");
+  root.style.setProperty("--inputBorder", "#dfe3fa");
 }

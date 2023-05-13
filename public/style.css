@@ -3,7 +3,7 @@
   src: url(./fonts/LeagueSpartan-VariableFont_wght.ttf);
 }
 :root {
-  --logoBG: rgb(124, 93, 250);
+  --wholeContentBG: rgb(248, 248, 251);
   --logoLightBG: rgb(146, 119, 255);
   --buttonBG: rgb(124, 93, 250);
   --logoBGHover: rgb(146, 119, 255);
@@ -15,23 +15,37 @@
   --pendingbg: rgb(255, 143, 0, 0.06);
   --draftbg: rgb(55, 59, 83, 0.06);
   --lighttext: rgb(133, 139, 178);
+  --clientName: rgb(133, 139, 178);
+  --invoiceDate: rgb(133, 139, 178);
+  --invoiceCount: rgb(133, 139, 178);
   --deleteBG: rgb(236, 87, 87);
   --profileLeftBorder: rgb(73, 78, 110);
   --headerBG: rgb(55, 59, 83);
-  --contentBG: rgb(248, 248, 251);
+  --paymentBG: rgb(55, 59, 83);
   --innerShadow: rgba(72, 84, 159, 0.100397);
+  --plussign: #ffffff;
   --white: #ffffff;
+  --TotalAmount: #ffffff;
+  --deleteBTNtext: #ffffff;
+  --formfield: #ffffff;
+  --newInvoice: #ffffff;
   --diezi: #7e88c3;
   --editBTN: #f9fafe;
+  --editBTNBG: #f9fafe;
+  --cancelButton: #f9fafe;
+  --itemsDetailed: #f9fafe;
   --paidBTNbg: #7c5dfa;
   --inputBorder: #dfe3fa;
+  --statustxtMain: #858bb2;
+  --addItemBTN: #f9fafe;
+  --additemtxt: rgb(133, 139, 178);
 }
 body {
   font-family: "League Spartan";
   font-style: normal;
   width: 100%;
   height: 100vh;
-  background-color: var(--contentBG);
+  background-color: var(--wholeContentBG);
   overflow-x: hidden;
   min-width: 300px;
 }
@@ -120,7 +134,7 @@ body {
   font-size: 13px;
   line-height: 15px;
   letter-spacing: -0.1px;
-  color: var(--lighttext);
+  color: var(--invoiceCount);
   margin-top: 3px;
 }
 .sectionHeaderRight {
@@ -155,7 +169,7 @@ body {
   cursor: pointer;
 }
 .plussign {
-  background-color: var(--white);
+  background-color: var(--plussign);
   width: 32px;
   height: 32px;
   display: flex;
@@ -169,7 +183,7 @@ body {
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: var(--white);
+  color: var(--plussign);
   margin-right: 15px;
 }
 .topbottomspace {
@@ -221,14 +235,14 @@ body {
   line-height: 15px;
   text-align: right;
   letter-spacing: -0.1px;
-  color: var(--lighttext);
+  color: var(--clientName);
 }
 .invoicedate {
   font-weight: 500;
   font-size: 13px;
   line-height: 15px;
   letter-spacing: -0.1px;
-  color: var(--lighttext);
+  color: var(--invoiceDate);
 }
 .invoiceprice {
   font-weight: 700;
@@ -272,6 +286,13 @@ body {
   font-size: 13px;
   line-height: 15px;
   letter-spacing: -0.1px;
+}
+.statustxtMain {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  color: var(--statustxtMain);
 }
 .statuscircle {
   width: 8px;
@@ -423,7 +444,7 @@ body {
   font-size: 13px;
   line-height: 18px;
   letter-spacing: -0.1px;
-  color: var(--white);
+  color: var(--TotalAmount);
 }
 .invoicedetailedh {
   font-weight: 700;
@@ -503,11 +524,11 @@ body {
   line-height: 32px;
   text-align: right;
   letter-spacing: -0.5px;
-  color: var(--white);
+  color: var(--TotalAmount);
 }
 .paymentdetailed {
   height: 80px;
-  background-color: var(--headerBG);
+  background-color: var(--paymentBG);
   padding: 0px 24px;
   display: flex;
   align-items: center;
@@ -533,7 +554,7 @@ body {
 .editbutton {
   width: 23%;
   height: 48px;
-  background: var(--editBTN);
+  background: var(--editBTNBG);
   border-radius: 24px;
   border-width: 0px;
   font-weight: 700;
@@ -554,7 +575,7 @@ body {
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: var(--white);
+  color: var(--deleteBTNtext);
   padding: 0px;
   cursor: pointer;
 }
@@ -568,7 +589,7 @@ body {
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: var(--white);
+  color: var(--deleteBTNtext);
   padding: 0px;
   cursor: pointer;
 }
@@ -577,7 +598,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding: 24px;
-  background-color: var(--editBTN);
+  background-color: var(--itemsDetailed);
   border-radius: 8px 8px 0px 0px;
   gap: 24px;
 }
@@ -636,7 +657,10 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 60vh;
-  display: none;
+  display: flex;
+}
+.fildettxt {
+  color: var(--boldText);
 }
 .emptyImg {
   height: 160px;
@@ -796,7 +820,7 @@ body {
 /* Create new invoice */
 #new_invoice {
   padding: 33px 24px 24px 24px;
-  background-color: var(--white);
+  background-color: var(--newInvoice);
   margin-bottom: -40px;
   display: none;
 }
@@ -827,7 +851,7 @@ body {
 .inputfield {
   width: calc(100% - 42px);
   height: 13px;
-  background: var(--white);
+  background: var(--formfield);
   border: 1px solid var(--inputBorder);
   border-radius: 4px;
   padding: 18px 20px 15px 20px;
@@ -942,7 +966,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--editBTN);
+  background: var(--addItemBTN);
   border-radius: 24px;
   height: 48px;
   margin-top: 48px;
@@ -957,7 +981,7 @@ input {
   line-height: 15px;
   text-align: center;
   letter-spacing: -0.25px;
-  color: var(--lighttext);
+  color: var(--additemtxt);
 }
 .gredinetfooter {
   margin: 24px -24px -24px -24px;
@@ -972,7 +996,7 @@ input {
 .discardbutton {
   width: 27.4%;
   height: 48px;
-  background: var(--editBTN);
+  background: var(--cancelButton);
   border-radius: 24px;
   border-width: 0px;
   font-weight: 700;
@@ -998,7 +1022,7 @@ input {
   cursor: pointer;
 }
 .sendbutton {
-  width: 35.8%;
+  width: 44.8%;
   height: 48px;
   background: var(--paidBTNbg);
   border-radius: 24px;
@@ -1007,7 +1031,7 @@ input {
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: var(--white);
+  color: var(--TotalAmount);
   padding: 0px;
   cursor: pointer;
 }
