@@ -936,7 +936,7 @@ paidinvoices.addEventListener("change", function () {
 pendingtinvoices.addEventListener("change", function () {
   const pendings = document.querySelectorAll(".statustxt");
   if (this.checked) {
-    for (let i = 0; i < pendings.length - 1; i++) {
+    for (let i = 0; i < pendings.length; i++) {
       if (pendings[i].innerHTML == "pending") {
         invoiceCount++;
         pendings[i].parentElement.parentElement.parentElement.style.display =
@@ -945,7 +945,7 @@ pendingtinvoices.addEventListener("change", function () {
     }
     countInvoices(invoiceCount);
   } else {
-    for (let i = 0; i < pendings.length - 1; i++) {
+    for (let i = 0; i < pendings.length; i++) {
       if (pendings[i].innerHTML == "pending") {
         invoiceCount--;
         pendings[i].parentElement.parentElement.parentElement.style.display =
@@ -958,7 +958,7 @@ pendingtinvoices.addEventListener("change", function () {
 draftinvoices.addEventListener("change", function () {
   const drafts = document.querySelectorAll(".statustxt");
   if (this.checked) {
-    for (let i = 0; i < drafts.length - 1; i++) {
+    for (let i = 0; i < drafts.length; i++) {
       if (drafts[i].innerHTML == "draft") {
         invoiceCount++;
         drafts[i].parentElement.parentElement.parentElement.style.display =
@@ -967,7 +967,7 @@ draftinvoices.addEventListener("change", function () {
     }
     countInvoices(invoiceCount);
   } else {
-    for (let i = 0; i < drafts.length - 1; i++) {
+    for (let i = 0; i < drafts.length; i++) {
       if (drafts[i].innerHTML == "draft") {
         invoiceCount--;
         drafts[i].parentElement.parentElement.parentElement.style.display =
