@@ -992,3 +992,119 @@ window.addEventListener("click", (event) => {
     checkbox.checked = false;
   }
 });
+function setDarkModeColors() {
+  document.documentElement.style.setProperty("--contentBG", "#141625");
+  document.documentElement.style.setProperty("--boldText", "#FFFFFF");
+  document.documentElement.style.setProperty("--white", "#1E2139");
+  // document.documentElement.style.setProperty("--logoBG", "rgb(255, 0, 0)");
+  // document.documentElement.style.setProperty(
+  //   "--logoLightBG",
+  //   "rgb(255, 255, 0)"
+  // );
+  // document.documentElement.style.setProperty("--buttonBG", "rgb(0, 255, 0)");
+  // document.documentElement.style.setProperty("--logoBGHover", "rgb(0, 0, 255)");
+  //
+  // document.documentElement.style.setProperty("--pending", "rgb(255, 165, 0)");
+  // document.documentElement.style.setProperty("--paid", "rgb(0, 255, 255)");
+  // document.documentElement.style.setProperty("--draft", "rgb(255, 0, 255)");
+  // document.documentElement.style.setProperty(
+  //   "--paidbg",
+  //   "rgb(0, 255, 255, 0.06)"
+  // );
+  // document.documentElement.style.setProperty(
+  //   "--pendingbg",
+  //   "rgb(255, 165, 0, 0.06)"
+  // );
+  // document.documentElement.style.setProperty(
+  //   "--draftbg",
+  //   "rgb(255, 0, 255, 0.06)"
+  // );
+  // document.documentElement.style.setProperty("--lighttext", "rgb(255, 255, 0)");
+  // document.documentElement.style.setProperty("--deleteBG", "rgb(255, 0, 0)");
+  // document.documentElement.style.setProperty(
+  //   "--profileLeftBorder",
+  //   "rgb(255, 255, 0)"
+  // );
+  // document.documentElement.style.setProperty("--headerBG", "rgb(0, 255, 0)");
+  //
+  // document.documentElement.style.setProperty(
+  //   "--innerShadow",
+  //   "rgba(255, 255, 0, 0.100397)"
+  // );
+  //
+  // document.documentElement.style.setProperty("--diezi", "#ff00ff");
+  // document.documentElement.style.setProperty("--editBTN", "#0000ff");
+  // document.documentElement.style.setProperty("--paidBTNbg", "#ffff00");
+  // document.documentElement.style.setProperty("--inputBorder", "#ff0000");
+}
+const dayNightIcon = document.getElementById("day_night");
+dayNightIcon.addEventListener("click", function () {
+  const currentMode = localStorage.getItem("dark-mode");
+  if (currentMode === "off") {
+    localStorage.setItem("dark-mode", "on");
+    dayNightIcon.src = "./assets/icon-sun.svg";
+    setDarkModeColors();
+  } else {
+    localStorage.setItem("dark-mode", "off");
+    dayNightIcon.src = "./assets/icon-moon.svg";
+    setLightModeColors();
+  }
+});
+if (localStorage.getItem("dark-mode") === "on") {
+  dayNightIcon.src = "./assets/icon-sun.svg";
+  setDarkModeColors();
+} else {
+  dayNightIcon.src = "./assets/icon-moon.svg";
+  setLightModeColors();
+}ფ
+function setLightModeColors() {
+  document.documentElement.style.setProperty("--logoBG", "rgb(124, 93, 250)");
+  document.documentElement.style.setProperty(
+    "--logoLightBG",
+    "rgb(146, 119, 255)"
+  );
+  document.documentElement.style.setProperty("--buttonBG", "rgb(124, 93, 250)");
+  document.documentElement.style.setProperty(
+    "--logoBGHover",
+    "rgb(146, 119, 255)"
+  );
+  document.documentElement.style.setProperty("--boldText", "rgb(12, 14, 22)");
+  document.documentElement.style.setProperty("--pending", "rgb(255, 143, 0)");
+  document.documentElement.style.setProperty("--paid", "rgb(51, 214, 159)");
+  document.documentElement.style.setProperty("--draft", "rgb(55, 59, 83)");
+  document.documentElement.style.setProperty(
+    "--paidbg",
+    "rgb(51, 214, 159, 0.06)"
+  );
+  document.documentElement.style.setProperty(
+    "--pendingbg",
+    "rgb(255, 143, 0, 0.06)"
+  );
+  document.documentElement.style.setProperty(
+    "--draftbg",
+    "rgb(55, 59, 83, 0.06)"
+  );
+  document.documentElement.style.setProperty(
+    "--lighttext",
+    "rgb(133, 139, 178)"
+  );
+  document.documentElement.style.setProperty("--deleteBG", "rgb(236, 87, 87)");
+  document.documentElement.style.setProperty(
+    "--profileLeftBorder",
+    "rgb(73, 78, 110)"
+  );
+  document.documentElement.style.setProperty("--headerBG", "rgb(55, 59, 83)");
+  document.documentElement.style.setProperty(
+    "--contentBG",
+    "rgb(248, 248, 251)"
+  );
+  document.documentElement.style.setProperty(
+    "--innerShadow",
+    "rgba(72, 84, 159, 0.100397)"
+  );
+  document.documentElement.style.setProperty("--white", "#ffffff");
+  document.documentElement.style.setProperty("--diezi", "#7e88c3");
+  document.documentElement.style.setProperty("--editBTN", "#f9fafe");
+  document.documentElement.style.setProperty("--paidBTNbg", "#7c5dfa");
+  document.documentElement.style.setProperty("--inputBorder", "#dfe3fa");
+}
