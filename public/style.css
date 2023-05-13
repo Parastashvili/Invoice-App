@@ -39,6 +39,8 @@
   --statustxtMain: #858bb2;
   --addItemBTN: #f9fafe;
   --additemtxt: rgb(133, 139, 178);
+  --draftbtnColor: #888eb0;
+  --cancelbtnTXT: #7e88c3;
 }
 body {
   font-family: "League Spartan";
@@ -746,7 +748,7 @@ body {
   gap: 8px;
 }
 .cancelbutton {
-  background: var(--editBTN);
+  background: var(--cancelButton);
   border-radius: 24px;
   border-width: 0px;
   width: 24%;
@@ -756,7 +758,7 @@ body {
   line-height: 15px;
   letter-spacing: -0.25px;
   min-width: 91px;
-  color: var(--diezi);
+  color: var(--cancelbtnTXT);
 }
 .confirmbutton {
   background: #ec5757;
@@ -769,7 +771,7 @@ body {
   line-height: 15px;
   letter-spacing: -0.25px;
   min-width: 91px;
-  color: var(--white);
+  color: var(--TotalAmount);
 }
 .confirmbutton1 {
   background: var(--buttonBG);
@@ -782,7 +784,7 @@ body {
   line-height: 15px;
   letter-spacing: -0.25px;
   min-width: 91px;
-  color: var(--white);
+  color: var(--TotalAmount);
 }
 .deleteconfirmcontainer {
   position: relative;
@@ -1008,7 +1010,7 @@ input {
   cursor: pointer;
 }
 .draftbutton {
-  width: 37%;
+  width: 41%;
   height: 48px;
   background: #373b53;
   border-radius: 24px;
@@ -1017,7 +1019,7 @@ input {
   font-size: 15px;
   line-height: 15px;
   letter-spacing: -0.25px;
-  color: #888eb0;
+  color: var(--draftbtnColor);
   padding: 0px;
   cursor: pointer;
 }

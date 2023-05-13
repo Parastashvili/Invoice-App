@@ -1037,9 +1037,13 @@ function setDarkModeColors() {
   root.style.setProperty("--addItemBTN", "#252945");
   root.style.setProperty("--additemtxt", "#7E88C3");
   root.style.setProperty("--cancelButton", "#252945");
+  root.style.setProperty("--draftbtnColor", "#DFE3FA");
+  root.style.setProperty("--cancelbtnTXT", "#DFE3FA");
 }
 function setLightModeColors() {
   const root = document.documentElement;
+  root.style.setProperty("--cancelbtnTXT", "#7e88c3");
+  root.style.setProperty("--draftbtnColor", "#888eb0");
   root.style.setProperty("--cancelButton", "#f9fafe");
   root.style.setProperty("--additemtxt", "rgb(133, 139, 178)");
   root.style.setProperty("--addItemBTN", "#f9fafe");
