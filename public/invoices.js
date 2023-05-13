@@ -7,6 +7,7 @@ import {
   set,
   onValue,
   remove,
+  update,
 } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDH_ifcXcFMQDDyBr6LVEsvW7MrtgnDJu8",
@@ -150,7 +151,6 @@ onValue(firebaseRef, (snapshot) => {
           deletebutton.removeEventListener("click", deleteinvoice);
           invoiceCount--;
           countInvoices(invoiceCount);
-
           try {
             remove(ref(database, "/" + itemIndex()));
           } catch (error) {}
@@ -161,7 +161,6 @@ onValue(firebaseRef, (snapshot) => {
           filter2.checked = true;
           filter3.checked = true;
         }
-
         deletebutton.addEventListener("click", deleteinvoice);
         const cancelbutton = document.getElementById("cancelbutton");
         cancelbutton.addEventListener("click", function cancelbtn() {
@@ -194,6 +193,37 @@ onValue(firebaseRef, (snapshot) => {
       const statusboxcolors = document.getElementById("statusboxcolors");
       const circlecolor = document.getElementById("circlecolor");
       const marraspaidbutton = document.getElementById("marraspaidbutton");
+      marraspaidbutton.addEventListener("click", () => {
+        let newStatus = "paid";
+        if (status == "draft") {
+          newStatus = "pending";
+          confirmdelete.innerHTML = "Save & Send";
+          confTXT.innerHTML =
+            "This invoice will be SEND if you will confirm, are you sure that you want to proceed ?";
+        } else {
+          newStatus = "paid";
+          confirmdelete.innerHTML = "Mark as PAID";
+          confTXT.innerHTML =
+            "This invoice will be marked as PAID, are you sure that you want to proceed ?";
+        }
+        const confirmscreen = document.getElementById("deletescreen1");
+        confirmscreen.style.display = "flex";
+        function updateInvoiceStatus(newStatus) {
+          const invoiceRef = ref(database, "/" + editInvoice);
+          update(invoiceRef, { status: newStatus })
+            .then(() => {})
+            .catch((error) => {});
+        }
+        const cancel = document.getElementById("cancelbutton1");
+        cancel.addEventListener("click", () => {
+          confirmscreen.style.display = "none";
+        });
+        const confirmOK = document.getElementById("confirmbuttonOK");
+        confirmOK.addEventListener("click", () => {
+          updateInvoiceStatus(newStatus);
+          location.reload();
+        });
+      });
       if (status === "paid") {
         invoicestatus.classList.add("paidcolor");
         statusboxcolors.classList.add("paidbg");
@@ -492,7 +522,7 @@ const invoicdate = document.getElementById("invoicdate");
 const projectdescription = document.getElementById("projectdescription");
 const payment = document.getElementById("dropdown");
 const itemList = document.getElementById("itemlistbox");
-const update = document.getElementById("update");
+const updates = document.getElementById("update");
 const savesend = document.getElementById("savesend");
 const savedraft = document.getElementById("savedraft");
 const confTXT = document.getElementById("confirmdeletep1");
@@ -509,7 +539,7 @@ savedraft.addEventListener("click", function () {
   confTXT.innerHTML =
     "This invoice will be saved as draft in your invoices after confirmation, are you sure that you want to save it ?";
 });
-update.addEventListener("click", updateInvoice);
+updates.addEventListener("click", updateInvoice);
 function updateInvoice() {
   const confirmscreen = document.getElementById("deletescreen1");
   confirmscreen.style.display = "flex";
@@ -627,7 +657,6 @@ function updateInvoice() {
     location.reload();
   });
 }
-
 function saveInvoice(status) {
   const confirmscreen = document.getElementById("deletescreen1");
   confirmscreen.style.display = "flex";
