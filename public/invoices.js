@@ -1348,3 +1348,14 @@ function setLightModeColors() {
   root.style.setProperty("--paidBTNbg", "#7c5dfa");
   root.style.setProperty("--inputBorder", "#dfe3fa");
 }
+
+if (window.innerWidth >= 768) {
+  document.querySelector(".sectionButtonTxt").innerHTML = "New Invoice";
+}
+window.addEventListener("resize", function () {
+  if (window.innerWidth >= 768) {
+    document.querySelector(".sectionButtonTxt").innerHTML = "New Invoice";
+  } else {
+    document.querySelector(".sectionButtonTxt").innerHTML = "New";
+  }
+});

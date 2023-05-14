@@ -1221,3 +1221,42 @@ label {
   display: inline-block;
   margin-left: 4px;
 }
+@media (min-width: 768px) {
+  .header {
+    height: 80px;
+  }
+  .logo {
+    width: 80px;
+    height: 80px;
+  }
+  .sectionH4 {
+    font-size: 36px;
+    line-height: 33px;
+    letter-spacing: -1.125px;
+  }
+  .sectionHeader {
+    margin: 61px 48px 55px 41px;
+  }
+  .addNew {
+    width: 140px;
+    height: 48px;
+    padding: 0 5px;
+  }
+  .invoiceContainerInner {
+    height: 40px;
+    padding: 16px 48px 16px 24px;
+  }
+  .topbottomspace {
+    flex-direction: row;
+  }
+  .bottomleftside {
+    flex-direction: row;
+    align-items: center;
+  }
+  .clientname {
+    margin-left: 38px;
+  }
+  .invoiceprice {
+    margin: 0 82px 0 42px;
+  }
+}
