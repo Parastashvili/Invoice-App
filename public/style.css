@@ -1246,6 +1246,10 @@ label {
     height: 40px;
     padding: 16px 48px 16px 24px;
   }
+  .contenttopbottom {
+    display: flex;
+    align-items: center;
+  }
   .topbottomspace {
     flex-direction: row;
   }
